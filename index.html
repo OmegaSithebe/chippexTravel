@@ -55,8 +55,158 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
+	
+
+
+	<style>
+        /* Add smooth scrolling to the HTML */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+
+<style>
+	/* Styling for the pop-up form */
+	.popup-form {
+		display: none;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background-color: white;
+		padding: 20px;
+		border: 1px solid #ccc;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		z-index: 1000;
+	}
+
+	.popup-overlay {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 999;
+	}
+
+	.popup-form input {
+		margin-bottom: 10px;
+		width: 100%;
+		padding: 8px;
+	}
+
+	.popup-form button {
+		padding: 10px 15px;
+	}
+
+	 /* Thank-you message styling */
+	 .thank-you-message {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            animation: slideDown 0.5s ease forwards;
+	}
+
+	 /* Slide-down animation */
+	 @keyframes slideDown {
+            from {
+                top: -50px;
+                opacity: 0;
+            }
+            to {
+                top: 20px;
+                opacity: 1;
+            }
+        }
+</style>
+	
+
 </head>
 <body>
+	<script>
+		const sheetID = '1xzQPmse5O944pinEYBbXLaf5L65eEgqByfsUxmi8cp4';
+		const sheetURL = `https://spreadsheets.google.com/feeds/list/${sheetID}/od6/public/values?alt=json`;
+		
+		let hotels = [];
+		
+		// Fetch data from Google Sheets
+		fetch(hotelAvailability)
+			.then(response => response.json())
+			.then(data => {
+				// Parse data and populate hotels array
+				data.feed.entry.forEach(entry => {
+					const hotel = {
+						name: entry.gsx$hotelname.$t,
+						price: parseFloat(entry.gsx$price.$t),
+						availability: entry.gsx$availability.$t.split(',').map(date => date.trim()), // Assume dates are comma-separated
+						amenities: entry.gsx$amenities.$t
+					};
+					hotels.push(hotel);
+				});
+				populateHotelOptions();
+			})
+			.catch(error => console.error('Error fetching data:', error));
+		
+		// Populate hotel options in the dropdown
+		function populateHotelOptions() {
+			const select = document.getElementById('hotel-select');
+			hotels.forEach((hotel, index) => {
+				const option = document.createElement('option');
+				option.value = index; // Use index to find hotel in the hotels array
+				option.textContent = hotel.name;
+				select.appendChild(option);
+			});
+		}
+		
+		// Check availability and display hotel details
+		function checkAvailability() {
+			const hotelIndex = document.getElementById('hotel-select').value;
+			const checkinDate = document.getElementById('checkin-date').value;
+			const checkoutDate = document.getElementById('checkout-date').value;
+		
+			if (hotelIndex === "") {
+				document.getElementById('hotel-details').textContent = "Please select a hotel.";
+				return;
+			}
+		
+			if (!checkinDate || !checkoutDate) {
+				document.getElementById('hotel-details').textContent = "Please select both check-in and check-out dates.";
+				return;
+			}
+		
+			const selectedHotel = hotels[hotelIndex];
+		
+			if (selectedHotel) {
+				const checkin = new Date(checkinDate);
+				const checkout = new Date(checkoutDate);
+				const availability = selectedHotel.availability.map(date => new Date(date));
+		
+				const isAvailable = availability.some(date => date >= checkin && date <= checkout);
+		
+				document.getElementById('hotel-details').textContent = isAvailable ? 
+					`Available! Price: $${selectedHotel.price} per night. Amenities: ${selectedHotel.amenities}` : 
+					"Not available for selected dates.";
+			} else {
+				document.getElementById('hotel-details').textContent = "Please select a hotel.";
+			}
+		}
+		</script>		
+
+
+
 	<div id="fh5co-wrapper">
 	<div id="fh5co-page">
 	<div id="fh5co-header">
@@ -73,12 +223,12 @@
 								<ul class="fh5co-sub-menu">
 								 	<li><a href="#">By Car</a></li>
 								 	<li><a href="#">By Ship</a></li>
-									<li><a href="#">By Flight</a></li> 
+									<li><a href="#Flight-travel">By Flight</a></li> 
 								</ul>
 							</li>
-							<li><a href="">Services</a></li>
-							<li><a href="">Team</a></li>
-							<li><a href="">Contact</a></li>
+							<li><a href="#featured-hotel">Services</a></li>
+							<li><a href="#hotel-facilities">Team</a></li>
+							<li><a href="#footer">Contact</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -90,7 +240,7 @@
 	<aside id="fh5co-hero" class="js-fullheight">
 		<div class="flexslider js-fullheight">
 			<ul class="slides">
-		   	<li style="background-image: url(images/slider1.jpg);">
+		   	<li style="background-image: url(images/car-travel-5.png);">
 		   		<div class="overlay-gradient"></div>
 		   		<div class="container">
 		   			<div class="col-md-12 col-md-offset-0 text-center slider-text">
@@ -99,14 +249,14 @@
 		   						<p><span>Car Travel</span></p>
 		   						<h2>Desribing car travel</h2>
 			   					<p>
-			   						<a href="#" class="btn btn-primary btn-lg">Book Now</a>
+			   						<a href="#featured-hotel" class="btn btn-primary btn-lg">Book Now</a>
 			   					</p>
 		   					</div>
 		   				</div>
 		   			</div>
 		   		</div>
 		   	</li>
-		   	<li style="background-image: url(images/slider2.jpg);">
+		   	<li style="background-image: url(images/ship-travel-2.png);">
 		   		<div class="overlay-gradient"></div>
 		   		<div class="container">
 		   			<div class="col-md-12 col-md-offset-0 text-center slider-text">
@@ -115,23 +265,23 @@
 		   						<p><span>Ship Travel</span></p>
 		   						<h2>Describing ship travel</h2>
 			   					<p>
-			   						<a href="#" class="btn btn-primary btn-lg">Book Now</a>
+			   						<a href="#featured-hotel" class="btn btn-primary btn-lg">Book Now</a>
 			   					</p>
 		   					</div>
 		   				</div>
 		   			</div>
 		   		</div>
 		   	</li>
-		   	<li style="background-image: url(images/slider3.jpg);">
+		   	<li style="background-image: url(images/flight-travel-3.jpg);">
 		   		<div class="overlay-gradient"></div>
-		   		<div class="container">
+		   		<div class="container" id="Flight-travel">
 		   			<div class="col-md-12 col-md-offset-0 text-center slider-text">
 		   				<div class="slider-text-inner js-fullheight">
 		   					<div class="desc">
 		   						<p><span>Flight Travel</span></p>
 		   						<h2>Describing flight travel</h2>
 			   					<p>
-			   						<a href="#" class="btn btn-primary btn-lg">Book Now</a>
+			   						<a href="#featured-hotel" class="btn btn-primary btn-lg">Book Now</a>
 			   					</p>
 		   					</div>
 		   				</div>
@@ -152,9 +302,9 @@
 							<section>
 								<select class="cs-select cs-skin-border">
 									<option value="" disabled selected>Select Hotel</option>
-									<option value="email">Vahlavi Lodge</option>
-									<option value="twitter">Xikoci Hotel</option>
-									<option value="linkedin">Nandoni Hotel</option>
+									<option value="email">Vahlavi Guest House</option>
+									<option value="twitter">Xisaka Guest House</option>
+									<option value="linkedin">Nandoni Waterfront Resort</option>
 								</select>
 							</section>
 						</div>
@@ -171,7 +321,7 @@
 							</div>
 						</div>
 						<div class="a-col action">
-							<a href="#">
+							<a href="#" onclick="openPopup(event)">
 								<span>Check</span>
 								Availability
 							</a>
@@ -181,6 +331,24 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Pop-up Overlay and Form -->
+<div class="popup-overlay" id="popup-overlay"></div>
+<div class="popup-form" id="popup-form">
+    <h3>Contact Details</h3>
+    <form onsubmit="submitForm(event)">
+        <input type="text" id="name" placeholder="Name" required />
+        <input type="text" id="surname" placeholder="Surname" required />
+        <input type="text" id="cellphone" placeholder="Cellphone Number" required />
+        <input type="email" id="email" placeholder="Email Address" required />
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<!-- Thank You Message -->
+<div class="thank-you-message" id="thank-you-message">
+    Thank you, we will be in contact with you.
+</div>
 	
 	<div id="fh5co-counter-section" class="fh5co-counters">
 		<div class="container">
@@ -218,41 +386,41 @@
 
 			<div class="row">
 				<div class="feature-full-1col">
-					<div class="image" style="background-image: url(images/hotel_feture_1.jpg);">
+					<div class="image" style="background-image: url(images/Nandoni-Waterfront-Resort.jpg);">
 						<div class="descrip text-center">
-							<p><small>For as low as</small><span>R100/night</span></p>
+							<p><small>For as low as</small><span>R2000/night</span></p>
 						</div>
 					</div>
 					<div class="desc">
-						<h3>Vahlavi Hotel</h3>
-						<p>Describing this hotel here</p>
-						<p><a href="#" class="btn btn-primary btn-luxe-primary">Book Now <i class="ti-angle-right"></i></a></p>
+						<h3>Nandoni Waterfront Resort</h3>
+						<p>A tranquil escape nestled on the scenic shores of Nandoni Dam. Experience breathtaking views, refreshing outdoor adventures, and serene accommodations designed for relaxation and rejuvenation.</p>
+						<p><a href="https://reservationsafrica.co.za/tour-search/" class="btn btn-primary btn-luxe-primary">Book Now <i class="ti-angle-right"></i></a></p>
 					</div>
 				</div>
 
 				<div class="feature-full-2col">
 					<div class="f-hotel">
-						<div class="image" style="background-image: url(images/hotel_feture_2.jpg);">
+						<div class="image" style="background-image: url(images/Vahlvi-guest-house.jpg);">
 							<div class="descrip text-center">
-								<p><small>For as low as</small><span>R250/night</span></p>
+								<p><small>For as low as</small><span>R1815/night</span></p>
 							</div>
 						</div>
 						<div class="desc">
-							<h3>Vahlavi Hotel</h3>
-							<p>Describing this hotel here</p>
-							<p><a href="#" class="btn btn-primary btn-luxe-primary">Book Now <i class="ti-angle-right"></i></a></p>
+							<h3>Vahlavi Guest House</h3>
+							<p>Your cozy retreat in the heart of comfort and elegance. Discover warm hospitality, stylish rooms, and a peaceful ambiance that makes you feel right at home.</p>
+							<p><a href="https://reservationsafrica.co.za/tour-search/" class="btn btn-primary btn-luxe-primary">Book Now <i class="ti-angle-right"></i></a></p>
 						</div>
 					</div>
 					<div class="f-hotel">
-						<div class="image" style="background-image: url(images/hotel_feture_3.jpg);">
+						<div class="image" style="background-image: url(images/Xisaka-guest-house.jpeg);">
 							<div class="descrip text-center">
-								<p><small>For as low as</small><span>R169/night</span></p>
+								<p><small>For as low as</small><span>R880/night</span></p>
 							</div>
 						</div>
 						<div class="desc">
-							<h3>Vahlavi Hotel</h3>
-							<p>Describing this hotel here</p>
-							<p><a href="#" class="btn btn-primary btn-luxe-primary">Book Now <i class="ti-angle-right"></i></a></p>
+							<h3>Xisaka Guest House</h3>
+							<p>Enjoy a relaxing stay in our inviting rooms, surrounded by a warm ambiance and exceptional service. Whether you’re here for business or leisure.</p>
+							<p><a href="https://reservationsafrica.co.za/tour-search/" class="btn btn-primary btn-luxe-primary">Book Now <i class="ti-angle-right"></i></a></p>
 						</div>
 					</div>
 				</div>
@@ -307,7 +475,7 @@
 						<div class="container">
 							<div class="row">
 								<div class="col-md-6">
-									<img src="images/tab_img_1.jpg" class="img-responsive" alt="Image">
+									<img src="images/Restaurant-service.jpg" class="img-responsive" alt="Restaurant service">
 								</div>
 								<div class="col-md-6">
 									<span class="super-heading-sm">World Class</span>
@@ -325,7 +493,7 @@
 						<div class="container">
 							<div class="row">
 								<div class="col-md-6">
-									<img src="images/tab_img_2.jpg" class="img-responsive" alt="Image">
+									<img src="images/Bar-service.jpg" class="img-responsive" alt="Bar service">
 								</div>
 								<div class="col-md-6">
 									<span class="super-heading-sm">World Class</span>
@@ -343,7 +511,7 @@
 						<div class="container">
 							<div class="row">
 								<div class="col-md-6">
-									<img src="images/tab_img_3.jpg" class="img-responsive" alt="Image">
+									<img src="images/Pick-up-service.jpg" class="img-responsive" alt="Pick-Up service">
 								</div>
 								<div class="col-md-6">
 									<span class="super-heading-sm">World Class</span>
@@ -361,7 +529,7 @@
 						<div class="container">
 							<div class="row">
 								<div class="col-md-6">
-									<img src="images/tab_img_4.jpg" class="img-responsive" alt="Image">
+									<img src="images/Swimming-pool.jpg" class="img-responsive" alt="Swimming Pool service">
 								</div>
 								<div class="col-md-6">
 									<span class="super-heading-sm">World Class</span>
@@ -379,7 +547,7 @@
 						<div class="container">
 							<div class="row">
 								<div class="col-md-6">
-									<img src="images/tab_img_5.jpg" class="img-responsive" alt="Image">
+									<img src="images/Spa-service.jpg" class="img-responsive" alt="Spa service">
 								</div>
 								<div class="col-md-6">
 									<span class="super-heading-sm">World Class</span>
@@ -397,7 +565,7 @@
 						<div class="container">
 							<div class="row">
 								<div class="col-md-6">
-									<img src="images/tab_img_6.jpg" class="img-responsive" alt="Image">
+									<img src="images/Gym-service.jpeg" class="img-responsive" alt="Gym service">
 								</div>
 								<div class="col-md-6">
 									<span class="super-heading-sm">World Class</span>
@@ -431,7 +599,7 @@
 						<blockquote>
 							&ldquo;If you’re looking for a top quality hotel look no further. We were upgraded free of charge to the Premium Suite, thanks so much&rdquo;
 						</blockquote>
-						<p class="author"><cite>Name</cite></p>
+						<p class="author"><cite>Maikel James</cite></p>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -439,7 +607,7 @@
 						<blockquote>
 							&ldquo;Me and my wife had a delightful weekend get away here, the staff were so friendly and attentive. Highly Recommended&rdquo;
 						</blockquote>
-						<p class="author"><cite>Name</cite></p>
+						<p class="author"><cite>Cindy Dube</cite></p>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -447,7 +615,7 @@
 						<blockquote>
 							&ldquo;If you’re looking for a top quality hotel look no further. We were upgraded free of charge to the Premium Suite, thanks so much&rdquo;
 						</blockquote>
-						<p class="author"><cite>Name</cite></p>
+						<p class="author"><cite>Zezuru Karanga</cite></p>
 					</div>
 				</div>
 			</div>
@@ -518,20 +686,20 @@
 							<ul class="link">
 								<li><a href="#">Home</a></li>
 								<li><a href="#">Travel</a></li>
-								<li><a href="#">Services</a></li>
-								<li><a href="#">Team</a></li>
-								<li><a href="#">Contact</a></li>
+								<li><a href="#featured-hotel">Services</a></li>
+								<li><a href="#hotel-facilities">Team</a></li>
+								<li><a href="#footer">Contact</a></li>
 							</ul>
 						</div>
 						<div class="col-md-3">
 							<h3>Our Facilities</h3>
 							<ul class="link">
-								<li><a href="#">Resturant</a></li>
-								<li><a href="#">Bars</a></li>
-								<li><a href="#">Pick-up</a></li>
-								<li><a href="#">Swimming Pool</a></li>
-								<li><a href="#">Spa</a></li>
-								<li><a href="#">Gym</a></li>
+								<li><a href="#hotel-facilities">Resturant</a></li>
+								<li><a href="#hotel-facilities">Bars</a></li>
+								<li><a href="#hotel-facilities">Pick-up</a></li>
+								<li><a href="#hotel-facilities">Swimming Pool</a></li>
+								<li><a href="#hotel-facilities">Spa</a></li>
+								<li><a href="#hotel-facilities">Gym</a></li>
 							</ul>
 						</div>
 						<div class="col-md-6">
@@ -548,10 +716,10 @@
 				<div class="col-md-3">
 					<ul class="social-icons">
 						<li>
-							<a href="#"><i class="icon-twitter-with-circle"></i></a>
-							<a href="#"><i class="icon-facebook-with-circle"></i></a>
-							<a href="#"><i class="icon-instagram-with-circle"></i></a>
-							<a href="#"><i class="icon-linkedin-with-circle"></i></a>
+							<a href="https://x.com/VisitUdupi"><i class="icon-twitter-with-circle"></i></a>
+							<a href="https://www.facebook.com/travel.bg"><i class="icon-facebook-with-circle"></i></a>
+							<a href="https://www.instagram.com/accounts/login/two_factor?next=%2Ftravel_africa%2F"><i class="icon-instagram-with-circle"></i></a>
+							<a href="https://www.linkedin.com/jobs/search/?currentJobId=4059514145&keywords=travel&origin=BLENDED_SEARCH_RESULT_NAVIGATION_JOB_CARD&originToLandingJobPostings=4059514145%2C4058679733%2C4054522735"><i class="icon-linkedin-with-circle"></i></a>
 						</li>
 					</ul>
 				</div>
@@ -589,6 +757,49 @@
 	<script src="js/jquery.flexslider-min.js"></script>
 
 	<script src="js/custom.js"></script>
+
+	<script>
+		function showSection(sectionId) {
+			const sections = document.querySelectorAll('.slides li');
+			sections.forEach(section => {
+				if (section.id === sectionId) {
+					section.style.display = 'block';
+				} else {
+					section.style.display = 'none';
+				}
+			});
+		}
+		
+	</script>
+
+<script>
+    function openPopup(event) {
+        event.preventDefault();
+        document.getElementById('popup-overlay').style.display = 'block';
+        document.getElementById('popup-form').style.display = 'block';
+    }
+
+    function closePopup() {
+        document.getElementById('popup-overlay').style.display = 'none';
+        document.getElementById('popup-form').style.display = 'none';
+    }
+
+	function submitForm(event) {
+        event.preventDefault();
+        closePopup();
+        const thankYouMessage = document.getElementById('thank-you-message');
+        thankYouMessage.style.display = 'block';
+        
+        // Hide thank-you message after a few seconds
+        setTimeout(() => {
+            thankYouMessage.style.display = 'none';
+        }, 5000);
+    }
+
+    // Close the popup when clicking outside of it
+    document.getElementById('popup-overlay').addEventListener('click', closePopup);
+</script>
+		
 
 </body>
 </html>
