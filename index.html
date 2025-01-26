@@ -54,8 +54,8 @@
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
-
 	
+	<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
 
 	<style>
@@ -131,141 +131,92 @@
                 opacity: 1;
             }
         }
-<<<<<<< HEAD
-=======
 
 		#additional-services {
     padding: 60px 0;
 }
 
-#additional-services .section-title {
-    margin-bottom: 40px;
-}
-
-#additional-services .service {
+#additional-services .additional-service-box {
+    display: flex;
+    flex-direction: column; /* Aligns image and text vertically */
+    align-items: center; /* Centers the content horizontally */
+    text-align: center;
     margin-bottom: 30px;
     transition: transform 0.3s ease;
 }
 
-#additional-services .service img {
+#additional-services .additional-service-box img {
     max-width: 100%;
+    height: 170px; /* Consistent image height */
+    object-fit: cover;
     border-radius: 10px;
     margin-bottom: 15px;
-	height: 200px;
-    object-fit: cover; 
-    border-radius: 10px; 
     transition: transform 0.3s ease;
 }
 
-.service img:hover {
-    transform: scale(1.1); 
-}
-
-#additional-services .service h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
-	margin-top: 15px;
+#additional-services .additional-service-box h3 {
     font-size: 18px;
+    margin: 10px 0; /* Consistent spacing */
+    color: #333;
     font-weight: bold;
 }
 
-#additional-services .service p {
+#additional-services .additional-service-box p {
     color: #666;
     font-size: 14px;
     line-height: 1.6;
-	margin-top: 10px;
+    margin: 0; /* Removes unnecessary spacing */
 }
 
-#additional-services .service:hover {
-    transform: scale(1.05);
+#additional-services .additional-service-box:hover img {
+    transform: scale(1.05); /* Slight zoom on hover */
 }
 
-.section-divider {
-    border-top: 4px solid #333; /* Thick dark line */
-    margin: 40px 0; /* Spacing above and below the line */
+#additional-services .row {
+    display: flex;
+    flex-wrap: wrap; /* Ensures proper wrapping for responsive layouts */
+    justify-content: space-evenly; /* Distributes boxes evenly */
+}
+
+#additional-services .col-md-4,
+#additional-services .col-md-6 {
+    flex: 1 1 calc(33.33% - 20px); /* Adjust for 3 items per row with spacing */
+    max-width: calc(33.33% - 20px); /* Same as flex for 3-column layout */
+    margin: 10px; /* Spacing between boxes */
+}
+
+@media (max-width: 768px) {
+    #additional-services .col-md-4,
+    #additional-services .col-md-6 {
+        flex: 1 1 100%; /* Stacks items for smaller screens */
+        max-width: 100%;
+    }
+}
+
+
+/* Referrals */
+.brochure-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.brochure-item h3 {
+    font-size: 1.1em;
+    color: #333;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
 
 
-
->>>>>>> 0416101e8856eddf0f6d07cc5a8b9b7e46784678
 </style>
 	
 
 </head>
 <body>
-	<script>
-		const sheetID = '1xzQPmse5O944pinEYBbXLaf5L65eEgqByfsUxmi8cp4';
-		const sheetURL = `https://spreadsheets.google.com/feeds/list/${sheetID}/od6/public/values?alt=json`;
-		
-		let hotels = [];
-		
-		// Fetch data from Google Sheets
-		fetch(hotelAvailability)
-			.then(response => response.json())
-			.then(data => {
-				// Parse data and populate hotels array
-				data.feed.entry.forEach(entry => {
-					const hotel = {
-						name: entry.gsx$hotelname.$t,
-						price: parseFloat(entry.gsx$price.$t),
-						availability: entry.gsx$availability.$t.split(',').map(date => date.trim()), // Assume dates are comma-separated
-						amenities: entry.gsx$amenities.$t
-					};
-					hotels.push(hotel);
-				});
-				populateHotelOptions();
-			})
-			.catch(error => console.error('Error fetching data:', error));
-		
-		// Populate hotel options in the dropdown
-		function populateHotelOptions() {
-			const select = document.getElementById('hotel-select');
-			hotels.forEach((hotel, index) => {
-				const option = document.createElement('option');
-				option.value = index; // Use index to find hotel in the hotels array
-				option.textContent = hotel.name;
-				select.appendChild(option);
-			});
-		}
-		
-		// Check availability and display hotel details
-		function checkAvailability() {
-			const hotelIndex = document.getElementById('hotel-select').value;
-			const checkinDate = document.getElementById('checkin-date').value;
-			const checkoutDate = document.getElementById('checkout-date').value;
-		
-			if (hotelIndex === "") {
-				document.getElementById('hotel-details').textContent = "Please select a hotel.";
-				return;
-			}
-		
-			if (!checkinDate || !checkoutDate) {
-				document.getElementById('hotel-details').textContent = "Please select both check-in and check-out dates.";
-				return;
-			}
-		
-			const selectedHotel = hotels[hotelIndex];
-		
-			if (selectedHotel) {
-				const checkin = new Date(checkinDate);
-				const checkout = new Date(checkoutDate);
-				const availability = selectedHotel.availability.map(date => new Date(date));
-		
-				const isAvailable = availability.some(date => date >= checkin && date <= checkout);
-		
-				document.getElementById('hotel-details').textContent = isAvailable ? 
-					`Available! Price: $${selectedHotel.price} per night. Amenities: ${selectedHotel.amenities}` : 
-					"Not available for selected dates.";
-			} else {
-				document.getElementById('hotel-details').textContent = "Please select a hotel.";
-			}
-		}
-		</script>		
-
-
-
 	<div id="fh5co-wrapper">
 	<div id="fh5co-page">
 	<div id="fh5co-header">
@@ -391,19 +342,11 @@
 		</div>
 	</div>
 
-<<<<<<< HEAD
-	<!-- Pop-up Overlay and Form -->
-<div class="popup-overlay" id="popup-overlay"></div>
-<div class="popup-form" id="popup-form">
-    <h3>Contact Details</h3>
-    <form onsubmit="submitForm(event)">
-=======
 <!-- Pop-up Overlay and Form -->
 <div class="popup-overlay" id="popup-overlay"></div>
 <div class="popup-form" id="popup-form">
     <h3>Contact Details</h3>
     <form action="https://reservationsafrica.co.za/tour-search/" method="get">
->>>>>>> 0416101e8856eddf0f6d07cc5a8b9b7e46784678
         <input type="text" id="name" placeholder="Name" required />
         <input type="text" id="surname" placeholder="Surname" required />
         <input type="text" id="cellphone" placeholder="Cellphone Number" required />
@@ -412,12 +355,6 @@
     </form>
 </div>
 
-<<<<<<< HEAD
-<!-- Thank You Message -->
-<div class="thank-you-message" id="thank-you-message">
-    Thank you, we will be in contact with you.
-</div>
-=======
 
 <!-- Thank You Message -->
 <div class="thank-you-message" id="thank-you-message" style="display:none;">
@@ -425,35 +362,31 @@
 </div>
 
 
-<!-- Thank You Message -->
-<div class="thank-you-message" id="thank-you-message" style="display: none;">
-    Thank you, we will be in contact with you.
+	
+<div id="fh5co-counter-section" class="fh5co-counters">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <span class="fh5co-counter js-counter" data-from="0" data-to="20356" data-speed="5000" data-refresh-interval="50"></span>
+                <span class="fh5co-counter-label">Trips By Car</span>
+            </div>
+            <div class="col-md-3 text-center">
+                <span class="fh5co-counter js-counter" data-from="0" data-to="15501" data-speed="5000" data-refresh-interval="50"></span>
+                <span class="fh5co-counter-label">Trips By Ship</span>
+            </div>
+            <div class="col-md-3 text-center">
+                <span class="fh5co-counter js-counter" data-from="0" data-to="8200" data-speed="5000" data-refresh-interval="50"></span>
+                <span class="fh5co-counter-label">Trips By Flight</span>
+            </div>
+            <div class="col-md-3 text-center">
+                <span class="fh5co-counter js-counter" data-from="0" data-to="8763" data-speed="5000" data-refresh-interval="50"></span>
+                <span class="fh5co-counter-label">Hotels Booked</span>
+            </div>
+        </div>
+        
+    </div>
 </div>
 
->>>>>>> 0416101e8856eddf0f6d07cc5a8b9b7e46784678
-	
-	<div id="fh5co-counter-section" class="fh5co-counters">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-3 text-center">
-					<span class="fh5co-counter js-counter" data-from="0" data-to="20356" data-speed="5000" data-refresh-interval="50"></span>
-					<span class="fh5co-counter-label">Trips By Car</span>
-				</div>
-				<div class="col-md-3 text-center">
-					<span class="fh5co-counter js-counter" data-from="0" data-to="15501" data-speed="5000" data-refresh-interval="50"></span>
-					<span class="fh5co-counter-label">Trips By Ship</span>
-				</div>
-				<div class="col-md-3 text-center">
-					<span class="fh5co-counter js-counter" data-from="0" data-to="8200" data-speed="5000" data-refresh-interval="50"></span>
-					<span class="fh5co-counter-label">Trips By Flight</span>
-				</div>
-				<div class="col-md-3 text-center">
-					<span class="fh5co-counter js-counter" data-from="0" data-to="8763" data-speed="5000" data-refresh-interval="50"></span>
-					<span class="fh5co-counter-label">Hotels Booked</span>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<div id="featured-hotel" class="fh5co-bg-color">
 		<div class="container">
@@ -528,7 +461,7 @@
 			<div class="row">
 				<!-- Travel Bookings -->
 				<div class="col-md-4 text-center">
-					<div class="service-box">
+					<div class="additional-service-box">
 						<img src="images/travelBooking.jpg" class="img-responsive" alt="Travel Bookings">
 						<h3>Travel Bookings</h3>
 						<p>Seamlessly book your travel experiences with our expert assistance, ensuring every trip is perfectly planned.</p>
@@ -536,7 +469,7 @@
 				</div>
 				<!-- Bookings/Planning Services -->
 				<div class="col-md-4 text-center">
-					<div class="service-box">
+					<div class="additional-service-box">
 						<img src="images/bookingsPlanning.jfif" class="img-responsive" alt="Bookings Planning">
 						<h3>Bookings/Planning Services</h3>
 						<p>Our dedicated team will assist in organizing and managing bookings for your next adventure or event.</p>
@@ -544,7 +477,7 @@
 				</div>
 				<!-- Car Hire -->
 				<div class="col-md-4 text-center">
-					<div class="service-box">
+					<div class="additional-service-box">
 						<img src="images/carHire2.png" class="img-responsive" alt="Car Hire">
 						<h3>Car Hire</h3>
 						<p>Choose from a range of vehicles for hire to suit your travel needs, whether for leisure or business.</p>
@@ -555,7 +488,7 @@
 			<div class="row">
 				<!-- Corporate Travel -->
 				<div class="col-md-4 text-center">
-					<div class="service-box">
+					<div class="additional-service-box">
 						<img src="images/corporateTravel.jpg" class="img-responsive" alt="Corporate Travel">
 						<h3>Corporate Travel</h3>
 						<p>Expertly tailored corporate travel solutions to meet your business travel requirements.</p>
@@ -563,7 +496,7 @@
 				</div>
 				<!-- Leisure Travel -->
 				<div class="col-md-4 text-center">
-					<div class="service-box">
+					<div class="additional-service-box">
 						<img src="images/leisureTravel.jpg" class="img-responsive" alt="Leisure Travel">
 						<h3>Leisure Travel</h3>
 						<p>Discover unforgettable leisure travel packages designed to create lasting memories.</p>
@@ -571,7 +504,7 @@
 				</div>
 				<!-- Adventure Tours Planning -->
 				<div class="col-md-4 text-center">
-					<div class="service-box">
+					<div class="additional-service-box">
 						<img src="images/adventureTours.jfif" class="img-responsive" alt="Adventure Tours">
 						<h3>Adventure Tours Planning</h3>
 						<p>Plan thrilling adventure tours with our expert guidance for a unique and exciting experience.</p>
@@ -582,7 +515,7 @@
 			<div class="row">
 				<!-- Activity Assessment and Accreditation -->
 				<div class="col-md-6 text-center">
-					<div class="service-box">
+					<div class="additional-service-box">
 						<img src="images/adventureTours2.png" class="img-responsive" alt="Activity Assessment">
 						<h3>Activity Assessment and Accreditation</h3>
 						<p>Receive expert activity assessments and ensure quality through our accreditation services.</p>
@@ -590,7 +523,7 @@
 				</div>
 				<!-- Educational/Leisure Travels -->
 				<div class="col-md-6 text-center">
-					<div class="service-box">
+					<div class="additional-service-box">
 						<img src="images/educationaLleisureTravels.jpg" class="img-responsive" alt="Educational Travels">
 						<h3>Educational/Leisure Travels</h3>
 						<p>Combine learning and leisure with our custom travel packages that cater to all age groups.</p>
@@ -793,6 +726,112 @@
 		</div>
 	</div>
 
+	<div id="referrals">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="section-title text-center">
+						<h2><br>Other Referrals & Brochures</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="brochure-item">
+						<img src="images/adamson-extra-services2.jpeg" alt="Event Management Brochure" class="img-responsive">
+						<h3 class="text-center">Adamson Security Services</h3>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="brochure-item">
+						<img src="images/african-safari.jpeg" alt="Security Officers Portfolio" class="img-responsive">
+						<h3 class="text-center">African Safaris</h3>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="brochure-item">
+						<img src="images/chippex-tours.jpeg" alt="V.I.P Protection Portfolio" class="img-responsive">
+						<h3 class="text-center">Chippex Travel and Tours - Agency</h3>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="brochure-item">
+						<img src="images/african tourism.jpeg" alt="Risk Control Brochure" class="img-responsive">
+						<h3 class="text-center">African Travelogue - SA Tours</h3>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="brochure-item">
+						<img src="images/sa-chippex-travel-broucher.jpeg" alt="Training Professionals Overview" class="img-responsive">
+						<h3 class="text-center">Chippex Travek and Tours - Agency</h3>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="brochure-item">
+						<img src="images/african-design-management.jpeg" alt="CCTV Surveillance Guide" class="img-responsive">
+						<h3 class="text-center">African Travelogue - Destination Management Company</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	<!-- New Payment Link Request Form -->
+	<div id="payment-request" class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="section-title text-center">
+					<h2>Payment Link Request Form</h2>
+				</div>
+			</div>
+		</div>
+		<div class="form-container">
+			<form id="payment-form">
+				<div class="form-group">
+					<label for="client-name">Client's Name</label>
+					<input type="text" class="form-control" id="client-name" name="client_name" required>
+				</div>
+				<div class="form-group">
+					<label for="contact-details">Contact Details</label>
+					<input type="text" 
+						   class="form-control" 
+						   id="contact-details" 
+						   name="contact_details" 
+						   placeholder="Enter email or phone number" 
+						   pattern="([0-9]{10}|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})"
+						   title="Enter a valid email or 10-digit phone number" 
+						   required>
+				</div>
+				<div class="form-group">
+					<label for="program-request">Program Request</label>
+					<input type="text" class="form-control" id="program-request" name="program_request" required>
+				</div>
+				<div class="form-group">
+					<label for="amount">Amount to Be Paid</label>
+					<input type="number" class="form-control" id="amount" name="amount" step="0.01" required>
+				</div>
+				<div class="form-group">
+					<label for="mode-of-receipt">Mode of Receipt</label>
+					<select class="form-control" id="mode-of-receipt" name="mode_of_receipt" required>
+						<option value="email">Email</option>
+						<option value="SMS">SMS</option>
+						<option value="whatsapp">WhatsApp</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="signature">Online Signature</label>
+					<input type="text" class="form-control" id="signature" name="signature" placeholder="Type your full name as a signature" required>
+				</div>
+				<div class="form-group text-center">
+					<button type="submit" class="btn btn-primary">Submit Request</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
 
 	<!--div id="fh5co-blog-section">
 		<div class="container">
@@ -847,7 +886,10 @@
 				<div class="col-md-3">
 					<div class="copyright">
 						<p><small>&copy; 2022 Chippex Travel <br> All Rights Reserved. <br>
-						Designed by <a href="http://gamechangersites.co.za" target="_blank">Game Changer Sites</a></p>
+						Designed by <a href="http://gamechangersites.co.za" target="_blank">Game Changer Sites</a>
+						<br><span class="icon" style="display: inline-block; margin-right: 8px; vertical-align: middle;">
+							&#10003;</span><strong>100% Black Owned</strong>
+					</p>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -876,10 +918,11 @@
 						<div class="col-md-6">
 							<h3>Contact Us</h3>
 							<p>Address:  103A   Zandspruit.  Honeydew
-							</br>Contact numbers: +27 73 474 2034 / +27 73 474 2034
-							</br>WhatsApp: 063 8591901
+							</br>Contact numbers: +27 73 474 2034 
+							<br><a href="https://wa.me/27734742034" target="_blank">WhatsApp: 0 73 474 2034</a>
 							</br>www.chippexstravel.co.za
-							</br>admin@chippexstrave.co.za</p>
+							</br>admin@chippexstrave.co.za
+							<br><strong> 24 Hours acces</strong></p>
 
 						</div>
 					</div>
@@ -969,7 +1012,64 @@
 
     // Close the popup when clicking outside of it
     document.getElementById('popup-overlay').addEventListener('click', closePopup);
+
+	// Generate QR Code
+	// const qrCodeCanvas = document.getElementById("qr-code");
+	// const qrCodeLink = "https://reservationsafrica.co.za/tour-search/?";
+
+	// QRCode.toCanvas(qrCodeCanvas, qrCodeLink, { width: 150 }, function (error) {
+	// 	if (error) {
+	// 		console.error("QR Code generation failed:", error);
+	// 	}
+	// });
+
+	const paymentLink = "https://paymentgateway.com/checkout?amount=100&currency=ZAR&description=TourPayment";
+    const qrCodeCanvas = document.getElementById("qr-code");
+
+    QRCode.toCanvas(qrCodeCanvas, paymentLink, { width: 200 }, function (error) {
+        if (error) console.error("Error generating QR Code:", error);
+    });
+
 </script>
+
+<script>
+    document.getElementById('payment-form').addEventListener('submit', function (e) {
+        let isValid = true;
+        const fields = ['client-name', 'contact-details', 'program-request', 'amount', 'mode-of-receipt', 'signature'];
+
+        fields.forEach(field => {
+            const input = document.getElementById(field);
+            if (!input.value.trim()) {
+                isValid = false;
+                input.style.borderColor = 'red';
+            } else {
+                input.style.borderColor = '';
+            }
+        });
+
+        if (!isValid) {
+            e.preventDefault(); // Prevent form submission
+            alert('Please fill out all required fields.');
+        }
+    });
+</script>
+
+<script>
+	document.getElementById("payment-form").addEventListener("submit", function (event) {
+		// Prevent the default form submission
+		event.preventDefault();
+
+		// Get the selected mode of receipt
+		const modeOfReceipt = document.getElementById("mode-of-receipt").value;
+
+		// Display a popup message
+		alert(`Thank you! We will reach you shortly via ${modeOfReceipt}.`);
+
+		// Reset the form
+		document.getElementById("payment-form").reset();
+	});
+</script>
+
 		
 
 </body>
