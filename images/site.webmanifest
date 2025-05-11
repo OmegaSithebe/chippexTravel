@@ -1,0 +1,21 @@
+{
+    "name": "Chippex Travel",
+    "short_name": "chippex",
+    "description": "Chippex Travel - Endless Adventures, captures the spirit of exploration and excitement.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#4285f4",
+    "icons": [
+      {
+        "src": "images/chippexTravel-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "images/chippexTravel-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
