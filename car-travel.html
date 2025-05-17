@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road Trip Adventures | Travel by Car</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FF6B35;
+      --secondary: #004E89;
+      --light: #F7F9FC;
+      --dark: #292929;
+      --accent: #FFBE0B;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      background: url('./images/travel\ by\ car.png') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.85);
+      z-index: -1;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .home-button {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 30px;
+      background-color: var(--primary);
+      color: white;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .home-button:hover {
+      background-color: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .home-button svg {
+      margin-right: 8px;
+    }
+    
+    .form-container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .form-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+    
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--secondary);
+      margin-top: 0;
+      font-size: 2.2rem;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    
+    .form-intro {
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #555;
+    }
+    
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    form input:focus, form textarea:focus, form select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+    }
+    
+    form label {
+      font-weight: 600;
+      color: var(--secondary);
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    form button {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 10px;
+    }
+    
+    form button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(255, 107, 53, 0.3);
+    }
+    
+    .travel-icons {
+      display: flex;
+      justify-content: space-around;
+      margin: 30px 0;
+    }
+    
+    .travel-icon {
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .travel-icon:hover {
+      background: rgba(255, 255, 255, 0.7);
+      transform: scale(1.1);
+    }
+    
+    .travel-icon svg {
+      width: 40px;
+      height: 40px;
+      fill: var(--primary);
+      margin-bottom: 10px;
+    }
+    
+    .travel-icon p {
+      margin: 0;
+      font-weight: 600;
+      color: var(--secondary);
+    }
+    
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 30px 20px;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Home Button -->
+    <a href="index.html" class="home-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+      Back to Home
+    </a>
+
+    <!-- Form Section -->
+    <div class="form-container">
+      <h2>Start Your Road Trip Adventure</h2>
+      <p class="form-intro">Fill out the form below to book your personalized car travel experience. Our team will contact you within 24 hours to confirm your journey details and discuss any special requests.</p>
+      
+      <div class="travel-icons">
+        <div class="travel-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.08 3.11H5.77L6.85 7zM19 17H5v-5h14v5z"/>
+            <circle cx="7.5" cy="14.5" r="1.5"/><circle cx="16.5" cy="14.5" r="1.5"/>
+          </svg>
+          <p>Comfort</p>
+        </div>
+        <div class="travel-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <p>Exploration</p>
+        </div>
+        <div class="travel-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm1-11h-2v3H8v2h3v3h2v-3h3v-2h-3V8z"/>
+          </svg>
+          <p>Freedom</p>
+        </div>
+      </div>
+      
+      <form id="carTravelForm" action="send-form.php" method="POST">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required>
+        
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+        
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="+27 (123) 456-789" required>
+        
+        <label for="pickup">Pickup Location</label>
+        <input type="text" id="pickup" name="pickup" placeholder="Where should we pick you up?" required>
+        
+        <label for="destination">Destination</label>
+        <input type="text" id="destination" name="destination" placeholder="Where are you heading?" required>
+        
+        <label for="date">Travel Date</label>
+        <input type="date" id="date" name="date" required>
+        
+        <label for="passengers">Number of Passengers</label>
+        <select id="passengers" name="passengers">
+          <option value="1">1 Traveler</option>
+          <option value="2">2 Travelers</option>
+          <option value="3">3 Travelers</option>
+          <option value="4">4 Travelers</option>
+          <option value="5+">5+ Travelers</option>
+        </select>
+        
+        <label for="notes">Additional Notes</label>
+        <textarea id="notes" name="notes" placeholder="Special requests, vehicle preferences, etc." rows="4"></textarea>
+        
+        <button type="submit">Begin Your Journey →</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("carTravelForm").addEventListener("submit", function(e) {
+      // e.preventDefault();
+      const name = this.name.value.split(' ')[0]; // Get first name
+      
+      // Create a more engaging confirmation
+      const confirmationHtml = `
+        <div style="text-align:center; padding:20px;">
+          <h3 style="color:var(--secondary); margin-bottom:15px;">Thanks ${name}!</h3>
+          <p style="margin-bottom:20px;">Your road trip request has been received. Our travel specialist will contact you within 24 hours to finalize your adventure.</p>
+          <div style="background:var(--light); padding:15px; border-radius:8px; margin:20px 0;">
+            <p style="font-weight:600; margin-bottom:10px;">Next Steps:</p>
+            <ol style="text-align:left; padding-left:20px; margin:0;">
+              <li>We'll confirm vehicle availability</li>
+              <li>Discuss route options</li>
+              <li>Provide personalized recommendations</li>
+            </ol>
+          </div>
+          <p>Get ready for an unforgettable journey!</p>
+        </div>
+      `;
+      
+      // Show custom alert
+      const customAlert = document.createElement('div');
+      customAlert.style.position = 'fixed';
+      customAlert.style.top = '0';
+      customAlert.style.left = '0';
+      customAlert.style.width = '100%';
+      customAlert.style.height = '100%';
+      customAlert.style.backgroundColor = 'rgba(0,0,0,0.8)';
+      customAlert.style.display = 'flex';
+      customAlert.style.justifyContent = 'center';
+      customAlert.style.alignItems = 'center';
+      customAlert.style.zIndex = '1000';
+      
+      const alertContent = document.createElement('div');
+      alertContent.style.backgroundColor = 'white';
+      alertContent.style.padding = '30px';
+      alertContent.style.borderRadius = '15px';
+      alertContent.style.maxWidth = '500px';
+      alertContent.style.width = '90%';
+      alertContent.innerHTML = confirmationHtml;
+      
+      const closeButton = document.createElement('button');
+      closeButton.textContent = 'Awesome!';
+      closeButton.style.background = 'linear-gradient(to right, var(--primary), var(--accent))';
+      closeButton.style.color = 'white';
+      closeButton.style.border = 'none';
+      closeButton.style.padding = '12px 25px';
+      closeButton.style.borderRadius = '8px';
+      closeButton.style.marginTop = '15px';
+      closeButton.style.cursor = 'pointer';
+      closeButton.style.fontWeight = '600';
+      closeButton.style.width = '100%';
+      
+      closeButton.addEventListener('click', function() {
+      document.body.removeChild(customAlert);
+      e.target.reset(); // This clears the form
+      // In a real implementation, you would submit the form here
+      // e.target.submit();
+      });
+      
+      alertContent.appendChild(closeButton);
+      customAlert.appendChild(alertContent);
+      document.body.appendChild(customAlert);
+    });
+    
+    // Add today's date as min date for date picker
+    document.getElementById('date').min = new Date().toISOString().split('T')[0];
+  </script>
+</body>
+</html>

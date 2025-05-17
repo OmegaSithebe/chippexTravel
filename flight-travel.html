@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sky High Adventures | Travel by Flight</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4285F4;
+      --secondary: #0F9D58;
+      --light: #F7F9FC;
+      --dark: #292929;
+      --accent: #FFC107;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      background: url('./images/travelByFlight4.png') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.85);
+      z-index: -1;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .home-button {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 30px;
+      background-color: var(--primary);
+      color: white;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .home-button:hover {
+      background-color: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .home-button svg {
+      margin-right: 8px;
+    }
+    
+    .form-container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .form-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+    
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--secondary);
+      margin-top: 0;
+      font-size: 2.2rem;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    
+    .form-intro {
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #555;
+    }
+    
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    form input:focus, form textarea:focus, form select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+    }
+    
+    form label {
+      font-weight: 600;
+      color: var(--secondary);
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    form button {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 10px;
+    }
+    
+    form button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(66, 133, 244, 0.3);
+    }
+    
+    .travel-icons {
+      display: flex;
+      justify-content: space-around;
+      margin: 30px 0;
+    }
+    
+    .travel-icon {
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .travel-icon:hover {
+      background: rgba(255, 255, 255, 0.7);
+      transform: scale(1.1);
+    }
+    
+    .travel-icon svg {
+      width: 40px;
+      height: 40px;
+      fill: var(--primary);
+      margin-bottom: 10px;
+    }
+    
+    .travel-icon p {
+      margin: 0;
+      font-weight: 600;
+      color: var(--secondary);
+    }
+    
+    .flight-class {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    
+    .flight-class label {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      border-radius: 8px;
+      background: var(--light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .flight-class input[type="radio"] {
+      display: none;
+    }
+    
+    .flight-class input[type="radio"]:checked + label {
+      background: var(--primary);
+      color: white;
+    }
+    
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 30px 20px;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      .flight-class {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .flight-class label {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="home-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+      Back to Home
+    </a>
+
+    <div class="form-container">
+      <h2>Soar to New Destinations</h2>
+      <p class="form-intro">Complete this form to book your flight adventure. Our travel experts will find you the best routes and deals for your journey.</p>
+      
+      <div class="travel-icons">
+        <div class="travel-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M10.18 9"/><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+          </svg>
+          <p>Speed</p>
+        </div>
+        <div class="travel-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M17 5.33C17 4.6 16.4 4 15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33V11h10V5.33z" fill="none"/><path d="M7 11v9.67C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V11H7z"/>
+          </svg>
+          <p>Comfort</p>
+        </div>
+        <div class="travel-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <p>Global</p>
+        </div>
+      </div>
+      
+      <form id="flightTravelForm" action="send-flight-form.php" method="post">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required>
+        
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+        
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="+1 (123) 456-7890" required>
+        
+        <label for="departureAirport">Departure Airport</label>
+        <input type="text" id="departureAirport" name="departureAirport" placeholder="City or airport code" required>
+        
+        <label for="arrivalAirport">Arrival Airport</label>
+        <input type="text" id="arrivalAirport" name="arrivalAirport" placeholder="City or airport code" required>
+        
+        <label for="flightDate">Travel Date</label>
+        <input type="date" id="flightDate" name="flightDate" required>
+        
+        <label>Flight Class</label>
+        <div class="flight-class">
+          <input type="radio" id="economy" name="flightClass" value="economy" checked>
+          <label for="economy">Economy</label>
+          
+          <input type="radio" id="premium" name="flightClass" value="premium">
+          <label for="premium">Premium</label>
+          
+          <input type="radio" id="business" name="flightClass" value="business">
+          <label for="business">Business</label>
+          
+          <input type="radio" id="first" name="flightClass" value="first">
+          <label for="first">First Class</label>
+        </div>
+        
+        <label for="passengers">Number of Passengers</label>
+        <select id="passengers" name="passengers">
+          <option value="1">1 Traveler</option>
+          <option value="2">2 Travelers</option>
+          <option value="3">3 Travelers</option>
+          <option value="4">4 Travelers</option>
+          <option value="5+">5+ Travelers</option>
+        </select>
+        
+        <label for="notes">Special Requests</label>
+        <textarea id="notes" name="notes" placeholder="Dietary needs, seating preferences, etc." rows="4"></textarea>
+        
+        <button type="submit">Book Your Flight →</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("flightTravelForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = this.name.value.split(' ')[0];
+      
+      const confirmationHtml = `
+        <div style="text-align:center; padding:20px;">
+          <h3 style="color:var(--secondary); margin-bottom:15px;">Thank You ${name}!</h3>
+          <p style="margin-bottom:20px;">Your flight request has been received. Our travel specialist will contact you within 24 hours with the best flight options for your journey.</p>
+          <div style="background:var(--light); padding:15px; border-radius:8px; margin:20px 0;">
+            <p style="font-weight:600; margin-bottom:10px;">What to Expect:</p>
+            <ol style="text-align:left; padding-left:20px; margin:0;">
+              <li>Personalized flight options</li>
+              <li>Best available pricing</li>
+              <li>Seat selection assistance</li>
+              <li>Travel tips for your destination</li>
+            </ol>
+          </div>
+          <p>We'll have you soaring to new heights in no time!</p>
+        </div>
+      `;
+      
+      const customAlert = document.createElement('div');
+      customAlert.style.position = 'fixed';
+      customAlert.style.top = '0';
+      customAlert.style.left = '0';
+      customAlert.style.width = '100%';
+      customAlert.style.height = '100%';
+      customAlert.style.backgroundColor = 'rgba(0,0,0,0.8)';
+      customAlert.style.display = 'flex';
+      customAlert.style.justifyContent = 'center';
+      customAlert.style.alignItems = 'center';
+      customAlert.style.zIndex = '1000';
+      
+      const alertContent = document.createElement('div');
+      alertContent.style.backgroundColor = 'white';
+      alertContent.style.padding = '30px';
+      alertContent.style.borderRadius = '15px';
+      alertContent.style.maxWidth = '500px';
+      alertContent.style.width = '90%';
+      alertContent.innerHTML = confirmationHtml;
+      
+      const closeButton = document.createElement('button');
+      closeButton.textContent = 'Continue';
+      closeButton.style.background = 'linear-gradient(to right, var(--primary), var(--accent))';
+      closeButton.style.color = 'white';
+      closeButton.style.border = 'none';
+      closeButton.style.padding = '12px 25px';
+      closeButton.style.borderRadius = '8px';
+      closeButton.style.marginTop = '15px';
+      closeButton.style.cursor = 'pointer';
+      closeButton.style.fontWeight = '600';
+      closeButton.style.width = '100%';
+      
+      closeButton.addEventListener('click', function() {
+      document.body.removeChild(customAlert);
+      e.target.reset(); // This clears the form
+      // In a real implementation, you would submit the form here
+      // e.target.submit();
+      });
+      
+      alertContent.appendChild(closeButton);
+      customAlert.appendChild(alertContent);
+      document.body.appendChild(customAlert);
+    });
+    
+    document.getElementById('flightDate').min = new Date().toISOString().split('T')[0];
+  </script>
+</body>
+</html>

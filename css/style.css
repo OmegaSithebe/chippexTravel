@@ -7669,7 +7669,7 @@ figure {
   box-shadow: none;
   border: transparent;
   min-width: 12em;
-  *width: 12em;
+  width: 12em;
 }
 
 .sf-menu a {
@@ -7723,7 +7723,7 @@ figure {
 
 .sf-arrows .sf-with-ul {
   padding-right: 2.5em;
-  *padding-right: 1em;
+  padding-right: 1em;
 }
 
 .sf-arrows .sf-with-ul:after {
@@ -8213,6 +8213,45 @@ div.cs-select span {
 #availability .a-col .input-field input[type="text"]:focus, #availability .a-col .input-field input[type="text"]:active {
   box-shadow: none;
   outline: none;
+}
+
+/* Add these styles to your CSS */
+.custom-nav {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1000;
+  padding: 0 20px;
+  transform: translateY(-50%);
+}
+
+.prev-slide, .next-slide {
+  color: white;
+  font-size: 3rem;
+  cursor: pointer;
+  background: rgba(0,0,0,0.3);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.prev-slide:hover, .next-slide:hover {
+  background: rgba(0,0,0,0.6);
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .prev-slide, .next-slide {
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+  }
 }
 
 .fh5co-counters {
@@ -9059,7 +9098,7 @@ input[type="text"] {
   display: -moz-inline-stack;
   display: inline-block;
   zoom: 1;
-  *display: inline;
+  display: inline;
   width: 30px;
   height: 2px;
   color: #000;
@@ -9239,3 +9278,5 @@ input[type="text"] {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+

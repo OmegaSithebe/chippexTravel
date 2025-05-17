@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ocean Voyages | Travel by Ship</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0066CC;
+      --secondary: #00AB66;
+      --light: #F7F9FC;
+      --dark: #292929;
+      --accent: #FFD700;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      background: url('./images/travel\ by\ ship2.png') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.85);
+      z-index: -1;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .home-button {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 30px;
+      background-color: var(--primary);
+      color: white;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .home-button:hover {
+      background-color: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .home-button svg {
+      margin-right: 8px;
+    }
+    
+    .form-container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .form-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+    
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--secondary);
+      margin-top: 0;
+      font-size: 2.2rem;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    
+    .form-intro {
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #555;
+    }
+    
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    form input:focus, form textarea:focus, form select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
+    }
+    
+    form label {
+      font-weight: 600;
+      color: var(--secondary);
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    form button {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 10px;
+    }
+    
+    form button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(0, 102, 204, 0.3);
+    }
+    
+    .travel-icons {
+      display: flex;
+      justify-content: space-around;
+      margin: 30px 0;
+    }
+    
+    .travel-icon {
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .travel-icon:hover {
+      background: rgba(255, 255, 255, 0.7);
+      transform: scale(1.1);
+    }
+    
+    .travel-icon svg {
+      width: 40px;
+      height: 40px;
+      fill: var(--primary);
+      margin-bottom: 10px;
+    }
+    
+    .travel-icon p {
+      margin: 0;
+      font-weight: 600;
+      color: var(--secondary);
+    }
+    
+    .cabin-type {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .cabin-type label {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      border-radius: 8px;
+      background: var(--light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 10px;
+    }
+    
+    .cabin-type input[type="radio"] {
+      display: none;
+    }
+    
+    .cabin-type input[type="radio"]:checked + label {
+      background: var(--primary);
+      color: white;
+    }
+    
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 30px 20px;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      .cabin-type {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="home-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+      Back to Home
+    </a>
+
+    <div class="form-container">
+      <h2>Set Sail on Your Dream Voyage</h2>
+      <p class="form-intro">Complete this form to begin your nautical adventure. Our cruise specialists will help you find the perfect itinerary and accommodations.</p>
+      
+      <div class="travel-icons">
+        <div class="travel-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M20 21c-1.39 0-2.78-.47-4-1.32-2.44 1.71-5.56 1.71-8 0C6.78 20.53 5.39 21 4 21H2v2h2c1.38 0 2.74-.35 4-.99 2.52 1.29 5.48 1.29 8 0 1.26.65 2.62.99 4 .99h2v-2h-2zM3.95 19H4c1.6 0 3.02-.88 4-2 .98 1.12 2.4 2 4 2s3.02-.88 4-2c.98 1.12 2.4 2 4 2h.05l1.89-6.68c.08-.26.06-.54-.06-.78s-.34-.42-.6-.5L20 10.62V6c0-1.1-.9-2-2-2h-3V1H9v3H6c-1.1 0-2 .9-2 2v4.62l-1.29.42c-.26.08-.48.26-.6.5s-.15.52-.06.78L3.95 19zM6 6h12v3.97L12 8 6 9.97V6z"/>
+          </svg>
+          <p>Luxury</p>
+        </div>
+        <div class="travel-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.73-2.77-.01-2.2-1.9-2.96-3.66-3.42z"/>
+          </svg>
+          <p>Value</p>
+        </div>
+        <div class="travel-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.73-2.77-.01-2.2-1.9-2.96-3.66-3.42z"/>
+          </svg>
+          <p>Adventure</p>
+        </div>
+      </div>
+      
+      <form id="shipTravelForm" action="send-ship-form.php" method="post">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required>
+        
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+        
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="+1 (123) 456-7890" required>
+        
+        <label for="departurePort">Departure Port</label>
+        <input type="text" id="departurePort" name="departurePort" placeholder="City and port name" required>
+        
+        <label for="arrivalPort">Arrival Port</label>
+        <input type="text" id="arrivalPort" name="arrivalPort" placeholder="City and port name" required>
+        
+        <label for="sailingDate">Sailing Date</label>
+        <input type="date" id="sailingDate" name="sailingDate" required>
+        
+        <label>Cabin Type</label>
+        <div class="cabin-type">
+          <input type="radio" id="inside" name="cabinType" value="inside" checked>
+          <label for="inside">Inside</label>
+          
+          <input type="radio" id="oceanview" name="cabinType" value="oceanview">
+          <label for="oceanview">Oceanview</label>
+          
+          <input type="radio" id="balcony" name="cabinType" value="balcony">
+          <label for="balcony">Balcony</label>
+          
+          <input type="radio" id="suite" name="cabinType" value="suite">
+          <label for="suite">Suite</label>
+        </div>
+        
+        <label for="passengers">Number of Passengers</label>
+        <select id="passengers" name="passengers">
+          <option value="1">1 Traveler</option>
+          <option value="2">2 Travelers</option>
+          <option value="3">3 Travelers</option>
+          <option value="4">4 Travelers</option>
+          <option value="5+">5+ Travelers</option>
+        </select>
+        
+        <label for="notes">Special Requests</label>
+        <textarea id="notes" name="notes" placeholder="Accessibility needs, dietary restrictions, etc." rows="4"></textarea>
+        
+        <button type="submit">Reserve Your Cabin →</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("shipTravelForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = this.name.value.split(' ')[0];
+      
+      const confirmationHtml = `
+        <div style="text-align:center; padding:20px;">
+          <h3 style="color:var(--secondary); margin-bottom:15px;">Bon Voyage ${name}!</h3>
+          <p style="margin-bottom:20px;">Your cruise inquiry has been received. Our sailing specialist will contact you within 24 hours with the best options for your maritime adventure.</p>
+          <div style="background:var(--light); padding:15px; border-radius:8px; margin:20px 0;">
+            <p style="font-weight:600; margin-bottom:10px;">Next Steps:</p>
+            <ol style="text-align:left; padding-left:20px; margin:0;">
+              <li>Personalized cruise options</li>
+              <li>Cabin selection assistance</li>
+              <li>Excursion recommendations</li>
+              <li>Packing tips for your voyage</li>
+            </ol>
+          </div>
+          <p>Smooth sailing ahead!</p>
+        </div>
+      `;
+      
+      const customAlert = document.createElement('div');
+      customAlert.style.position = 'fixed';
+      customAlert.style.top = '0';
+      customAlert.style.left = '0';
+      customAlert.style.width = '100%';
+      customAlert.style.height = '100%';
+      customAlert.style.backgroundColor = 'rgba(0,0,0,0.8)';
+      customAlert.style.display = 'flex';
+      customAlert.style.justifyContent = 'center';
+      customAlert.style.alignItems = 'center';
+      customAlert.style.zIndex = '1000';
+      
+      const alertContent = document.createElement('div');
+      alertContent.style.backgroundColor = 'white';
+      alertContent.style.padding = '30px';
+      alertContent.style.borderRadius = '15px';
+      alertContent.style.maxWidth = '500px';
+      alertContent.style.width = '90%';
+      alertContent.innerHTML = confirmationHtml;
+      
+      const closeButton = document.createElement('button');
+      closeButton.textContent = 'Continue';
+      closeButton.style.background = 'linear-gradient(to right, var(--primary), var(--accent))';
+      closeButton.style.color = 'white';
+      closeButton.style.border = 'none';
+      closeButton.style.padding = '12px 25px';
+      closeButton.style.borderRadius = '8px';
+      closeButton.style.marginTop = '15px';
+      closeButton.style.cursor = 'pointer';
+      closeButton.style.fontWeight = '600';
+      closeButton.style.width = '100%';
+      
+      closeButton.addEventListener('click', function() {
+      document.body.removeChild(customAlert);
+      e.target.reset(); // This clears the form
+      // In a real implementation, you would submit the form here
+      // e.target.submit();
+      });
+      
+      alertContent.appendChild(closeButton);
+      customAlert.appendChild(alertContent);
+      document.body.appendChild(customAlert);
+    });
+    
+    document.getElementById('sailingDate').min = new Date().toISOString().split('T')[0];
+  </script>
+</body>
+</html>

@@ -63,14 +63,145 @@
 	<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
 
-	<style>
-        /* Add smooth scrolling to the HTML */
-        html {
-            scroll-behavior: smooth;
-        }
-    </style>
-
 <style>
+	html {
+		scroll-behavior: smooth;
+	}
+  /* Hero Slider Styles */
+  .travel-selector {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+  
+  .travel-option {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.8s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  
+  .travel-option.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 1;
+  }
+  
+  .travel-overlay {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .travel-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    max-width: 800px;
+    padding: 0 20px;
+  }
+  
+  .travel-content h2 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+  }
+  
+  .travel-content p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+  }
+  
+  .btn-book {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #ff5a00;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    border: 2px solid #ff5a00;
+  }
+  
+  .btn-book:hover {
+    background-color: transparent;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+  
+  .travel-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 3;
+    padding: 0 20px;
+    transform: translateY(-50%);
+  }
+  
+  .nav-arrow {
+    color: white;
+    font-size: 3rem;
+    cursor: pointer;
+    background: rgba(0,0,0,0.3);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+  
+  .nav-arrow:hover {
+    background: rgba(0,0,0,0.6);
+    transform: scale(1.1);
+  }
+  
+  /* Availability Form Styles */
+  .availability-form {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+    margin-top: -50px;
+    position: relative;
+    z-index: 10;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .travel-content h2 {
+      font-size: 2.5rem;
+    }
+    
+    .travel-content p {
+      font-size: 1.2rem;
+    }
+    
+    .nav-arrow {
+      width: 50px;
+      height: 50px;
+      font-size: 2rem;
+    }
+  }
+
 	/* Styling for the pop-up form */
 	.popup-form {
 		display: none;
@@ -141,10 +272,235 @@
     padding: 60px 0;
 }
 
-#additional-services .additional-service-box {
+    /* Base section styles */
+    #additional-services {
+      padding: 80px 0;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #additional-services::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 10px;
+      background: linear-gradient(90deg, #ff5a00, #ff8a00, #ff5a00);
+    }
+
+    /* Section title */
+    #additional-services .section-title {
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    #additional-services .section-title h2 {
+      font-size: 2.5rem;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+
+    #additional-services .section-title h2::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: #ff5a00;
+      border-radius: 2px;
+    }
+
+    /* Grid container */
+    #additional-services .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+
+    /* Card styles */
+    #additional-services .additional-service-box {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      position: relative;
+      padding-bottom: 20px;
+      text-align: center;
+    }
+
+    #additional-services .additional-service-box:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-image-container {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    #additional-services .additional-service-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      border-radius: 0;
+    }
+
+    #additional-services .additional-service-box:hover img {
+      transform: scale(1.1);
+    }
+
+    #additional-services .additional-service-box h3 {
+      font-size: 1.3rem;
+      color: #2c3e50;
+      margin: 15px 0;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    #additional-services .additional-service-box h3::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 2px;
+      background: #ff5a00;
+    }
+
+    #additional-services .additional-service-box p {
+      color: #7f8c8d;
+      line-height: 1.6;
+      padding: 0 20px;
+    }
+
+    .service-icon {
+      position: absolute;
+      top: -20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: #ff5a00;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      box-shadow: 0 5px 15px rgba(255, 90, 0, 0.3);
+    }
+
+    .enquire-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 25px;
+      background: #ff5a00;
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid #ff5a00;
+    }
+
+    .enquire-btn:hover {
+      background: transparent;
+      color: #ff5a00;
+      transform: translateY(-3px);
+    }
+
+    /* Hidden Form Styles */
+    .service-form-container {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-top: 30px;
+    }
+
+    .service-form-container.active {
+      max-height: 800px;
+      padding: 30px;
+      margin-bottom: 50px;
+    }
+
+    .service-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #2c3e50;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+    }
+
+    .submit-btn {
+      grid-column: span 2;
+      padding: 15px;
+      background: #ff5a00;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #e44b00;
+      transform: translateY(-3px);
+    }
+
+    @media (max-width: 768px) {
+      .service-form {
+        grid-template-columns: 1fr;
+      }
+      .form-group.full-width, .submit-btn {
+        grid-column: span 1;
+      }
+    }
+
+/* #additional-services .additional-service-box {
     display: flex;
-    flex-direction: column; /* Aligns image and text vertically */
-    align-items: center; /* Centers the content horizontally */
+    flex-direction: column;
+    align-items: center; 
     text-align: center;
     margin-bottom: 30px;
     transition: transform 0.3s ease;
@@ -152,7 +508,7 @@
 
 #additional-services .additional-service-box img {
     max-width: 100%;
-    height: 170px; /* Consistent image height */
+    height: 170px; 
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 15px;
@@ -161,7 +517,7 @@
 
 #additional-services .additional-service-box h3 {
     font-size: 18px;
-    margin: 10px 0; /* Consistent spacing */
+    margin: 10px 0; 
     color: #333;
     font-weight: bold;
 }
@@ -170,33 +526,33 @@
     color: #666;
     font-size: 14px;
     line-height: 1.6;
-    margin: 0; /* Removes unnecessary spacing */
+    margin: 0; 
 }
 
 #additional-services .additional-service-box:hover img {
-    transform: scale(1.05); /* Slight zoom on hover */
+    transform: scale(1.05); 
 }
 
 #additional-services .row {
     display: flex;
-    flex-wrap: wrap; /* Ensures proper wrapping for responsive layouts */
-    justify-content: space-evenly; /* Distributes boxes evenly */
+    flex-wrap: wrap; 
+    justify-content: space-evenly; 
 }
 
 #additional-services .col-md-4,
 #additional-services .col-md-6 {
-    flex: 1 1 calc(33.33% - 20px); /* Adjust for 3 items per row with spacing */
-    max-width: calc(33.33% - 20px); /* Same as flex for 3-column layout */
-    margin: 10px; /* Spacing between boxes */
+    flex: 1 1 calc(33.33% - 20px); 
+    max-width: calc(33.33% - 20px); 
+    margin: 10px; 
 }
 
 @media (max-width: 768px) {
     #additional-services .col-md-4,
     #additional-services .col-md-6 {
-        flex: 1 1 100%; /* Stacks items for smaller screens */
+        flex: 1 1 100%; 
         max-width: 100%;
     }
-}
+} */
 
 
 /* Referrals */
@@ -215,98 +571,153 @@
     margin-top: 10px;
 }
 
-
+  /* WhatsApp Floating Button */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    background-color: #25D366;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s;
+  }
+  
+  .whatsapp-float:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  }
+  
+  .whatsapp-float img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .whatsapp-text {
+    font-weight: 600;
+    font-size: 14px;
+    display: none;
+  }
+  
+  @media (min-width: 480px) {
+    .whatsapp-text {
+      display: inline;
+    }
+  }
 
 </style>
 	
 
 </head>
-<body>
+    <!-- WhatsApp Button with your requested message -->
+    <a href="https://wa.me/27734742034?text=Hi%20I'm%20interested%20in%20your%20services." 
+    class="whatsapp-float" target="_blank">
+    <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
+    <span class="whatsapp-text">Chat with Us</span>
+    </a>
+
 	<div id="fh5co-wrapper">
 	<div id="fh5co-page">
 	<div id="fh5co-header">
-		<header id="fh5co-header-section">
-			<div class="container">
-				<div class="nav-header">
-					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
-					<h1 id="fh5co-logo"><a href="index.html">Chippex Travel</a></h1>
-					<nav id="fh5co-menu-wrap" role="navigation">
-						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li><a class="active" href="index.html">Home</a></li>
-							<li>
-								<a href="" class="fh5co-sub-ddown">Travel</a>
-								<ul class="fh5co-sub-menu">
-								 	<li><a href="#">By Car</a></li>
-								 	<li><a href="#">By Ship</a></li>
-									<li><a href="#Flight-travel">By Flight</a></li> 
-								</ul>
-							</li>
-							<li><a href="#featured-hotel">Services</a></li>
-							<li><a href="#hotel-facilities">Team</a></li>
-							<li><a href="#footer">Contact</a></li>
+	<header id="fh5co-header-section">
+	<div class="container">
+		<div class="nav-header">
+			<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
+			<div style="display: inline-block; padding: 15px;  border-radius: 8px;">
+		<div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 28px; color: white; letter-spacing: 1px;">
+			<span style="color: #3498db;">CHIPP</span><span style="color: #e74c3c;">EX</span>
+		</div>
+		<div style="font-family: 'Open Sans', sans-serif; font-size: 20px; color: #ecf0f1; letter-spacing: 3px; text-align: center;">
+			TRAVEL
+		</div>
+		</div>
+			<nav id="fh5co-menu-wrap" role="navigation">
+				<ul class="sf-menu" id="fh5co-primary-menu">
+					<li><a class="active" href="index.html">Home</a></li>
+					<li>
+						<a href="" class="fh5co-sub-ddown">Travel</a>
+						<ul class="fh5co-sub-menu">
+							<li><a href="car-travel.html">By Car</a></li>
+							<li><a href="ship-travel.html">By Ship</a></li>
+							<li><a href="flight-travel.html">By Flight</a></li> 
 						</ul>
-					</nav>
-				</div>
-			</div>
-		</header>
-		
+					</li>
+					<li><a href="#featured-hotel">Services</a></li>
+					<li><a href="payment.html">Pay Now Online</a></li>
+					<li><a href="#footer">Contact Us</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</header>
+
+<body>
 	</div>
 	<!-- end:fh5co-header -->
-	<aside id="fh5co-hero" class="js-fullheight">
-		<div class="flexslider js-fullheight">
-			<ul class="slides">
-		   	<li style="background-image: url(images/car-travel-5.png);">
-		   		<div class="overlay-gradient"></div>
-		   		<div class="container">
-		   			<div class="col-md-12 col-md-offset-0 text-center slider-text">
-		   				<div class="slider-text-inner js-fullheight">
-		   					<div class="desc">
-		   						<p><span>Car Travel</span></p>
-		   						<h2>Desribing car travel</h2>
-			   					<p>
-			   						<a href="#featured-hotel" class="btn btn-primary btn-lg">Book Now</a>
-			   					</p>
-		   					</div>
-		   				</div>
-		   			</div>
-		   		</div>
-		   	</li>
-		   	<li style="background-image: url(images/ship-travel-2.png);">
-		   		<div class="overlay-gradient"></div>
-		   		<div class="container">
-		   			<div class="col-md-12 col-md-offset-0 text-center slider-text">
-		   				<div class="slider-text-inner js-fullheight">
-		   					<div class="desc">
-		   						<p><span>Ship Travel</span></p>
-		   						<h2>Describing ship travel</h2>
-			   					<p>
-			   						<a href="#featured-hotel" class="btn btn-primary btn-lg">Book Now</a>
-			   					</p>
-		   					</div>
-		   				</div>
-		   			</div>
-		   		</div>
-		   	</li>
-		   	<li style="background-image: url(images/flight-travel-3.jpg);">
-		   		<div class="overlay-gradient"></div>
-		   		<div class="container" id="Flight-travel">
-		   			<div class="col-md-12 col-md-offset-0 text-center slider-text">
-		   				<div class="slider-text-inner js-fullheight">
-		   					<div class="desc">
-		   						<p><span>Flight Travel</span></p>
-		   						<h2>Describing flight travel</h2>
-			   					<p>
-			   						<a href="#featured-hotel" class="btn btn-primary btn-lg">Book Now</a>
-			   					</p>
-		   					</div>
-		   				</div>
-		   			</div>
-		   		</div>
-		   	</li>
-		   	
-		  	</ul>
-	  	</div>
-	</aside>
+<!-- Update your slides HTML (just the Book Now links) -->
+<aside id="fh5co-hero" class="js-fullheight">
+  <div class="flexslider js-fullheight">
+    <ul class="slides">
+      <li style="background-image: url(images/travel\ by\ car2.png);">
+        <div class="overlay-gradient"></div>
+        <div class="container">
+          <div class="col-md-12 col-md-offset-0 text-center slider-text">
+            <div class="slider-text-inner js-fullheight">
+              <div class="desc">
+                <p><span>Car Travel</span></p>
+                <h2>Freedom to Explore at Your Own Pace</h2>
+      			<p>Discover hidden gems and scenic routes with our premium car travel services</p>
+                <p>
+                  <a href="car-travel.html" class="btn btn-primary btn-lg">Book Now</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li style="background-image: url(images/travel\ by\ ship.png);">
+        <div class="overlay-gradient"></div>
+        <div class="container">
+          <div class="col-md-12 col-md-offset-0 text-center slider-text">
+            <div class="slider-text-inner js-fullheight">
+              <div class="desc">
+                <p><span>Ship Travel</span></p>
+                <h2>Luxury Voyages Across the Seas</h2>
+      			<p>Experience the romance of ocean travel with our premium cruise packages</p>
+                <p>
+                  <a href="ship-travel.html" class="btn btn-primary btn-lg">Book Now</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li style="background-image: url(images/flight-travel-3.jpg);">
+        <div class="overlay-gradient"></div>
+        <div class="container" id="Flight-travel">
+          <div class="col-md-12 col-md-offset-0 text-center slider-text">
+            <div class="slider-text-inner js-fullheight">
+              <div class="desc">
+                <p><span>Flight Travel</span></p>
+                <h2>Soar to Your Dream Destination</h2>
+      			<p>Fast, comfortable air travel to destinations worldwide</p>
+                <p>
+                  <a href="flight-travel.html" class="btn btn-primary btn-lg">Book Now</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</aside>
 	<div class="wrap">
 		<div class="container">
 			<div class="row">
@@ -347,52 +758,52 @@
 		</div>
 	</div>
 
-<!-- Pop-up Overlay and Form -->
-<div class="popup-overlay" id="popup-overlay"></div>
-<div class="popup-form" id="popup-form">
-    <h3>Contact Details</h3>
-    <form action="https://reservationsafrica.co.za/tour-search/" method="get">
-        <input type="text" id="name" placeholder="Name" required />
-        <input type="text" id="surname" placeholder="Surname" required />
-        <input type="text" id="cellphone" placeholder="Cellphone Number" required />
-        <input type="email" id="email" placeholder="Email Address" required />
-        <button type="submit">Submit</button>
-    </form>
-</div>
+	<!-- Pop-up Overlay and Form -->
+	<div class="popup-overlay" id="popup-overlay"></div>
+	<div class="popup-form" id="popup-form">
+		<h3>Contact Details</h3>
+		<form action="https://reservationsafrica.co.za/tour-search/" method="get">
+			<input type="text" id="name" placeholder="Name" required />
+			<input type="text" id="surname" placeholder="Surname" required />
+			<input type="text" id="cellphone" placeholder="Cellphone Number" required />
+			<input type="email" id="email" placeholder="Email Address" required />
+			<button type="submit">Submit</button>
+		</form>
+	</div>
 
 
-<!-- Thank You Message -->
-<div class="thank-you-message" id="thank-you-message" style="display:none;">
-    Thank you, we will be in contact with you.
-</div>
+	<!-- Thank You Message -->
+	<div class="thank-you-message" id="thank-you-message" style="display:none;">
+		Thank you, we will be in contact with you.
+	</div>
 
 
 	
-<div id="fh5co-counter-section" class="fh5co-counters">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 text-center">
-                <span class="fh5co-counter js-counter" data-from="0" data-to="20356" data-speed="5000" data-refresh-interval="50"></span>
-                <span class="fh5co-counter-label">Trips By Car</span>
-            </div>
-            <div class="col-md-3 text-center">
-                <span class="fh5co-counter js-counter" data-from="0" data-to="15501" data-speed="5000" data-refresh-interval="50"></span>
-                <span class="fh5co-counter-label">Trips By Ship</span>
-            </div>
-            <div class="col-md-3 text-center">
-                <span class="fh5co-counter js-counter" data-from="0" data-to="8200" data-speed="5000" data-refresh-interval="50"></span>
-                <span class="fh5co-counter-label">Trips By Flight</span>
-            </div>
-            <div class="col-md-3 text-center">
-                <span class="fh5co-counter js-counter" data-from="0" data-to="8763" data-speed="5000" data-refresh-interval="50"></span>
-                <span class="fh5co-counter-label">Hotels Booked</span>
-            </div>
-        </div>
-        
-    </div>
-</div>
+	<div id="fh5co-counter-section" class="fh5co-counters">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 text-center">
+					<span class="fh5co-counter js-counter" data-from="0" data-to="20356" data-speed="5000" data-refresh-interval="50"></span>
+					<span class="fh5co-counter-label">Trips By Car</span>
+				</div>
+				<div class="col-md-3 text-center">
+					<span class="fh5co-counter js-counter" data-from="0" data-to="15501" data-speed="5000" data-refresh-interval="50"></span>
+					<span class="fh5co-counter-label">Trips By Ship</span>
+				</div>
+				<div class="col-md-3 text-center">
+					<span class="fh5co-counter js-counter" data-from="0" data-to="8200" data-speed="5000" data-refresh-interval="50"></span>
+					<span class="fh5co-counter-label">Trips By Flight</span>
+				</div>
+				<div class="col-md-3 text-center">
+					<span class="fh5co-counter js-counter" data-from="0" data-to="8763" data-speed="5000" data-refresh-interval="50"></span>
+					<span class="fh5co-counter-label">Hotels Booked</span>
+				</div>
+			</div>
+			
+		</div>
+	</div>
 
-
+	<!-- Featured Hotels Section -->
 	<div id="featured-hotel" class="fh5co-bg-color">
 		<div class="container">
 			
@@ -449,94 +860,117 @@
 		</div>
 	</div>
 
+<div id="additional-services" class="fh5co-bg-color">
+  <div class="container">
+    <div class="section-title text-center">
+      <h2>Our Premium Services</h2>
+      <p>Discover the perfect travel experience tailored just for you</p>
+    </div>
 
-	<div id="additional-services" class="fh5co-bg-color">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="section-title text-center">
-						<!-- Horizontal Line -->
-						<div class="section-divider"></div>
-						<br><br>
-						<h2>Additional Services</h2>
-					</div>
-				</div>
-			</div>
-	
-			<div class="row">
-				<!-- Travel Bookings -->
-				<div class="col-md-4 text-center">
-					<div class="additional-service-box">
-						<img src="images/travelBooking.jpg" class="img-responsive" alt="Travel Bookings">
-						<h3>Travel Bookings</h3>
-						<p>Seamlessly book your travel experiences with our expert assistance, ensuring every trip is perfectly planned.</p>
-					</div>
-				</div>
-				<!-- Bookings/Planning Services -->
-				<div class="col-md-4 text-center">
-					<div class="additional-service-box">
-						<img src="images/bookingsPlanning.jfif" class="img-responsive" alt="Bookings Planning">
-						<h3>Bookings/Planning Services</h3>
-						<p>Our dedicated team will assist in organizing and managing bookings for your next adventure or event.</p>
-					</div>
-				</div>
-				<!-- Car Hire -->
-				<div class="col-md-4 text-center">
-					<div class="additional-service-box">
-						<img src="images/carHire2.png" class="img-responsive" alt="Car Hire">
-						<h3>Car Hire</h3>
-						<p>Choose from a range of vehicles for hire to suit your travel needs, whether for leisure or business.</p>
-					</div>
-				</div>
-			</div>
-	
-			<div class="row">
-				<!-- Corporate Travel -->
-				<div class="col-md-4 text-center">
-					<div class="additional-service-box">
-						<img src="images/corporateTravel.jpg" class="img-responsive" alt="Corporate Travel">
-						<h3>Corporate Travel</h3>
-						<p>Expertly tailored corporate travel solutions to meet your business travel requirements.</p>
-					</div>
-				</div>
-				<!-- Leisure Travel -->
-				<div class="col-md-4 text-center">
-					<div class="additional-service-box">
-						<img src="images/leisureTravel.jpg" class="img-responsive" alt="Leisure Travel">
-						<h3>Leisure Travel</h3>
-						<p>Discover unforgettable leisure travel packages designed to create lasting memories.</p>
-					</div>
-				</div>
-				<!-- Adventure Tours Planning -->
-				<div class="col-md-4 text-center">
-					<div class="additional-service-box">
-						<img src="images/adventureTours.jfif" class="img-responsive" alt="Adventure Tours">
-						<h3>Adventure Tours Planning</h3>
-						<p>Plan thrilling adventure tours with our expert guidance for a unique and exciting experience.</p>
-					</div>
-				</div>
-			</div>
-	
-			<div class="row">
-				<!-- Activity Assessment and Accreditation -->
-				<div class="col-md-6 text-center">
-					<div class="additional-service-box">
-						<img src="images/adventureTours2.png" class="img-responsive" alt="Activity Assessment">
-						<h3>Activity Assessment and Accreditation</h3>
-						<p>Receive expert activity assessments and ensure quality through our accreditation services.</p>
-					</div>
-				</div>
-				<!-- Educational/Leisure Travels -->
-				<div class="col-md-6 text-center">
-					<div class="additional-service-box">
-						<img src="images/educationaLleisureTravels.jpg" class="img-responsive" alt="Educational Travels">
-						<h3>Educational/Leisure Travels</h3>
-						<p>Combine learning and leisure with our custom travel packages that cater to all age groups.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>	
+    <div class="row">
+      <!-- Service Cards -->
+      <div class="additional-service-box">
+        <div class="service-icon">✈️</div>
+        <div class="service-image-container">
+          <img src="images/travelBooking.jpg" alt="Travel Bookings">
+        </div>
+        <h3>Travel Bookings</h3>
+        <p>Let us handle all your travel arrangements with our expert booking services for flights, hotels, and more.</p>
+        <a href="#" class="enquire-btn" data-service="Travel Bookings">Enquire Now</a>
+      </div>
+
+      <div class="additional-service-box">
+        <div class="service-icon">📅</div>
+        <div class="service-image-container">
+          <img src="images/bookingsPlanning.jfif" alt="Bookings Planning">
+        </div>
+        <h3>Bookings/Planning Services</h3>
+        <p>Comprehensive travel planning from itinerary creation to activity scheduling for your perfect trip.</p>
+        <a href="#" class="enquire-btn" data-service="Bookings/Planning Services">Enquire Now</a>
+      </div>
+
+      <div class="additional-service-box">
+        <div class="service-icon">🚗</div>
+        <div class="service-image-container">
+          <img src="images/car hire.png" alt="Car Hire">
+        </div>
+        <h3>Car Hire</h3>
+        <p>Choose from our premium fleet of vehicles for your business trips or family vacations.</p>
+        <a href="#" class="enquire-btn" data-service="Car Hire">Enquire Now</a>
+      </div>
+
+      <div class="additional-service-box">
+        <div class="service-icon">💼</div>
+        <div class="service-image-container">
+          <img src="images/corporateTravel.jpg" alt="Corporate Travel">
+        </div>
+        <h3>Corporate Travel</h3>
+        <p>Efficient travel solutions for businesses with special corporate rates and priority services.</p>
+        <a href="#" class="enquire-btn" data-service="Corporate Travel">Enquire Now</a>
+      </div>
+
+      <div class="additional-service-box">
+        <div class="service-icon">🏖️</div>
+        <div class="service-image-container">
+          <img src="images/leisureTravel.jpg" alt="Leisure Travel">
+        </div>
+        <h3>Leisure Travel</h3>
+        <p>Custom vacation packages designed for relaxation, adventure, and unforgettable experiences.</p>
+        <a href="#" class="enquire-btn" data-service="Leisure Travel">Enquire Now</a>
+      </div>
+
+      <div class="additional-service-box">
+        <div class="service-icon">🧗</div>
+        <div class="service-image-container">
+          <img src="images/adventureTours.jfif" alt="Adventure Tours">
+        </div>
+        <h3>Adventure Tours</h3>
+        <p>Thrilling adventure packages for adrenaline seekers and outdoor enthusiasts.</p>
+        <a href="#" class="enquire-btn" data-service="Adventure Tours">Enquire Now</a>
+      </div>
+    </div>
+
+    <!-- Hidden Enquiry Form -->
+    <div class="service-form-container" id="serviceForm">
+      <h3 class="text-center" id="formTitle">Enquire About Our Services</h3>
+      <form class="service-form" id="enquiryForm">
+        <input type="hidden" id="selectedService" name="service">
+
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+
+        <div class="form-group">
+          <label for="date">Travel Date</label>
+          <input type="date" id="date" name="date">
+        </div>
+
+        <div class="form-group full-width">
+          <label for="message">Your Enquiry</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="requirements">Specific Requirements</label>
+          <textarea id="requirements" name="requirements"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Enquiry</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 	<div id="hotel-facilities">
 		<div class="container">
@@ -890,11 +1324,14 @@
 			<div class="row">
 				<div class="col-md-3">
 					<div class="copyright">
-						<p><small>&copy; 2022 Chippex Travel <br> All Rights Reserved. <br>
+						<p class="copyright-text">&copy; <span id="current-year"></span> Chippex Travel <br> All Rights Reserved. <br>
 						Designed by <a href="http://gamechangersites.co.za" target="_blank">Game Changer Sites</a>
 						<br><span class="icon" style="display: inline-block; margin-right: 8px; vertical-align: middle;">
 							&#10003;</span><strong>100% Black Owned</strong>
-					</p>
+						</p>
+						<script>
+							document.getElementById('current-year').textContent = new Date().getFullYear();
+						</script>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -991,89 +1428,89 @@
 		
 	</script>
 
-<script>
-    function openPopup(event) {
-        event.preventDefault();
-        document.getElementById('popup-overlay').style.display = 'block';
-        document.getElementById('popup-form').style.display = 'block';
-    }
+	<script>
+		function openPopup(event) {
+			event.preventDefault();
+			document.getElementById('popup-overlay').style.display = 'block';
+			document.getElementById('popup-form').style.display = 'block';
+		}
 
-    function closePopup() {
-        document.getElementById('popup-overlay').style.display = 'none';
-        document.getElementById('popup-form').style.display = 'none';
-    }
+		function closePopup() {
+			document.getElementById('popup-overlay').style.display = 'none';
+			document.getElementById('popup-form').style.display = 'none';
+		}
 
-	function submitForm(event) {
-        event.preventDefault();
-        closePopup();
-        const thankYouMessage = document.getElementById('thank-you-message');
-        thankYouMessage.style.display = 'block';
-        
-        // Hide thank-you message after a few seconds
-        setTimeout(() => {
-            thankYouMessage.style.display = 'none';
-        }, 5000);
-    }
+		function submitForm(event) {
+			event.preventDefault();
+			closePopup();
+			const thankYouMessage = document.getElementById('thank-you-message');
+			thankYouMessage.style.display = 'block';
+			
+			// Hide thank-you message after a few seconds
+			setTimeout(() => {
+				thankYouMessage.style.display = 'none';
+			}, 5000);
+		}
 
-    // Close the popup when clicking outside of it
-    document.getElementById('popup-overlay').addEventListener('click', closePopup);
+		// Close the popup when clicking outside of it
+		document.getElementById('popup-overlay').addEventListener('click', closePopup);
 
-	// Generate QR Code
-	// const qrCodeCanvas = document.getElementById("qr-code");
-	// const qrCodeLink = "https://reservationsafrica.co.za/tour-search/?";
+		// Generate QR Code
+		// const qrCodeCanvas = document.getElementById("qr-code");
+		// const qrCodeLink = "https://reservationsafrica.co.za/tour-search/?";
 
-	// QRCode.toCanvas(qrCodeCanvas, qrCodeLink, { width: 150 }, function (error) {
-	// 	if (error) {
-	// 		console.error("QR Code generation failed:", error);
-	// 	}
-	// });
+		// QRCode.toCanvas(qrCodeCanvas, qrCodeLink, { width: 150 }, function (error) {
+		// 	if (error) {
+		// 		console.error("QR Code generation failed:", error);
+		// 	}
+		// });
 
-	const paymentLink = "https://paymentgateway.com/checkout?amount=100&currency=ZAR&description=TourPayment";
-    const qrCodeCanvas = document.getElementById("qr-code");
+		const paymentLink = "https://paymentgateway.com/checkout?amount=100&currency=ZAR&description=TourPayment";
+		const qrCodeCanvas = document.getElementById("qr-code");
 
-    QRCode.toCanvas(qrCodeCanvas, paymentLink, { width: 200 }, function (error) {
-        if (error) console.error("Error generating QR Code:", error);
-    });
+		QRCode.toCanvas(qrCodeCanvas, paymentLink, { width: 200 }, function (error) {
+			if (error) console.error("Error generating QR Code:", error);
+		});
 
-</script>
+	</script>
 
-<script>
-    document.getElementById('payment-form').addEventListener('submit', function (e) {
-        let isValid = true;
-        const fields = ['client-name', 'contact-details', 'program-request', 'amount', 'mode-of-receipt', 'signature'];
+	<script>
+		document.getElementById('payment-form').addEventListener('submit', function (e) {
+			let isValid = true;
+			const fields = ['client-name', 'contact-details', 'program-request', 'amount', 'mode-of-receipt', 'signature'];
 
-        fields.forEach(field => {
-            const input = document.getElementById(field);
-            if (!input.value.trim()) {
-                isValid = false;
-                input.style.borderColor = 'red';
-            } else {
-                input.style.borderColor = '';
-            }
-        });
+			fields.forEach(field => {
+				const input = document.getElementById(field);
+				if (!input.value.trim()) {
+					isValid = false;
+					input.style.borderColor = 'red';
+				} else {
+					input.style.borderColor = '';
+				}
+			});
 
-        if (!isValid) {
-            e.preventDefault(); // Prevent form submission
-            alert('Please fill out all required fields.');
-        }
-    });
-</script>
+			if (!isValid) {
+				e.preventDefault(); // Prevent form submission
+				alert('Please fill out all required fields.');
+			}
+		});
+	</script>
 
-<script>
-	document.getElementById("payment-form").addEventListener("submit", function (event) {
-		// Prevent the default form submission
-		event.preventDefault();
+	<script>
+		document.getElementById("payment-form").addEventListener("submit", function (event) {
+			// Prevent the default form submission
+			event.preventDefault();
 
-		// Get the selected mode of receipt
-		const modeOfReceipt = document.getElementById("mode-of-receipt").value;
+			// Get the selected mode of receipt
+			const modeOfReceipt = document.getElementById("mode-of-receipt").value;
 
-		// Display a popup message
-		alert(`Thank you! We will reach you shortly via ${modeOfReceipt}.`);
+			// Display a popup message
+			alert(`Thank you! We will reach you shortly via ${modeOfReceipt}.`);
 
-		// Reset the form
-		document.getElementById("payment-form").reset();
-	});
-</script>
+			// Reset the form
+			document.getElementById("payment-form").reset();
+		});
+	</script>
 
 		
 

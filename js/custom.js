@@ -185,33 +185,45 @@ $(function(){
       });
    };
 
-   var sliderMain = function() {
-      
-      $('#fh5co-hero .flexslider').flexslider({
-         animation: "fade",
-         slideshowSpeed: 5000,
-         directionNav: true,
-         start: function(){
-            setTimeout(function(){
-               $('.slider-text').removeClass('animated fadeInUp');
-               $('.flex-active-slide').find('.slider-text').addClass('animated fadeInUp');
-            }, 500);
-         },
-         before: function(){
-            setTimeout(function(){
-               $('.slider-text').removeClass('animated fadeInUp');
-               $('.flex-active-slide').find('.slider-text').addClass('animated fadeInUp');
-            }, 500);
-         }
+// Replace your sliderMain function with this:
+var sliderMain = function() {
+  $('#fh5co-hero .flexslider').flexslider({
+    animation: "fade",
+    slideshow: false, // Disable auto-rotation
+    directionNav: false, // Hide default arrows
+    controlNav: false, // Hide default dots
+    start: function(){
+      setTimeout(function(){
+        $('.slider-text').removeClass('animated fadeInUp');
+        $('.flex-active-slide').find('.slider-text').addClass('animated fadeInUp');
+      }, 500);
+    },
+    before: function(){
+      setTimeout(function(){
+        $('.slider-text').removeClass('animated fadeInUp');
+        $('.flex-active-slide').find('.slider-text').addClass('animated fadeInUp');
+      }, 500);
+    }
+  });
 
-      });
+  // Custom navigation arrows
+  $('.flexslider').append('<div class="custom-nav"><span class="prev-slide">&#10094;</span><span class="next-slide">&#10095;</span></div>');
+  
+  // Navigation functionality
+  $('.prev-slide').click(function(){
+    $('.flexslider').flexslider('prev');
+  });
+  
+  $('.next-slide').click(function(){
+    $('.flexslider').flexslider('next');
+  });
 
-      $('#fh5co-hero .flexslider .slides > li').css('height', $(window).height());  
-      $(window).resize(function(){
-         $('#fh5co-hero .flexslider .slides > li').css('height', $(window).height());  
-      });
-
-   };
+  // Update slide height
+  $('#fh5co-hero .flexslider .slides > li').css('height', $(window).height());  
+  $(window).resize(function(){
+    $('#fh5co-hero .flexslider .slides > li').css('height', $(window).height());  
+  });
+};
 
    // Parallax
    var parallax = function() {
