@@ -273,14 +273,20 @@
 }
 
     /* Base section styles */
-    #additional-services {
-      padding: 80px 0;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
-      position: relative;
-      overflow: hidden;
+    #additional-services .additional-service-box {
+		padding: 0;
+		padding-bottom: 20px;
+		background: white;
+		border-radius: 15px;
+		overflow: hidden;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+		transition: all 0.3s ease;
+		position: relative;
+		padding-bottom: 20px;
+		text-align: center;
     }
 
-    #additional-services::before {
+    #additional-services .additional-service-box::before {
       content: "";
       position: absolute;
       top: 0;
@@ -291,12 +297,12 @@
     }
 
     /* Section title */
-    #additional-services .section-title {
+    #additional-services .additional-service-box .section-title {
       margin-bottom: 60px;
       position: relative;
     }
 
-    #additional-services .section-title h2 {
+    #additional-services .additional-service-box .section-title h2 {
       font-size: 2.5rem;
       color: #2c3e50;
       margin-bottom: 20px;
@@ -304,7 +310,7 @@
       display: inline-block;
     }
 
-    #additional-services .section-title h2::after {
+    #additional-services .additional-service-box .section-title h2::after {
       content: "";
       position: absolute;
       bottom: -10px;
@@ -317,11 +323,11 @@
     }
 
     /* Grid container */
-    #additional-services .row {
+    #additional-services  .service-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 30px;
-      margin-bottom: 50px;
+	  margin-bottom: 50px;
     }
 
     /* Card styles */
@@ -429,11 +435,13 @@
       margin-top: 30px;
     }
 
-    .service-form-container.active {
-      max-height: 800px;
-      padding: 30px;
-      margin-bottom: 50px;
-    }
+	.service-form-container.active {
+	max-height: none; /* allow full content height */
+	height: auto;
+	padding: 30px;
+	margin-bottom: 50px;
+	}
+
 
     .service-form {
       display: grid;
@@ -497,79 +505,117 @@
       }
     }
 
-/* #additional-services .additional-service-box {
+
+
+  
+#referrals::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #ff5a00, #ff8a00, #ff5a00);
+  }
+  
+  #referrals .section-title h2 {
+    font-size: 2.3rem;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  
+  #referrals .section-title h2::after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: #ff5a00;
+    border-radius: 2px;
+  }
+  
+  .brochure-item {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; 
-    text-align: center;
-    margin-bottom: 30px;
-    transition: transform 0.3s ease;
-}
-
-#additional-services .additional-service-box img {
-    max-width: 100%;
-    height: 170px; 
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    transition: transform 0.3s ease;
-}
-
-#additional-services .additional-service-box h3 {
-    font-size: 18px;
-    margin: 10px 0; 
-    color: #333;
-    font-weight: bold;
-}
-
-#additional-services .additional-service-box p {
-    color: #666;
-    font-size: 14px;
-    line-height: 1.6;
-    margin: 0; 
-}
-
-#additional-services .additional-service-box:hover img {
-    transform: scale(1.05); 
-}
-
-#additional-services .row {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: space-evenly; 
-}
-
-#additional-services .col-md-4,
-#additional-services .col-md-6 {
-    flex: 1 1 calc(33.33% - 20px); 
-    max-width: calc(33.33% - 20px); 
-    margin: 10px; 
-}
-
-@media (max-width: 768px) {
-    #additional-services .col-md-4,
-    #additional-services .col-md-6 {
-        flex: 1 1 100%; 
-        max-width: 100%;
-    }
-} */
-
-
-/* Referrals */
-.brochure-item img {
+  }
+  
+  .brochure-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  }
+  
+  .brochure-item img {
     width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-}
-
-.brochure-item h3 {
-    font-size: 1.1em;
-    color: #333;
-    font-weight: bold;
-    margin-top: 10px;
-}
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 0;
+  }
+  
+  .brochure-item:hover img {
+    transform: scale(1.05);
+  }
+  
+  .brochure-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .brochure-item h3 {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin: 0 0 15px 0;
+    font-weight: 600;
+  }
+  
+  .brochure-item p {
+    color: #7f8c8d;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+  
+  .view-brochure-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #ff5a00;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: center;
+    border: 2px solid #ff5a00;
+    margin-top: auto;
+  }
+  
+  .view-brochure-btn:hover {
+    background: transparent;
+    color: #ff5a00;
+  }
+  
+  @media (max-width: 768px) {
+    .brochure-item {
+      margin-bottom: 20px;
+    }
+    
+    #referrals .section-title h2 {
+      font-size: 1.8rem;
+    }
+  }
 
   /* WhatsApp Floating Button */
   .whatsapp-float {
@@ -648,7 +694,7 @@
 							<li><a href="flight-travel.html">By Flight</a></li> 
 						</ul>
 					</li>
-					<li><a href="#featured-hotel">Services</a></li>
+					<li><a href="#additional-services">Services</a></li>
 					<li><a href="payment.html">Pay Now Online</a></li>
 					<li><a href="#footer">Contact Us</a></li>
 				</ul>
@@ -860,75 +906,119 @@
 		</div>
 	</div>
 
-<div id="additional-services" class="fh5co-bg-color">
-  <div class="container">
-    <div class="section-title text-center">
-      <h2>Our Premium Services</h2>
-      <p>Discover the perfect travel experience tailored just for you</p>
-    </div>
+	<!-- Additional Services -->
+	<section id="additional-services" class="fh5co-bg-color">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="section-title text-center">
+						<!-- Horizontal Line -->
+						<div class="section-divider"></div>
+						<br><br>
+						<h2>Our Premium Services</h2>
+						<p>Discover the perfect travel experience tailored just for you</p>
+					</div>
+				</div>
+			</div>
 
-    <div class="row">
-      <!-- Service Cards -->
-      <div class="additional-service-box">
-        <div class="service-icon">✈️</div>
-        <div class="service-image-container">
-          <img src="images/travelBooking.jpg" alt="Travel Bookings">
-        </div>
-        <h3>Travel Bookings</h3>
-        <p>Let us handle all your travel arrangements with our expert booking services for flights, hotels, and more.</p>
-        <a href="#" class="enquire-btn" data-service="Travel Bookings">Enquire Now</a>
-      </div>
 
-      <div class="additional-service-box">
-        <div class="service-icon">📅</div>
-        <div class="service-image-container">
-          <img src="images/bookingsPlanning.jfif" alt="Bookings Planning">
-        </div>
-        <h3>Bookings/Planning Services</h3>
-        <p>Comprehensive travel planning from itinerary creation to activity scheduling for your perfect trip.</p>
-        <a href="#" class="enquire-btn" data-service="Bookings/Planning Services">Enquire Now</a>
-      </div>
+			<div class="service-grid">
+				<!-- Travel Bookings -->
+				<div class="additional-service-box">
+					<div class="service-icon">✈️</div>
+					<div class="service-image-container">
+					<img src="images/travelBooking.jpg" alt="Travel Bookings">
+					</div>
+					<h3>Travel Bookings</h3>
+					<p>Let us handle all your travel arrangements with our expert booking services for flights, hotels, and more.</p>
+					<a href="#" class="enquire-btn" data-service="Travel Bookings">Enquire Now</a>
+				</div>
 
-      <div class="additional-service-box">
-        <div class="service-icon">🚗</div>
-        <div class="service-image-container">
-          <img src="images/car hire.png" alt="Car Hire">
-        </div>
-        <h3>Car Hire</h3>
-        <p>Choose from our premium fleet of vehicles for your business trips or family vacations.</p>
-        <a href="#" class="enquire-btn" data-service="Car Hire">Enquire Now</a>
-      </div>
+				<!-- Bookings/Planning Services -->
+				<div class="additional-service-box">
+					<div class="service-icon">📅</div>
+					<div class="service-image-container">
+					<img src="images/bookingsPlanning.jfif" alt="Bookings Planning">
+					</div>
+					<h3>Bookings/Planning Services</h3>
+					<p>Comprehensive travel planning from itinerary creation to activity scheduling for your perfect trip.</p>
+					<a href="#" class="enquire-btn" data-service="Bookings/Planning Services">Enquire Now</a>
+				</div>
 
-      <div class="additional-service-box">
-        <div class="service-icon">💼</div>
-        <div class="service-image-container">
-          <img src="images/corporateTravel.jpg" alt="Corporate Travel">
-        </div>
-        <h3>Corporate Travel</h3>
-        <p>Efficient travel solutions for businesses with special corporate rates and priority services.</p>
-        <a href="#" class="enquire-btn" data-service="Corporate Travel">Enquire Now</a>
-      </div>
+				<!-- Car Hire -->
+				<div class="additional-service-box">
+					<div class="service-icon">🚗</div>
+					<div class="service-image-container">
+					<img src="images/car hire.png" alt="Car Hire">
+					</div>
+					<h3>Car Hire</h3>
+					<p>Choose from our premium fleet of vehicles for your business trips or family vacations.</p>
+					<a href="#" class="enquire-btn" data-service="Car Hire">Enquire Now</a>
+				</div>
+			
 
-      <div class="additional-service-box">
-        <div class="service-icon">🏖️</div>
-        <div class="service-image-container">
-          <img src="images/leisureTravel.jpg" alt="Leisure Travel">
-        </div>
-        <h3>Leisure Travel</h3>
-        <p>Custom vacation packages designed for relaxation, adventure, and unforgettable experiences.</p>
-        <a href="#" class="enquire-btn" data-service="Leisure Travel">Enquire Now</a>
-      </div>
+			
+				<!-- Corporate Travel -->
+				<div class="additional-service-box">
+					<div class="service-icon">💼</div>
+					<div class="service-image-container">
+					<img src="images/corporateTravel.jpg" alt="Corporate Travel">
+					</div>
+					<h3>Corporate Travel</h3>
+					<p>Efficient travel solutions for businesses with special corporate rates and priority services.</p>
+					<a href="#" class="enquire-btn" data-service="Corporate Travel">Enquire Now</a>
+				</div>
 
-      <div class="additional-service-box">
-        <div class="service-icon">🧗</div>
-        <div class="service-image-container">
-          <img src="images/adventureTours.jfif" alt="Adventure Tours">
-        </div>
-        <h3>Adventure Tours</h3>
-        <p>Thrilling adventure packages for adrenaline seekers and outdoor enthusiasts.</p>
-        <a href="#" class="enquire-btn" data-service="Adventure Tours">Enquire Now</a>
-      </div>
-    </div>
+				<!-- Corporate Travel -->
+				<div class="additional-service-box">
+					<div class="service-icon">🏖️</div>
+					<div class="service-image-container">
+					<img src="images/leisureTravel.jpg" alt="Leisure Travel">
+					</div>
+					<h3>Leisure Travel</h3>
+					<p>Custom vacation packages designed for relaxation, adventure, and unforgettable experiences.</p>
+					<a href="#" class="enquire-btn" data-service="Leisure Travel">Enquire Now</a>
+				</div>
+
+				<!-- Adventure Tours Planning -->
+				<div class="additional-service-box">
+					<div class="service-icon">🧗</div>
+					<div class="service-image-container">
+					<img src="images/adventureTours.jfif" alt="Adventure Tours">
+					</div>
+					<h3>Adventure Tours</h3>
+					<p>Thrilling adventure packages for adrenaline seekers and outdoor enthusiasts.</p>
+					<a href="#" class="enquire-btn" data-service="Adventure Tours">Enquire Now</a>
+				</div>
+			
+
+			
+				<!-- Educational/Leisure Travels -->
+				<div class="additional-service-box">
+					<div class="service-icon">🎓</div>
+					<div class="service-image-container">
+						<img src="images/educationaLleisureTravels.jpg" alt="Adventure Tours">
+					</div>
+						<h3>Educational/Leisure Travels</h3>
+						<p>Combine learning and leisure with our custom travel packages that cater to all age groups.</p>
+						<a href="#" class="enquire-btn" data-service="Adventure Tours">Enquire Now</a>
+				</div>
+					
+				
+				<!-- Activity Assessment and Accreditation -->
+				<div class="additional-service-box">
+					<div class="service-icon">🏅</div>
+					<div class="service-image-container">
+						<img src="images/adventureTours2.png" class="img-responsive" alt="Activity Assessment">
+					</div>
+					<h3>Activity Assessment and Accreditation</h3>
+					<p>Receive expert activity assessments and ensure quality through our accreditation services.</p>
+					<a href="#" class="enquire-btn" data-service="Adventure Tours">Enquire Now</a>
+				</div>	
+			</div>
+		</div>
+	</section>
+	
 
     <!-- Hidden Enquiry Form -->
     <div class="service-form-container" id="serviceForm">
@@ -967,12 +1057,11 @@
         </div>
 
         <button type="submit" class="submit-btn">Submit Enquiry</button>
-      </form>
-    </div>
-  </div>
-</div>
+		</form>
+	</div>
 
-	<div id="hotel-facilities">
+	<!-- Hotel facilities -->
+	<section id="hotel-facilities">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -1125,8 +1214,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 
+	<!-- Testimonials -->
 	<div id="testimonial">
 		<div class="container">
 			<div class="row">
@@ -1165,61 +1255,86 @@
 		</div>
 	</div>
 
-	<div id="referrals">
+	<section id="referrals">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12">
-					<div class="section-title text-center">
-						<h2><br>Other Referrals & Brochures</h2>
-					</div>
+			<div class="col-md-12">
+				<div class="section-title text-center">
+				<h2><br>Our Trusted Partners & Brochures</h2>
+				<p>Explore our network of premium travel partners and services</p>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-4">
-					<div class="brochure-item">
-						<img src="images/adamson-extra-services2.jpeg" alt="Event Management Brochure" class="img-responsive">
-						<h3 class="text-center">Adamson Security Services</h3>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="brochure-item">
-						<img src="images/african-safari.jpeg" alt="Security Officers Portfolio" class="img-responsive">
-						<h3 class="text-center">African Safaris</h3>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="brochure-item">
-						<img src="images/chippex-tours.jpeg" alt="V.I.P Protection Portfolio" class="img-responsive">
-						<h3 class="text-center">Chippex Travel and Tours - Agency</h3>
-					</div>
-				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4">
-					<div class="brochure-item">
-						<img src="images/african tourism.jpeg" alt="Risk Control Brochure" class="img-responsive">
-						<h3 class="text-center">African Travelogue - SA Tours</h3>
-					</div>
+			<div class="col-md-4">
+				<div class="brochure-item">
+				<img src="images/adamson-extra-services2.jpeg" alt="Adamson Security Services" class="img-responsive">
+				<div class="brochure-content">
+					<h3 class="text-center">Adamson Security Services</h3>
+					<p>Comprehensive security solutions tailored to protect your people, property, and assets—ensuring safety and peace of mind at all times.</p>
+					<a href="https://adamsonsecurityservices.co.za/rates.html" class="view-brochure-btn" target="_blank">View Brochure</a>
 				</div>
-				<div class="col-md-4">
-					<div class="brochure-item">
-						<img src="images/sa-chippex-travel-broucher.jpeg" alt="Training Professionals Overview" class="img-responsive">
-						<h3 class="text-center">Chippex Travek and Tours - Agency</h3>
-					</div>
 				</div>
-				<div class="col-md-4">
-					<div class="brochure-item">
-						<img src="images/african-design-management.jpeg" alt="CCTV Surveillance Guide" class="img-responsive">
-						<h3 class="text-center">African Travelogue - Destination Management Company</h3>
-					</div>
+			</div>
+			<div class="col-md-4">
+				<div class="brochure-item">
+				<img src="images/african-safari.jpeg" alt="African Safaris" class="img-responsive">
+				<div class="brochure-content">
+					<h3 class="text-center">African Safaris</h3>
+					<p>Experience the wild beauty of Africa with our exclusive safari packages and wildlife adventures.</p>
+					<a href="https://africantravelogue.co.za/brochures.html" class="view-brochure-btn" target="_blank">View Brochure</a>
 				</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="brochure-item">
+				<img src="images/chippex-tours.jpeg" alt="Chippex Travel and Tours" class="img-responsive">
+				<div class="brochure-content">
+					<h3 class="text-center">Chippex Travel and Tours</h3>
+					<p>Your premier travel agency for customized tours and exceptional travel experiences worldwide.</p>
+					<a href="https://www.chippexstravel.co.za/" class="view-brochure-btn" target="_blank">View Brochure</a>
+				</div>
+				</div>
+			</div>
+			</div>
+			<div class="row">
+			<div class="col-md-4">
+				<div class="brochure-item">
+				<img src="images/african tourism.jpeg" alt="African Travelogue" class="img-responsive">
+				<div class="brochure-content">
+					<h3 class="text-center">African Travelogue - SA Tours</h3>
+					<p>Discover South Africa's hidden gems with our expertly curated tour packages and local insights.</p>
+					<a href="https://africantravelogue.co.za/brochures.html" class="view-brochure-btn" target="_blank">View Brochure</a>
+				</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="brochure-item">
+				<img src="images/sa-chippex-travel-broucher.jpeg" alt="Chippex Travel and Tours" class="img-responsive">
+				<div class="brochure-content">
+					<h3 class="text-center">Chippex Travel and Tours</h3>
+					<p>Explore our complete range of travel services and exclusive vacation packages for every budget.</p>
+					<a href="https://www.chippexstravel.co.za/" class="view-brochure-btn" target="_blank">View Brochure</a>
+				</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="brochure-item">
+				<img src="images/african-design-management.jpeg" alt="African Travelogue DMC" class="img-responsive">
+				<div class="brochure-content">
+					<h3 class="text-center">African Travelogue DMC</h3>
+					<p>Professional destination management services for groups, corporate travel, and special events.</p>
+					<a href="https://africantravelogue.co.za/brochures.html" class="view-brochure-btn" target="_blank">View Brochure</a>
+				</div>
+				</div>
+			</div>
 			</div>
 		</div>
-	</div>
+	</section>
 	
 
 	<!-- New Payment Link Request Form -->
-	<div id="payment-request" class="container">
+	<!-- <div id="payment-request" class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="section-title text-center">
@@ -1269,7 +1384,7 @@
 				</div>
 			</form>
 		</div>
-	</div>
+	</div> -->
 
 
 	<!--div id="fh5co-blog-section">
@@ -1319,6 +1434,7 @@
 		</div>
 	</div-->
 
+	<!-- Footer -->
 	<footer id="footer" class="fh5co-bg-color">
 		<div class="container">
 			<div class="row">
@@ -1414,18 +1530,58 @@
 
 	<script src="js/custom.js"></script>
 
+	<!-- Additional Services -->
 	<script>
-		function showSection(sectionId) {
-			const sections = document.querySelectorAll('.slides li');
-			sections.forEach(section => {
-				if (section.id === sectionId) {
-					section.style.display = 'block';
-				} else {
-					section.style.display = 'none';
-				}
-			});
-		}
+	document.addEventListener('DOMContentLoaded', function() {
+		const enquiryBtns = document.querySelectorAll('.enquire-btn');
+		const serviceForm = document.getElementById('serviceForm');
+		const formTitle = document.getElementById('formTitle');
+		const selectedService = document.getElementById('selectedService');
+		const enquiryForm = document.getElementById('enquiryForm');
 		
+		enquiryBtns.forEach(btn => {
+		btn.addEventListener('click', function(e) {
+			e.preventDefault();
+			const service = this.getAttribute('data-service');
+			
+			// Set form title and hidden field
+			formTitle.textContent = `Enquire About ${service}`;
+			selectedService.value = service;
+			
+			// Show the form
+			if (serviceForm.classList.contains('active') && selectedService.value === service) {
+			// If form is open and for the same service, close it
+			serviceForm.classList.remove('active');
+			} else {
+			// Open or switch to a different service
+			serviceForm.classList.add('active');
+			formTitle.textContent = `Enquire About ${service}`;
+			selectedService.value = service;
+			
+			setTimeout(() => {
+				serviceForm.scrollIntoView({ behavior: 'smooth' });
+			}, 50);
+			}
+		});
+		});
+		
+		// Form submission
+		enquiryForm.addEventListener('submit', function(e) {
+		e.preventDefault();
+		// Here you would normally send the form data to your server
+		alert('Thank you for your enquiry! Our team will contact you shortly.');
+		this.reset();
+		serviceForm.classList.remove('active');
+		});
+		
+		// Close form when clicking outside
+		document.addEventListener('click', function(e) {
+		if (!serviceForm.contains(e.target) && 
+			!Array.from(enquiryBtns).some(btn => btn.contains(e.target))) {
+			serviceForm.classList.remove('active');
+		}
+		});
+	});
 	</script>
 
 	<script>
