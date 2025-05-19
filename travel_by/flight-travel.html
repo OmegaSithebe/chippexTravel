@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Road Trip Adventures | Travel by Car</title>
+  <title>Sky High Adventures | Travel by Flight</title>
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #FF6B35;
-      --secondary: #004E89;
+      --primary: #4285F4;
+      --secondary: #0F9D58;
       --light: #F7F9FC;
       --dark: #292929;
-      --accent: #FFBE0B;
+      --accent: #FFC107;
     }
     
     body {
@@ -20,7 +20,7 @@
       margin: 0;
       padding: 0;
       color: var(--dark);
-      background: url('./images/travel\ by\ car.png') no-repeat center center fixed;
+      background: url('../images/travelByFlight4.png') no-repeat center center fixed;
       background-size: cover;
       position: relative;
     }
@@ -127,7 +127,7 @@
     form input:focus, form textarea:focus, form select:focus {
       border-color: var(--primary);
       outline: none;
-      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
     }
     
     form label {
@@ -155,7 +155,7 @@
     
     form button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 15px rgba(255, 107, 53, 0.3);
+      box-shadow: 0 8px 15px rgba(66, 133, 244, 0.3);
     }
     
     .travel-icons {
@@ -189,6 +189,31 @@
       color: var(--secondary);
     }
     
+    .flight-class {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    
+    .flight-class label {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      border-radius: 8px;
+      background: var(--light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .flight-class input[type="radio"] {
+      display: none;
+    }
+    
+    .flight-class input[type="radio"]:checked + label {
+      background: var(--primary);
+      color: white;
+    }
+    
     @media (max-width: 768px) {
       .form-container {
         padding: 30px 20px;
@@ -196,6 +221,15 @@
       
       h2 {
         font-size: 1.8rem;
+      }
+      
+      .flight-class {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .flight-class label {
+        justify-content: center;
       }
     }
 
@@ -238,6 +272,7 @@
       display: inline;
     }
   }
+
   </style>
 </head>
 <body>
@@ -249,24 +284,27 @@
     </a>
 
   <div class="container">
-    <!-- Home Button -->
-    <a href="index.html" class="home-button">
+    <a href="../index.html" class="home-button">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
       </svg>
       Back to Home
     </a>
 
-    <!-- Form Section -->
     <div class="form-container">
-      <h2>Start Your Road Trip Adventure</h2>
-      <p class="form-intro">Fill out the form below to book your personalized car travel experience. Our team will contact you within 24 hours to confirm your journey details and discuss any special requests.</p>
+      <h2>Soar to New Destinations</h2>
+      <p class="form-intro">Complete this form to book your flight adventure. Our travel experts will find you the best routes and deals for your journey.</p>
       
       <div class="travel-icons">
         <div class="travel-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.08 3.11H5.77L6.85 7zM19 17H5v-5h14v5z"/>
-            <circle cx="7.5" cy="14.5" r="1.5"/><circle cx="16.5" cy="14.5" r="1.5"/>
+            <path d="M10.18 9"/><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+          </svg>
+          <p>Speed</p>
+        </div>
+        <div class="travel-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M17 5.33C17 4.6 16.4 4 15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33V11h10V5.33z" fill="none"/><path d="M7 11v9.67C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V11H7z"/>
           </svg>
           <p>Comfort</p>
         </div>
@@ -274,17 +312,11 @@
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
           </svg>
-          <p>Exploration</p>
-        </div>
-        <div class="travel-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm1-11h-2v3H8v2h3v3h2v-3h3v-2h-3V8z"/>
-          </svg>
-          <p>Freedom</p>
+          <p>Global</p>
         </div>
       </div>
       
-      <form id="carTravelForm" action="send-form.php" method="POST">
+      <form id="flightTravelForm" action="send-flight-form.php" method="post">
         <label for="name">Full Name</label>
         <input type="text" id="name" name="name" placeholder="Your full name" required>
         
@@ -292,16 +324,31 @@
         <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
         
         <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone" placeholder="+27 (123) 456-789" required>
+        <input type="tel" id="phone" name="phone" placeholder="+1 (123) 456-7890" required>
         
-        <label for="pickup">Pickup Location</label>
-        <input type="text" id="pickup" name="pickup" placeholder="Where should we pick you up?" required>
+        <label for="departureAirport">Departure Airport</label>
+        <input type="text" id="departureAirport" name="departureAirport" placeholder="City or airport code" required>
         
-        <label for="destination">Destination</label>
-        <input type="text" id="destination" name="destination" placeholder="Where are you heading?" required>
+        <label for="arrivalAirport">Arrival Airport</label>
+        <input type="text" id="arrivalAirport" name="arrivalAirport" placeholder="City or airport code" required>
         
-        <label for="date">Travel Date</label>
-        <input type="date" id="date" name="date" required>
+        <label for="flightDate">Travel Date</label>
+        <input type="date" id="flightDate" name="flightDate" required>
+        
+        <label>Flight Class</label>
+        <div class="flight-class">
+          <input type="radio" id="economy" name="flightClass" value="economy" checked>
+          <label for="economy">Economy</label>
+          
+          <input type="radio" id="premium" name="flightClass" value="premium">
+          <label for="premium">Premium</label>
+          
+          <input type="radio" id="business" name="flightClass" value="business">
+          <label for="business">Business</label>
+          
+          <input type="radio" id="first" name="flightClass" value="first">
+          <label for="first">First Class</label>
+        </div>
         
         <label for="passengers">Number of Passengers</label>
         <select id="passengers" name="passengers">
@@ -312,37 +359,36 @@
           <option value="5+">5+ Travelers</option>
         </select>
         
-        <label for="notes">Additional Notes</label>
-        <textarea id="notes" name="notes" placeholder="Special requests, vehicle preferences, etc." rows="4"></textarea>
+        <label for="notes">Special Requests</label>
+        <textarea id="notes" name="notes" placeholder="Dietary needs, seating preferences, etc." rows="4"></textarea>
         
-        <button type="submit">Begin Your Journey →</button>
+        <button type="submit">Book Your Flight →</button>
       </form>
     </div>
   </div>
 
   <script>
-    document.getElementById("carTravelForm").addEventListener("submit", function(e) {
-      // e.preventDefault();
-      const name = this.name.value.split(' ')[0]; // Get first name
+    document.getElementById("flightTravelForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = this.name.value.split(' ')[0];
       
-      // Create a more engaging confirmation
       const confirmationHtml = `
         <div style="text-align:center; padding:20px;">
-          <h3 style="color:var(--secondary); margin-bottom:15px;">Thanks ${name}!</h3>
-          <p style="margin-bottom:20px;">Your road trip request has been received. Our travel specialist will contact you within 24 hours to finalize your adventure.</p>
+          <h3 style="color:var(--secondary); margin-bottom:15px;">Thank You ${name}!</h3>
+          <p style="margin-bottom:20px;">Your flight request has been received. Our travel specialist will contact you within 24 hours with the best flight options for your journey.</p>
           <div style="background:var(--light); padding:15px; border-radius:8px; margin:20px 0;">
-            <p style="font-weight:600; margin-bottom:10px;">Next Steps:</p>
+            <p style="font-weight:600; margin-bottom:10px;">What to Expect:</p>
             <ol style="text-align:left; padding-left:20px; margin:0;">
-              <li>We'll confirm vehicle availability</li>
-              <li>Discuss route options</li>
-              <li>Provide personalized recommendations</li>
+              <li>Personalized flight options</li>
+              <li>Best available pricing</li>
+              <li>Seat selection assistance</li>
+              <li>Travel tips for your destination</li>
             </ol>
           </div>
-          <p>Get ready for an unforgettable journey!</p>
+          <p>We'll have you soaring to new heights in no time!</p>
         </div>
       `;
       
-      // Show custom alert
       const customAlert = document.createElement('div');
       customAlert.style.position = 'fixed';
       customAlert.style.top = '0';
@@ -364,7 +410,7 @@
       alertContent.innerHTML = confirmationHtml;
       
       const closeButton = document.createElement('button');
-      closeButton.textContent = 'Awesome!';
+      closeButton.textContent = 'Continue';
       closeButton.style.background = 'linear-gradient(to right, var(--primary), var(--accent))';
       closeButton.style.color = 'white';
       closeButton.style.border = 'none';
@@ -387,8 +433,7 @@
       document.body.appendChild(customAlert);
     });
     
-    // Add today's date as min date for date picker
-    document.getElementById('date').min = new Date().toISOString().split('T')[0];
+    document.getElementById('flightDate').min = new Date().toISOString().split('T')[0];
   </script>
 </body>
 </html>

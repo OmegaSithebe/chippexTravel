@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Your Stay at Vahlavi Guest House</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Vahlavi-specific styles */
+    :root {
+      --primary-color: #9b59b6;
+      --secondary-color: #8e44ad;
+      --accent-color: #f39c12;
+    }
+    
+    .hero {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/vahlaviLodge.jpg');
+    }
+    
+    .room-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .room-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .room-card.selected {
+      box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+      border: 2px solid var(--accent-color);
+    }
+    
+    .room-image {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .room-details {
+      padding: 20px;
+    }
+    
+    .room-details h4 {
+      color: var(--dark-color);
+      margin-bottom: 10px;
+    }
+    
+    .room-price {
+      color: var(--accent-color);
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+    
+    .room-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    
+    .feature {
+      background: rgba(155, 89, 182, 0.1);
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+    }
+    
+    .room-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .package-options {
+      margin-bottom: 30px;
+    }
+    
+    .package-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .package-option input {
+      margin-right: 10px;
+    }
+    
+    .package-label {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+    
+    .package-name {
+      font-weight: bold;
+    }
+    
+    .package-price {
+      color: var(--accent-color);
+    }
+
+      /* WhatsApp Floating Button */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    background-color: #25D366;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s;
+  }
+  
+  .whatsapp-float:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  }
+  
+  .whatsapp-float img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .whatsapp-text {
+    font-weight: 600;
+    font-size: 14px;
+    display: none;
+  }
+  
+  @media (min-width: 480px) {
+    .whatsapp-text {
+      display: inline;
+    }
+  }
+  </style>
+  <link rel="stylesheet" href="css/hotels-common.css">
+</head>
+<body>
+    <!-- WhatsApp Button with your requested message -->
+    <a href="https://wa.me/27734742034?text=Hi%20I'm%20interested%20in%20your%20services." 
+        class="whatsapp-float" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
+        <span class="whatsapp-text">Chat with Us</span>
+    </a>
+
+  <div class="container">
+    <header>
+      <a href="../index.html" class="btn btn-back animated"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </header>
+    
+    <section class="hero animated">
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <h1 class="animated delay-1">Vahlavi Guest House</h1>
+          <p class="animated delay-2">Your cozy retreat in the heart of comfort and elegance</p>
+        </div>
+      </div>
+    </section>
+    
+    <section class="booking-section animated delay-1">
+      <div class="section-title">
+        <h2>Book Your Stay</h2>
+        <p>Experience warm hospitality and stylish comfort</p>
+      </div>
+      
+      <form id="bookingForm" class="booking-form">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input type="tel" id="phone" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="checkIn">Check-in Date *</label>
+          <input type="date" id="checkIn" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="checkOut">Check-out Date *</label>
+          <input type="date" id="checkOut" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="guests">Number of Guests *</label>
+          <select id="guests" class="form-control" required>
+            <option value="">Select...</option>
+            <option value="1">1 Guest</option>
+            <option value="2">2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4 Guests</option>
+          </select>
+        </div>
+        
+        <div class="form-group" style="grid-column: 1 / -1">
+          <label>Select Your Room *</label>
+          <input type="hidden" id="roomType" required>
+          
+          <div class="room-grid">
+            <div class="room-card" data-value="standard">
+              <div class="room-image" style="background-image: url('images/vahlaviLodge_standard.jfif');"></div>
+              <div class="room-details">
+                <h4>Standard Room</h4>
+                <div class="room-features">
+                  <span class="feature">Queen Bed</span>
+                  <span class="feature">Ensuite</span>
+                  <span class="feature">WiFi</span>
+                </div>
+                <div class="room-price">R1815/night</div>
+              </div>
+            </div>
+            
+            <div class="room-card" data-value="deluxe">
+              <div class="room-image" style="background-image: url('images/vahlaviLodge_deluxe.jpg');"></div>
+              <div class="room-details">
+                <h4>Deluxe Room</h4>
+                <div class="room-features">
+                  <span class="feature">King Bed</span>
+                  <span class="feature">Ensuite</span>
+                  <span class="feature">WiFi</span>
+                  <span class="feature">Balcony</span>
+                </div>
+                <div class="room-price">R2400/night</div>
+              </div>
+            </div>
+            
+            <div class="room-card" data-value="executive">
+              <div class="room-image" style="background-image: url('images/vahlaviLodge_suite.jpg');"></div>
+              <div class="room-details">
+                <h4>Executive Suite</h4>
+                <div class="room-features">
+                  <span class="feature">King Bed</span>
+                  <span class="feature">Lounge</span>
+                  <span class="feature">WiFi</span>
+                  <span class="feature">Jacuzzi</span>
+                </div>
+                <div class="room-price">R3200/night</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group" style="grid-column: 1 / -1">
+          <label>Add Packages (Optional)</label>
+          <div class="package-options">
+            <div class="package-option">
+              <input type="checkbox" id="breakfast" name="packages" value="breakfast">
+              <label for="breakfast" class="package-label">
+                <span class="package-name">Daily Breakfast</span>
+                <span class="package-price">+R150/day</span>
+              </label>
+            </div>
+            <div class="package-option">
+              <input type="checkbox" id="airport" name="packages" value="airport">
+              <label for="airport" class="package-label">
+                <span class="package-name">Airport Transfer</span>
+                <span class="package-price">+R300 one-way</span>
+              </label>
+            </div>
+            <div class="package-option">
+              <input type="checkbox" id="dinner" name="packages" value="dinner">
+              <label for="dinner" class="package-label">
+                <span class="package-name">3-Course Dinner</span>
+                <span class="package-price">+R450/day</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group" style="grid-column: 1 / -1">
+          <label for="specialRequests">Special Requests</label>
+          <textarea id="specialRequests" class="form-control" placeholder="Let us know how we can make your stay more comfortable..."></textarea>
+        </div>
+        
+        <div class="form-submit">
+          <button type="submit" class="btn btn-submit">Reserve Now</button>
+        </div>
+      </form>
+    </section>
+    
+    <footer class="animated delay-2">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>Email: admin@chippexstrave.co.za</p>
+            <p>Phone: +27 73 474 2034 </p>
+          </div>
+          <div class="footer-section">
+            <h3>Location</h3>
+            <p>123 Comfort Street</p>
+            <p>Limpopo, South Africa</p>
+          </div>
+          <div class="footer-section">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="copyright-text">&copy; <span id="current-year"></span> Chippex Travel All Rights Reserved. <br>
+        </div>
+      </div>
+    </footer>
+  </div>
+  
+  <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+  <script src="js/scripts.js"></script>
+  <script>
+    // Additional JS for Vahlavi
+    document.addEventListener('DOMContentLoaded', function() {
+      // Room card selection
+      const roomCards = document.querySelectorAll('.room-card');
+      roomCards.forEach(card => {
+        card.addEventListener('click', function() {
+          roomCards.forEach(c => c.classList.remove('selected'));
+          this.classList.add('selected');
+          document.getElementById('roomType').value = this.dataset.value;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

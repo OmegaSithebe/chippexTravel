@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Your Stay at Xisaka Guest House</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Xisaka-specific styles */
+    :root {
+      --primary-color: #27ae60;
+      --secondary-color: #219653;
+      --accent-color: #e67e22;
+    }
+    
+    .hero {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/xisakaGuestHouse.jpg');
+    }
+    
+    .booking-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    .booking-steps:before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #ddd;
+      z-index: 1;
+    }
+    
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .step-number {
+      width: 32px;
+      height: 32px;
+      background: #ddd;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      font-weight: bold;
+    }
+    
+    .step.active .step-number {
+      background: var(--primary-color);
+    }
+    
+    .step.completed .step-number {
+      background: var(--accent-color);
+    }
+    
+    .step-text {
+      font-size: 0.9rem;
+      color: #777;
+    }
+    
+    .step.active .step-text {
+      color: var(--dark-color);
+      font-weight: bold;
+    }
+    
+    .room-type {
+      display: flex;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .room-type:hover {
+      border-color: var(--primary-color);
+    }
+    
+    .room-type.selected {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 2px rgba(230, 126, 34, 0.3);
+    }
+    
+    .room-image {
+      width: 120px;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .room-info {
+      flex: 1;
+      padding: 15px;
+    }
+    
+    .room-info h4 {
+      margin-bottom: 5px;
+      color: var(--dark-color);
+    }
+    
+    .room-description {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    
+    .room-price {
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+    
+    .room-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    
+    .feature {
+      background: rgba(39, 174, 96, 0.1);
+      color: var(--secondary-color);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+    
+    .add-ons {
+      margin: 20px 0;
+    }
+    
+    .add-on-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .add-on-item:last-child {
+      border-bottom: none;
+    }
+    
+    .add-on-name {
+      display: flex;
+      align-items: center;
+    }
+    
+    .add-on-checkbox {
+      margin-right: 10px;
+    }
+    
+    .add-on-price {
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
+      /* WhatsApp Floating Button */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    background-color: #25D366;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s;
+  }
+  
+  .whatsapp-float:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  }
+  
+  .whatsapp-float img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .whatsapp-text {
+    font-weight: 600;
+    font-size: 14px;
+    display: none;
+  }
+  
+  @media (min-width: 480px) {
+    .whatsapp-text {
+      display: inline;
+    }
+  }
+  </style>
+  <link rel="stylesheet" href="css/hotels-common.css">
+</head>
+<body>
+    <!-- WhatsApp Button with your requested message -->
+    <a href="https://wa.me/27734742034?text=Hi%20I'm%20interested%20in%20your%20services." 
+        class="whatsapp-float" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
+        <span class="whatsapp-text">Chat with Us</span>
+    </a>
+
+
+  <div class="container">
+    <header>
+      <a href="../index.html" class="btn btn-back animated"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </header>
+    
+    <section class="hero animated">
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <h1 class="animated delay-1">Xisaka Guest House</h1>
+          <p class="animated delay-2">Relax in our inviting rooms with warm ambiance and exceptional service</p>
+        </div>
+      </div>
+    </section>
+    
+    <section class="booking-section animated delay-1">
+      <div class="section-title">
+        <h2>Book Your Stay</h2>
+        <p>Complete your reservation in just a few steps</p>
+      </div>
+      
+      <div class="booking-steps">
+        <div class="step active">
+          <div class="step-number">1</div>
+          <div class="step-text">Your Details</div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-text">Room Selection</div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-text">Confirmation</div>
+        </div>
+      </div>
+      
+      <form id="bookingForm" class="booking-form">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input type="tel" id="phone" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="checkIn">Check-in Date *</label>
+          <input type="date" id="checkIn" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="checkOut">Check-out Date *</label>
+          <input type="date" id="checkOut" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="guests">Number of Guests *</label>
+          <select id="guests" class="form-control" required>
+            <option value="">Select...</option>
+            <option value="1">1 Guest</option>
+            <option value="2">2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4 Guests</option>
+          </select>
+        </div>
+        
+        <div class="form-group" style="grid-column: 1 / -1">
+          <label>Select Your Room *</label>
+          <input type="hidden" id="roomType" required>
+          
+                <div class="room-type" data-value="standard">
+            <div class="room-image" style="background-image: url('images/xisaka_standard.jfif');"></div>
+            <div class="room-info">
+            <h4>Standard Room</h4>
+            <p class="room-description">Comfortable room with all basic amenities for a pleasant stay.</p>
+            <div class="room-features">
+                <span class="feature">Double Bed</span>
+                <span class="feature">WiFi</span>
+                <span class="feature">TV</span>
+            </div>
+            <p class="room-price">R880/night</p>
+            </div>
+        </div>
+        
+        <div class="room-type" data-value="deluxe">
+            <div class="room-image" style="background-image: url('images/xisaka_deluxe.png');"></div>
+            <div class="room-info">
+            <h4>Deluxe Room</h4>
+            <p class="room-description">Spacious room with upgraded amenities and work desk.</p>
+            <div class="room-features">
+                <span class="feature">Queen Bed</span>
+                <span class="feature">WiFi</span>
+                <span class="feature">Smart TV</span>
+                <span class="feature">Desk</span>
+            </div>
+            <p class="room-price">R1200/night</p>
+            </div>
+        </div>
+        
+        <div class="room-type" data-value="family">
+            <div class="room-image" style="background-image: url('images/xisaka_familyRoom.jfif');"></div>
+            <div class="room-info">
+            <h4>Family Room</h4>
+            <p class="room-description">Perfect for families with two double beds and extra space.</p>
+            <div class="room-features">
+                <span class="feature">2 Double Beds</span>
+                <span class="feature">WiFi</span>
+                <span class="feature">Smart TV</span>
+                <span class="feature">Sofa</span>
+            </div>
+            <p class="room-price">R1600/night</p>
+            </div>
+        </div>
+        </div>
+        
+        <div class="form-group" style="grid-column: 1 / -1">
+        <label>Add Extra Comfort (Optional)</label>
+        <div class="add-ons">
+            <div class="add-on-item">
+            <div class="add-on-name">
+                <input type="checkbox" id="breakfast" class="add-on-checkbox">
+                <label for="breakfast">Daily Breakfast Buffet</label>
+            </div>
+            <div class="add-on-price">+R120/day</div>
+            </div>
+            <div class="add-on-item">
+            <div class="add-on-name">
+                <input type="checkbox" id="parking" class="add-on-checkbox">
+                <label for="parking">Secure Parking</label>
+            </div>
+            <div class="add-on-price">+R60/day</div>
+            </div>
+            <div class="add-on-item">
+            <div class="add-on-name">
+                <input type="checkbox" id="laundry" class="add-on-checkbox">
+                <label for="laundry">Laundry Service</label>
+            </div>
+            <div class="add-on-price">+R80/load</div>
+            </div>
+        </div>
+        </div>
+        
+        <div class="form-group" style="grid-column: 1 / -1">
+        <label for="specialRequests">Special Requests</label>
+        <textarea id="specialRequests" class="form-control" placeholder="Do you have any special requirements?"></textarea>
+        </div>
+        
+    
+    <div class="form-submit">
+      <button type="submit" class="btn btn-submit">Confirm Booking</button>
+    </div>
+  </form>
+</section>
+
+<footer class="animated delay-2">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+            <p>Email: admin@chippexstrave.co.za</p>
+            <p>Phone: +27 73 474 2034 </p>
+      </div>
+      <div class="footer-section">
+        <h3>Location</h3>
+        <p>456 Serenity Road</p>
+        <p>Limpopo, South Africa</p>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="copyright-text">&copy; <span id="current-year"></span> Chippex Travel All Rights Reserved. <br>
+    </div>
+  </div>
+</footer>
+
+  
+  <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+
+<script src="js/scripts.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Room selection functionality
+    const roomTypes = document.querySelectorAll('.room-type');
+    
+    roomTypes.forEach(room => {
+        room.addEventListener('click', function() {
+        // Remove selected class from all rooms
+        roomTypes.forEach(r => r.classList.remove('selected'));
+        
+        // Add selected class to clicked room
+        this.classList.add('selected');
+        
+        // Update the hidden input with the selected room value
+        document.getElementById('roomType').value = this.dataset.value;
+        
+        // Calculate and update pricing (example)
+        updatePriceSummary();
+        });
+    });
+
+    // Function to update price summary (example implementation)
+    function updatePriceSummary() {
+        const selectedRoom = document.querySelector('.room-type.selected');
+        if (selectedRoom) {
+        const priceText = selectedRoom.querySelector('.room-price').textContent;
+        const price = parseInt(priceText.replace(/[^0-9]/g, ''));
+        
+        // Get number of nights
+        const checkIn = document.getElementById('checkIn').value;
+        const checkOut = document.getElementById('checkOut').value;
+        
+        if (checkIn && checkOut) {
+            const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            const firstDate = new Date(checkIn);
+            const secondDate = new Date(checkOut);
+            const nights = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+            
+            // Update summary
+            const roomTotal = price * nights;
+            const taxes = Math.round(roomTotal * 0.1); // Example 10% tax
+            const total = roomTotal + taxes;
+            
+            // Update the DOM (you'll need to add these elements to your HTML)
+            document.querySelector('.summary-item span:last-child').textContent = `R${roomTotal}`;
+            document.querySelector('.summary-taxes span:last-child').textContent = `R${taxes}`;
+            document.querySelector('.summary-total span:last-child').textContent = `R${total}`;
+        }
+        }
+    }
+
+    // Update price when dates change
+    document.getElementById('checkIn').addEventListener('change', updatePriceSummary);
+    document.getElementById('checkOut').addEventListener('change', updatePriceSummary);
+    });
+</script>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Your Stay at Nandoni Waterfront Resort</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Nandoni-specific styles */
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2980b9;
+      --accent-color: #e74c3c;
+    }
+    
+    .hero {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/nandoniWaterfrontResort.png');
+    }
+    
+    .room-option {
+      border: 2px solid #ddd;
+      padding: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 15px;
+    }
+    
+    .room-option:hover {
+      border-color: var(--primary-color);
+    }
+    
+    .room-option.selected {
+      border-color: var(--accent-color);
+      background-color: rgba(231, 76, 60, 0.05);
+    }
+    
+    .room-option h4 {
+      color: var(--dark-color);
+      margin-bottom: 10px;
+    }
+    
+    .room-option .price {
+      color: var(--accent-color);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    .amenities-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .amenity-item {
+      display: flex;
+      align-items: center;
+      background: rgba(52, 152, 219, 0.1);
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+    
+    .amenity-item i {
+      margin-right: 8px;
+      color: var(--primary-color);
+    }
+    
+    .special-request {
+      grid-column: 1 / -1;
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+  /* WhatsApp Floating Button */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    background-color: #25D366;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s;
+  }
+  
+  .whatsapp-float:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  }
+  
+  .whatsapp-float img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .whatsapp-text {
+    font-weight: 600;
+    font-size: 14px;
+    display: none;
+  }
+  
+  @media (min-width: 480px) {
+    .whatsapp-text {
+      display: inline;
+    }
+  }
+  </style>
+</head>
+<body>
+    <!-- WhatsApp Button with your requested message -->
+    <a href="https://wa.me/27734742034?text=Hi%20I'm%20interested%20in%20your%20services." 
+        class="whatsapp-float" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
+        <span class="whatsapp-text">Chat with Us</span>
+    </a>
+
+  <div class="container">
+    <header>
+      <a href="../index.html" class="btn btn-back animated"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </header>
+    
+    <section class="hero animated">
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <h1 class="animated delay-1">Nandoni Waterfront Resort</h1>
+          <p class="animated delay-2">Your tranquil escape on the scenic shores of Nandoni Dam</p>
+        </div>
+      </div>
+    </section>
+    
+    <section class="booking-section animated delay-1">
+      <div class="section-title">
+        <h2>Book Your Stay</h2>
+        <p>Fill in your details to reserve your perfect getaway</p>
+      </div>
+      
+      <form id="bookingForm" class="booking-form">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input type="tel" id="phone" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="checkIn">Check-in Date *</label>
+          <input type="date" id="checkIn" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="checkOut">Check-out Date *</label>
+          <input type="date" id="checkOut" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="guests">Number of Guests *</label>
+          <select id="guests" class="form-control" required>
+            <option value="">Select...</option>
+            <option value="1">1 Guest</option>
+            <option value="2">2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4 Guests</option>
+            <option value="4+">More than 4</option>
+          </select>
+        </div>
+        
+        <div class="form-group" style="grid-column: 1 / -1">
+          <label>Select Your Room Type *</label>
+          <input type="hidden" id="roomType" required>
+          
+          <div class="room-option" data-value="standard">
+            <h4>Standard Room</h4>
+            <p>Comfortable room with dam view, perfect for couples or solo travelers.</p>
+            <div class="amenities-list">
+              <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
+              <span class="amenity-item"><i class="fas fa-tv"></i> TV</span>
+              <span class="amenity-item"><i class="fas fa-coffee"></i> Tea/Coffee</span>
+            </div>
+            <p class="price">R2000/night</p>
+          </div>
+          
+          <div class="room-option" data-value="deluxe">
+            <h4>Deluxe Room</h4>
+            <p>Spacious room with private balcony overlooking the dam.</p>
+            <div class="amenities-list">
+              <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
+              <span class="amenity-item"><i class="fas fa-tv"></i> Smart TV</span>
+              <span class="amenity-item"><i class="fas fa-coffee"></i> Tea/Coffee</span>
+              <span class="amenity-item"><i class="fas fa-umbrella-beach"></i> Balcony</span>
+            </div>
+            <p class="price">R2800/night</p>
+          </div>
+          
+          <div class="room-option" data-value="family">
+            <h4>Family Suite</h4>
+            <p>Two-bedroom suite perfect for families, with kitchenette.</p>
+            <div class="amenities-list">
+              <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
+              <span class="amenity-item"><i class="fas fa-tv"></i> Smart TV</span>
+              <span class="amenity-item"><i class="fas fa-utensils"></i> Kitchenette</span>
+              <span class="amenity-item"><i class="fas fa-couch"></i> Living Area</span>
+            </div>
+            <p class="price">R3500/night</p>
+          </div>
+        </div>
+        
+        <div class="form-group special-request">
+          <label for="specialRequests">Special Requests</label>
+          <textarea id="specialRequests" class="form-control" placeholder="Any special requirements or preferences..."></textarea>
+        </div>
+        
+        <div class="form-submit">
+          <button type="submit" class="btn btn-submit">Complete Booking</button>
+        </div>
+      </form>
+    </section>
+    
+    <footer class="animated delay-2">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Contact Us</h3>
+              <p>Email: admin@chippexstrave.co.za</p>
+              <p>Phone: +27 73 474 2034 </p>
+          </div>
+          <div class="footer-section">
+            <h3>Location</h3>
+            <p>Nandoni Dam, Limpopo</p>
+            <p>South Africa</p>
+          </div>
+          <div class="footer-section">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="copyright-text">&copy; <span id="current-year"></span> Chippex Travel All Rights Reserved. <br>
+        </div>
+      </div>
+    </footer>
+  </div>
+    
+  <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+  
+  <script src="js/scripts.js"></script>
+</body>
+</html>
