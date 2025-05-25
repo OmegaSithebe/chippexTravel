@@ -6,9 +6,10 @@
 	<link rel="icon" type="image/png" sizes="16x16" href="images/chippexTravel-192x192.png">
 	<link rel="apple-touch-icon" sizes="180x180" href="images/chippexTravel.png">
 	<link rel="manifest" href="images/site.webmanifest">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Chippex Travel &mdash; Endless Adventures, captures the spirit of exploration and excitement.</title>
+	<title>Chippexs Travel &mdash; Endless Adventures, captures the spirit of exploration and excitement.</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
@@ -74,7 +75,44 @@
     min-height: 600px;
     overflow: hidden;
   }
+
+ /* Check Availability styling */
+.popup-form {
+  position: fixed;
+  background: white;
+  padding: 30px;
+  border: 1px solid #ccc;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.popup-form .form-group {
+  margin-bottom: 15px;
+}
+
+.popup-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.popup-form input[type="text"],
+.popup-form input[type="email"],
+.popup-form input[type="tel"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.popup-form button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  cursor: pointer;
+}
   
+  /* Travel option */
   .travel-option {
     position: absolute;
     width: 100%;
@@ -173,17 +211,7 @@
     background: rgba(0,0,0,0.6);
     transform: scale(1.1);
   }
-  
-  /* Availability Form Styles */
-  .availability-form {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 30px rgba(0,0,0,0.1);
-    margin-top: -50px;
-    position: relative;
-    z-index: 10;
-  }
+
   
   /* Responsive Adjustments */
   @media (max-width: 768px) {
@@ -201,41 +229,6 @@
       font-size: 2rem;
     }
   }
-
-	/* Styling for the pop-up form */
-	.popup-form {
-		display: none;
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		background-color: white;
-		padding: 20px;
-		border: 1px solid #ccc;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-		z-index: 1000;
-	}
-
-	.popup-overlay {
-		display: none;
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
-		z-index: 999;
-	}
-
-	.popup-form input {
-		margin-bottom: 10px;
-		width: 100%;
-		padding: 8px;
-	}
-
-	.popup-form button {
-		padding: 10px 15px;
-	}
 
 	 /* Thank-you message styling */
 	 .thank-you-message {
@@ -505,8 +498,6 @@
       }
     }
 
-
-
   
 	#referrals::before {
     content: "";
@@ -617,6 +608,267 @@
     }
   }
 
+/* Chippexs Logo */
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+}
+
+.chippex-logo {
+    position: relative;
+    z-index: 10;
+}
+
+.logo-container {
+    display: inline-block;
+    padding: 15px;
+    border-radius: 8px;
+    position: relative;
+    z-index: 20;
+}
+
+.logo-main {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    color: white;
+    letter-spacing: 1px;
+    line-height: 1;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.logo-part1 {
+    color: #3498db;
+}
+
+.logo-part2 {
+    color: #e74c3c;
+}
+
+.logo-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    color: #ecf0f1;
+    letter-spacing: 3px;
+    text-align: center;
+    line-height: 1.2;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* ---------- NAVIGATION STYLES ---------- */
+#fh5co-menu-wrap {
+    text-align: right;
+    flex-grow: 1;
+}
+
+#fh5co-primary-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 25px;
+}
+
+#fh5co-primary-menu li {
+    position: relative;
+}
+
+#fh5co-primary-menu li a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    padding: 10px 5px;
+    transition: color 0.3s ease;
+}
+
+#fh5co-primary-menu li a:hover,
+#fh5co-primary-menu li a.active {
+    color: #e74c3c;
+}
+
+/* Dropdown menu */
+.fh5co-sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #2c3e50;
+    padding: 10px 0;
+    display: none;
+    min-width: 160px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 999;
+}
+
+.fh5co-sub-ddown:hover .fh5co-sub-menu {
+    display: block;
+}
+
+.fh5co-sub-menu li {
+    padding: 0;
+    margin: 0;
+}
+
+.fh5co-sub-menu li a {
+    padding: 8px 20px;
+    display: block;
+    white-space: nowrap;
+}
+
+/*  RESPONSIVE  */
+@media (max-width: 992px) {
+    .logo-main {
+        font-size: 24px;
+    }
+
+    .logo-sub {
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-flex {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #fh5co-menu-wrap {
+        width: 100%;
+        text-align: left;
+        margin-top: 10px;
+    }
+
+    #fh5co-primary-menu {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .logo-main {
+        font-size: 20px;
+    }
+
+    .logo-sub {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    .logo-container {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-main {
+        font-size: 18px;
+    }
+
+    .logo-sub {
+        font-size: 14px;
+    }
+
+    .logo-container {
+        padding: 8px;
+    }
+}
+
+/* HAMBURGER TOGGLE BUTTON  */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 999;
+    padding: 10px;
+    margin-left: auto;
+}
+
+.nav-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* ---------- ACTIVE STATE FOR CROSS ---------- */
+.nav-toggle.open .bar:nth-child(1) {
+    transform: rotate(45deg) translateY(8px);
+}
+.nav-toggle.open .bar:nth-child(2) {
+    opacity: 0;
+}
+.nav-toggle.open .bar:nth-child(3) {
+    transform: rotate(-45deg) translateY(-8px);
+}
+
+/* ---------- MOBILE MENU STYLES ---------- */
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: flex;
+    }
+
+    #fh5co-menu-wrap {
+        display: none;
+        width: 100%;
+    }
+
+    #fh5co-menu-wrap.active {
+        display: block;
+        background-color: #2c3e50;
+        padding: 10px 10px;
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+
+    #fh5co-primary-menu {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0; /* removed spacing between items */
+        margin: 0;
+        padding: 0;
+    }
+
+    #fh5co-primary-menu li {
+        width: 100%;
+        margin: 0;
+    }
+
+    #fh5co-primary-menu li a {
+        font-size: 15px;
+        padding: 10px 12px;
+        display: block;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .fh5co-sub-menu {
+        position: relative;
+        background: none;
+        display: none;
+        padding-left: 15px;
+    }
+
+    .fh5co-sub-ddown.open .fh5co-sub-menu {
+        display: block;
+    }
+
+    .logo-container {
+        padding: 10px 0;
+    }
+}
+
+
+
+
+
   /* WhatsApp Floating Button */
   .whatsapp-float {
     position: fixed;
@@ -661,6 +913,7 @@
 	
 
 </head>
+
     <!-- WhatsApp Button with your requested message -->
     <a href="https://wa.me/27734742034?text=Hi%20I'm%20interested%20in%20your%20services." 
     class="whatsapp-float" target="_blank">
@@ -671,128 +924,135 @@
 	<div id="fh5co-wrapper">
 	<div id="fh5co-page">
 	<div id="fh5co-header">
-	<header id="fh5co-header-section">
-	<div class="container">
-		<div class="nav-header">
-			<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
-			<div style="display: inline-block; padding: 15px;  border-radius: 8px;">
-		<div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 28px; color: white; letter-spacing: 1px;">
-			<span style="color: #3498db;">CHIPP</span><span style="color: #e74c3c;">EX</span>
-		</div>
-		<div style="font-family: 'Open Sans', sans-serif; font-size: 20px; color: #ecf0f1; letter-spacing: 3px; text-align: center;">
-			TRAVEL
-		</div>
-		</div>
-			<nav id="fh5co-menu-wrap" role="navigation">
-				<ul class="sf-menu" id="fh5co-primary-menu">
-					<li><a class="active" href="index.html">Home</a></li>
-					<li>
-						<a href="" class="fh5co-sub-ddown">Travel</a>
-						<ul class="fh5co-sub-menu">
-							<li><a href="travel_by/car-travel.html">By Car</a></li>
-							<li><a href="travel_by/ship-travel.html">By Ship</a></li>
-							<li><a href="travel_by/flight-travel.html">By Flight</a></li> 
-						</ul>
-					</li>
-					<li><a href="#additional-services">Services</a></li>
-					<li><a href="payment.html">Pay Now Online</a></li>
-					<li><a href="#footer">Contact Us</a></li>
-				</ul>
-			</nav>
-		</div>
-	</div>
+<header id="fh5co-header-section">
+  <div class="container header-flex">
+    <div class="chippex-logo">
+      <div class="logo-container">
+        <div class="logo-main">
+          <span class="logo-part1">CHIPP</span><span class="logo-part2">EXS</span>
+        </div>
+        <div class="logo-sub">TRAVEL</div>
+      </div>
+    </div>
+
+    <!-- 🔧 Hamburger Toggle Button -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <!-- Navigation Menu -->
+    <nav id="fh5co-menu-wrap" role="navigation">
+      <ul class="sf-menu" id="fh5co-primary-menu">
+        <li><a class="active" href="index.html">Home</a></li>
+        <li>
+          <a href="#" class="fh5co-sub-ddown">Travel</a>
+          <ul class="fh5co-sub-menu">
+            <li><a href="travel_by/car-travel.html">By Car</a></li>
+            <li><a href="travel_by/ship-travel.html">By Ship</a></li>
+            <li><a href="travel_by/flight-travel.html">By Flight</a></li>
+          </ul>
+        </li>
+        <li><a href="#additional-services">Services</a></li>
+        <li><a href="/payment.html">Pay Now Online</a></li>
+        <li><a href="#footer">Contact Us</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
 
+
 <body>
-	</div>
-	<!-- end:fh5co-header -->
-	<!-- Update your slides HTML (just the Book Now links) -->
-	<aside id="fh5co-hero" class="js-fullheight">
-	<div class="flexslider js-fullheight">
-		<ul class="slides">
-		<li style="background-image: url(images/travel\ by\ car.png);">
-			<div class="overlay-gradient"></div>
-			<div class="container">
-			<div class="col-md-12 col-md-offset-0 text-center slider-text">
-				<div class="slider-text-inner js-fullheight">
-				<div class="desc">
-					<p><span>Car Travel</span></p>
-					<h2>Freedom to Explore at Your Own Pace</h2>
-					<p>Discover hidden gems and scenic routes with our premium car travel services</p>
-					<p>
-					<a href="car-travel.html" class="btn btn-primary btn-lg">Book Now</a>
-					</p>
-				</div>
-				</div>
-			</div>
-			</div>
-		</li>
-		<li style="background-image: url(images/travel\ by\ ship.png);">
-			<div class="overlay-gradient"></div>
-			<div class="container">
-			<div class="col-md-12 col-md-offset-0 text-center slider-text">
-				<div class="slider-text-inner js-fullheight">
-				<div class="desc">
-					<p><span>Ship Travel</span></p>
-					<h2>Luxury Voyages Across the Seas</h2>
-					<p>Experience the romance of ocean travel with our premium cruise packages</p>
-					<p>
-					<a href="ship-travel.html" class="btn btn-primary btn-lg">Book Now</a>
-					</p>
-				</div>
-				</div>
-			</div>
-			</div>
-		</li>
-		<li style="background-image: url(images/flight-travel-6.jpg);">
-			<div class="overlay-gradient"></div>
-			<div class="container" id="Flight-travel">
-			<div class="col-md-12 col-md-offset-0 text-center slider-text">
-				<div class="slider-text-inner js-fullheight">
-				<div class="desc">
-					<p><span>Flight Travel</span></p>
-					<h2>Soar to Your Dream Destination</h2>
-					<p>Fast, comfortable air travel to destinations worldwide</p>
-					<p>
-					<a href="flight-travel.html" class="btn btn-primary btn-lg">Book Now</a>
-					</p>
-				</div>
-				</div>
-			</div>
-			</div>
-		</li>
-		</ul>
-	</div>
-	</aside>
+		</div>
+		<!-- end:fh5co-header -->
+		<!-- Update your slides HTML (just the Book Now links) -->
+		<aside id="fh5co-hero" class="js-fullheight">
+		<div class="flexslider js-fullheight">
+			<ul class="slides">
+				<li style="background-image: url(images/travel\ by\ ship.png);">
+					<div class="overlay-gradient"></div>
+					<div class="container">
+					<div class="col-md-12 col-md-offset-0 text-center slider-text">
+						<div class="slider-text-inner js-fullheight">
+						<div class="desc">
+							<p><span>Ship Travel</span></p>
+							<h2>Luxury Voyages Across the Seas</h2>
+							<p>Experience the romance of ocean travel with our premium cruise packages</p>
+							<p>
+							<a href="/travel_by/ship-travel.html" class="btn btn-primary btn-lg">Book Now</a>
+							</p>
+						</div>
+						</div>
+					</div>
+					</div>
+				</li>
+				<li style="background-image: url(images/travel\ by\ car.png);">
+					<div class="overlay-gradient"></div>
+					<div class="container">
+					<div class="col-md-12 col-md-offset-0 text-center slider-text">
+						<div class="slider-text-inner js-fullheight">
+						<div class="desc">
+							<p><span>Car Travel</span></p>
+							<h2>Freedom to Explore at Your Own Pace</h2>
+							<p>Discover hidden gems and scenic routes with our premium car travel services</p>
+							<p>
+							<a href="/travel_by/car-travel.html" class="btn btn-primary btn-lg">Book Now</a>
+							</p>
+						</div>
+						</div>
+					</div>
+					</div>
+				</li>
+				<li style="background-image: url(images/flight-travel-6.jpg);">
+					<div class="overlay-gradient"></div>
+					<div class="container" id="Flight-travel">
+						<div class="col-md-12 col-md-offset-0 text-center slider-text">
+							<div class="slider-text-inner js-fullheight">
+								<div class="desc">
+									<p><span>Flight Travel</span></p>
+									<h2>Soar to Your Dream Destination</h2>
+									<p>Fast, comfortable air travel to destinations worldwide</p>
+									<p>
+									<a href="/travel_by/flight-travel.html" class="btn btn-primary btn-lg">Book Now</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		</aside>
 	<div class="wrap">
 		<div class="container">
 			<div class="row">
 				<div id="availability">
-					<form action="checkAvail.php" method="post">
+					<form id="availabilityForm" method="post">
 						<div class="a-col">
 							<section>
-								<select class="cs-select cs-skin-border">
+								<select class="cs-select cs-skin-border" name="hotel" id="hotelSelect" required>
 									<option value="" disabled selected>Select Hotel</option>
-									<option value="email">Vahlavi Guest House</option>
-									<option value="twitter">Xisaka Guest House</option>
-									<option value="linkedin">Nandoni Waterfront Resort</option>
+									<option value="Vahlavi Guest House">Vahlavi Guest House</option>
+									<option value="Xisaka Guest House">Xisaka Guest House</option>
+									<option value="Nandoni Waterfront Resort">Nandoni Waterfront Resort</option>
 								</select>
 							</section>
 						</div>
 						<div class="a-col alternate">
 							<div class="input-field">
 								<label for="date-start">Check In</label>
-								<input type="text" class="form-control" id="date-start" />
+								<input type="text" class="form-control" id="date-start" name="check_in" required>
 							</div>
 						</div>
 						<div class="a-col alternate">
 							<div class="input-field">
 								<label for="date-end">Check Out</label>
-								<input type="text" class="form-control" id="date-end" />
+								<input type="text" class="form-control" id="date-end" name="check_out" required>
 							</div>
 						</div>
 						<div class="a-col action">
-							<a href="#" onclick="openPopup(event)">
+							<a href="#" id="checkAvailabilityBtn">
 								<span>Check</span>
 								Availability
 							</a>
@@ -803,26 +1063,32 @@
 		</div>
 	</div>
 
+	<!-- Popup Form for Contact Info -->
+	<div id="contactPopup" class="popup-form" style="display:none;">
+	<form id="contactForm" method="post" action="checkAvail.php">
+		<input type="hidden" name="hotelName" id="popupHotel">
+		<input type="hidden" name="checkIn" id="popupCheckIn">
+		<input type="hidden" name="checkOut" id="popupCheckOut">
 
-	<!-- Pop-up Overlay and Form -->
-	<div class="popup-overlay" id="popup-overlay"></div>
-	<div class="popup-form" id="popup-form">
-		<h3>Contact Details</h3>
-		<form action="https://reservationsafrica.co.za/tour-search/" method="get">
-			<input type="text" id="name" placeholder="Name" required />
-			<input type="text" id="surname" placeholder="Surname" required />
-			<input type="text" id="cellphone" placeholder="Cellphone Number" required />
-			<input type="email" id="email" placeholder="Email Address" required />
-			<button type="submit">Submit</button>
-		</form>
+		<div class="form-group">
+		<label for="user_name">Full Name *</label>
+		<input type="text" name="userName" id="user_name" required>
+		</div>
+
+		<div class="form-group">
+		<label for="user_email">Email *</label>
+		<input type="email" name="userEmail" id="user_email" required>
+		</div>
+
+		<div class="form-group">
+		<label for="user_phone">Phone Number *</label>
+		<input type="tel" name="userPhone" id="user_phone" required>
+		</div>
+
+		<button type="submit">Submit</button>
+		<button type="button" onclick="closePopup()">Cancel</button>
+	</form>
 	</div>
-
-
-	<!-- Thank You Message -->
-	<div class="thank-you-message" id="thank-you-message" style="display:none;">
-		Thank you, we will be in contact with you.
-	</div>
-
 
 	
 	<div id="fh5co-counter-section" class="fh5co-counters">
@@ -1023,7 +1289,7 @@
     <!-- Hidden Enquiry Form -->
     <div class="service-form-container" id="serviceForm">
       <h3 class="text-center" id="formTitle">Enquire About Our Services</h3>
-      <form class="service-form" id="enquiryForm">
+      <form class="service-form" id="enquiryForm" action="premService.php" method="POST">
         <input type="hidden" id="selectedService" name="service">
 
         <div class="form-group">
@@ -1255,6 +1521,7 @@
 		</div>
 	</div>
 
+	<!-- Our Trusted Brochures -->
 	<section id="referrals">
 		<div class="container">
 			<div class="row">
@@ -1288,9 +1555,9 @@
 			</div>
 			<div class="col-md-4">
 				<div class="brochure-item">
-				<img src="images/chippex-tours.jpeg" alt="Chippex Travel and Tours" class="img-responsive">
+				<img src="images/chippex-tours.jpeg" alt="Chippexs Travel and Tours" class="img-responsive">
 				<div class="brochure-content">
-					<h3 class="text-center">Chippex Travel and Tours</h3>
+					<h3 class="text-center">Chippexs Travel and Tours</h3>
 					<p>Your premier travel agency for customized tours and exceptional travel experiences worldwide.</p>
 					<a href="https://www.chippexstravel.co.za/" class="view-brochure-btn" target="_blank">View Brochure</a>
 				</div>
@@ -1310,9 +1577,9 @@
 			</div>
 			<div class="col-md-4">
 				<div class="brochure-item">
-				<img src="images/sa-chippex-travel-broucher.jpeg" alt="Chippex Travel and Tours" class="img-responsive">
+				<img src="images/sa-chippex-travel-broucher.jpeg" alt="Chippexs Travel and Tours" class="img-responsive">
 				<div class="brochure-content">
-					<h3 class="text-center">Chippex Travel and Tours</h3>
+					<h3 class="text-center">Chippexs Travel and Tours</h3>
 					<p>Explore our complete range of travel services and exclusive vacation packages for every budget.</p>
 					<a href="https://www.chippexstravel.co.za/" class="view-brochure-btn" target="_blank">View Brochure</a>
 				</div>
@@ -1440,7 +1707,7 @@
 			<div class="row">
 				<div class="col-md-3">
 					<div class="copyright">
-						<p class="copyright-text">&copy; <span id="current-year"></span> Chippex Travel <br> All Rights Reserved. <br>
+						<p class="copyright-text">&copy; <span id="current-year"></span> Chippexs Travel <br> All Rights Reserved. <br>
 						Designed by <a href="http://gamechangersites.co.za" target="_blank">Game Changer Sites</a>
 						<br><span class="icon" style="display: inline-block; margin-right: 8px; vertical-align: middle;">
 							&#10003;</span><strong>100% Black Owned</strong>
@@ -1530,127 +1797,113 @@
 
 	<script src="js/custom.js"></script>
 
-	<!-- Additional Services -->
-	<script>
-	document.addEventListener('DOMContentLoaded', function() {
-		const enquiryBtns = document.querySelectorAll('.enquire-btn');
-		const serviceForm = document.getElementById('serviceForm');
-		const formTitle = document.getElementById('formTitle');
-		const selectedService = document.getElementById('selectedService');
-		const enquiryForm = document.getElementById('enquiryForm');
-		
-		enquiryBtns.forEach(btn => {
-		btn.addEventListener('click', function(e) {
-			e.preventDefault();
-			const service = this.getAttribute('data-service');
-			
-			// Set form title and hidden field
-			formTitle.textContent = `Enquire About ${service}`;
-			selectedService.value = service;
-			
-			// Show the form
-			if (serviceForm.classList.contains('active') && selectedService.value === service) {
-			// If form is open and for the same service, close it
-			serviceForm.classList.remove('active');
-			} else {
-			// Open or switch to a different service
-			serviceForm.classList.add('active');
-			formTitle.textContent = `Enquire About ${service}`;
-			selectedService.value = service;
-			
-			setTimeout(() => {
-				serviceForm.scrollIntoView({ behavior: 'smooth' });
-			}, 50);
-			}
-		});
-		});
-		
-		// Form submission
-		enquiryForm.addEventListener('submit', function(e) {
-		e.preventDefault();
-		// Here you would normally send the form data to your server
-		alert('Thank you for your enquiry! Our team will contact you shortly.');
-		this.reset();
-		serviceForm.classList.remove('active');
-		});
-		
-		// Close form when clicking outside
-		document.addEventListener('click', function(e) {
-		if (!serviceForm.contains(e.target) && 
-			!Array.from(enquiryBtns).some(btn => btn.contains(e.target))) {
-			serviceForm.classList.remove('active');
-		}
-		});
-	});
-	</script>
+	<!-- Hamburger menu option -->
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const menuWrap = document.getElementById('fh5co-menu-wrap');
+  const dropdownLinks = document.querySelectorAll('.fh5co-sub-ddown');
+
+  navToggle.addEventListener('click', () => {
+    const open = navToggle.classList.toggle('open');
+    menuWrap.classList.toggle('active');
+
+    // Prevent background scroll
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  dropdownLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      link.parentElement.classList.toggle('open');
+    });
+  });
+</script>
+
+
+
+
 
 	<script>
+		// Wait for DOM to be fully loaded
+		document.addEventListener('DOMContentLoaded', function() {
+		// Bind click event to the Check Availability button
+		document.getElementById('checkAvailabilityBtn').addEventListener('click', openPopup);
+		});
+
 		function openPopup(event) {
-			event.preventDefault();
-			document.getElementById('popup-overlay').style.display = 'block';
-			document.getElementById('popup-form').style.display = 'block';
+		event.preventDefault();
+
+		// Get selected hotel and dates
+		const hotelSelect = document.getElementById("hotelSelect");
+		const hotel = hotelSelect.options[hotelSelect.selectedIndex].value;
+		const checkIn = document.getElementById("date-start").value;
+		const checkOut = document.getElementById("date-end").value;
+
+		if (!hotel || !checkIn || !checkOut) {
+			alert("Please complete all fields before checking availability.");
+			return;
+		}
+
+		// Populate hidden inputs
+		document.getElementById("popupHotel").value = hotel;
+		document.getElementById("popupCheckIn").value = checkIn;
+		document.getElementById("popupCheckOut").value = checkOut;
+
+		// Show popup
+		document.getElementById("contactPopup").style.display = "block";
 		}
 
 		function closePopup() {
-			document.getElementById('popup-overlay').style.display = 'none';
-			document.getElementById('popup-form').style.display = 'none';
+		document.getElementById("contactPopup").style.display = "none";
 		}
-
-		function submitForm(event) {
-			event.preventDefault();
-			closePopup();
-			const thankYouMessage = document.getElementById('thank-you-message');
-			thankYouMessage.style.display = 'block';
-			
-			// Hide thank-you message after a few seconds
-			setTimeout(() => {
-				thankYouMessage.style.display = 'none';
-			}, 5000);
-		}
-
-		// Close the popup when clicking outside of it
-		document.getElementById('popup-overlay').addEventListener('click', closePopup);
-
-		// Generate QR Code
-		// const qrCodeCanvas = document.getElementById("qr-code");
-		// const qrCodeLink = "https://reservationsafrica.co.za/tour-search/?";
-
-		// QRCode.toCanvas(qrCodeCanvas, qrCodeLink, { width: 150 }, function (error) {
-		// 	if (error) {
-		// 		console.error("QR Code generation failed:", error);
-		// 	}
-		// });
-
-		const paymentLink = "https://paymentgateway.com/checkout?amount=100&currency=ZAR&description=TourPayment";
-		const qrCodeCanvas = document.getElementById("qr-code");
-
-		QRCode.toCanvas(qrCodeCanvas, paymentLink, { width: 200 }, function (error) {
-			if (error) console.error("Error generating QR Code:", error);
-		});
-
 	</script>
 
-	<script>
-		document.getElementById('payment-form').addEventListener('submit', function (e) {
-			let isValid = true;
-			const fields = ['client-name', 'contact-details', 'program-request', 'amount', 'mode-of-receipt', 'signature'];
 
-			fields.forEach(field => {
-				const input = document.getElementById(field);
-				if (!input.value.trim()) {
-					isValid = false;
-					input.style.borderColor = 'red';
-				} else {
-					input.style.borderColor = '';
-				}
+	<!-- Additional Services -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const enquiryBtns = document.querySelectorAll('.enquire-btn');
+			const serviceForm = document.getElementById('serviceForm');
+			const formTitle = document.getElementById('formTitle');
+			const selectedService = document.getElementById('selectedService');
+
+			enquiryBtns.forEach(btn => {
+				btn.addEventListener('click', function (e) {
+					e.preventDefault();
+					const service = this.getAttribute('data-service');
+
+					// Set form title and hidden field
+					formTitle.textContent = `Enquire About ${service}`;
+					selectedService.value = service;
+
+					// Show or toggle form visibility
+					if (serviceForm.classList.contains('active') && selectedService.value === service) {
+						serviceForm.classList.remove('active');
+					} else {
+						serviceForm.classList.add('active');
+						setTimeout(() => {
+							serviceForm.scrollIntoView({ behavior: 'smooth' });
+						}, 50);
+					}
+				});
 			});
 
-			if (!isValid) {
-				e.preventDefault(); // Prevent form submission
-				alert('Please fill out all required fields.');
-			}
+			// OPTIONAL: Remove this section entirely or keep for Ajax version later
+			// DO NOT block native form submission
+			// enquiryForm.addEventListener('submit', function(e) {
+			//     e.preventDefault(); // ❌ Do NOT block submission here
+			// });
+
+			// Optional: Close form when clicking outside
+			document.addEventListener('click', function (e) {
+				if (!serviceForm.contains(e.target) &&
+					!Array.from(enquiryBtns).some(btn => btn.contains(e.target))) {
+					serviceForm.classList.remove('active');
+				}
+			});
 		});
 	</script>
+
 
 	<script>
 		document.getElementById("payment-form").addEventListener("submit", function (event) {

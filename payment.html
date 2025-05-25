@@ -10,7 +10,7 @@
 	<link rel="manifest" href="images/site.webmanifest">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Chippex Travel &mdash; Endless Adventures, captures the spirit of exploration and excitement.</title>
+	<title>Chippexs Travel &mdash; Endless Adventures, captures the spirit of exploration and excitement.</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
@@ -89,11 +89,176 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   }
   
-  .logo {
-    max-width: 180px;
-    height: auto;
-    margin-bottom: 10px;
-  }
+
+  /* Chippexs Logo */
+  /* Chippexs Logo */
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+}
+
+.chippex-logo {
+    position: relative;
+    z-index: 10;
+}
+
+.logo-container {
+    display: inline-block;
+    padding: 15px;
+    border-radius: 8px;
+    position: relative;
+    z-index: 20;
+}
+
+.logo-main {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    color: white;
+    letter-spacing: 1px;
+    line-height: 1;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.logo-part1 {
+    color: #3498db;
+}
+
+.logo-part2 {
+    color: #e74c3c;
+}
+
+.logo-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    color: #ecf0f1;
+    letter-spacing: 3px;
+    text-align: center;
+    line-height: 1.2;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* ---------- NAVIGATION STYLES ---------- */
+#fh5co-menu-wrap {
+    text-align: right;
+    flex-grow: 1;
+}
+
+#fh5co-primary-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 25px;
+}
+
+#fh5co-primary-menu li {
+    position: relative;
+}
+
+#fh5co-primary-menu li a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    padding: 10px 5px;
+    transition: color 0.3s ease;
+}
+
+#fh5co-primary-menu li a:hover,
+#fh5co-primary-menu li a.active {
+    color: #e74c3c;
+}
+
+/* Dropdown menu */
+.fh5co-sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #2c3e50;
+    padding: 10px 0;
+    display: none;
+    min-width: 160px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 999;
+}
+
+.fh5co-sub-ddown:hover .fh5co-sub-menu {
+    display: block;
+}
+
+.fh5co-sub-menu li {
+    padding: 0;
+    margin: 0;
+}
+
+.fh5co-sub-menu li a {
+    padding: 8px 20px;
+    display: block;
+    white-space: nowrap;
+}
+
+/*  RESPONSIVE  */
+@media (max-width: 992px) {
+    .logo-main {
+        font-size: 24px;
+    }
+
+    .logo-sub {
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-flex {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #fh5co-menu-wrap {
+        width: 100%;
+        text-align: left;
+        margin-top: 10px;
+    }
+
+    #fh5co-primary-menu {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .logo-main {
+        font-size: 20px;
+    }
+
+    .logo-sub {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    .logo-container {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-main {
+        font-size: 18px;
+    }
+
+    .logo-sub {
+        font-size: 14px;
+    }
+
+    .logo-container {
+        padding: 8px;
+    }
+}
   
   .payment-container {
     max-width: 600px;
@@ -233,19 +398,19 @@
 <body>
 
     <div class="header">
-    <div style="display: inline-block; padding: 15px; background: #2c3e50; border-radius: 8px;">
-    <div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 28px; color: white; letter-spacing: 1px;">
-        <span style="color: #3498db;">CHIPP</span><span style="color: #e74c3c;">EX</span>
-    </div>
-    <div style="font-family: 'Open Sans', sans-serif; font-size: 20px; color: #ecf0f1; letter-spacing: 3px; text-align: center;">
-        TRAVEL
-    </div>
-    </div>
-    <h1>Secure Online Payments</h1>
+      <div class="chippex-logo">
+        <div class="logo-container">
+              <div class="logo-main">
+                <span class="logo-part1">CHIPP</span><span class="logo-part2">EXS</span>
+              </div>
+            <div class="logo-sub">TRAVEL</div>
+        </div>
+		  </div>
+      <h1>Secure Online Payments</h1>
     </div>
 
     <div class="payment-container">
-    <h2>Chippex Travel Online Fast Payment</h2>
+    <h2>Chippexs Travel Online Fast Payment</h2>
     <p>Make quick and secure payments for your tours and travel packages</p>
     <p class="important-note">Please use the exact name that was used to book the tour when making your payment. You don't need a PayFast account to use this payment portal.</p>
     
@@ -280,7 +445,7 @@
 			<div class="row">
 				<div class="col-md-3">
 					<div class="copyright">
-						<p class="copyright-text">&copy; <span id="current-year"></span> Chippex Travel <br> All Rights Reserved. <br>
+						<p class="copyright-text">&copy; <span id="current-year"></span> Chippexs Travel <br> All Rights Reserved. <br>
 						Designed by <a href="http://gamechangersites.co.za" target="_blank">Game Changer Sites</a>
 						<br><span class="icon" style="display: inline-block; margin-right: 8px; vertical-align: middle;">
 							&#10003;</span><strong>100% Black Owned</strong>

@@ -313,7 +313,7 @@
         </div>
       </div>
       
-      <form id="shipTravelForm" action="send-ship-form.php" method="post">
+      <form id="shipTravelForm" action="ship-travel.php" method="post">
         <label for="name">Full Name</label>
         <input type="text" id="name" name="name" placeholder="Your full name" required>
         
@@ -321,7 +321,7 @@
         <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
         
         <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone" placeholder="+1 (123) 456-7890" required>
+        <input type="tel" id="phone" name="phone" placeholder="+27 (123) 456-789" required>
         
         <label for="departurePort">Departure Port</label>
         <input type="text" id="departurePort" name="departurePort" placeholder="City and port name" required>
@@ -366,26 +366,27 @@
 
   <script>
     document.getElementById("shipTravelForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const name = this.name.value.split(' ')[0];
+      // e.preventDefault();
+      const name = this.name.value.split(' ')[0]; // Get first name
       
+      // Create a more engaging confirmation
       const confirmationHtml = `
         <div style="text-align:center; padding:20px;">
-          <h3 style="color:var(--secondary); margin-bottom:15px;">Bon Voyage ${name}!</h3>
-          <p style="margin-bottom:20px;">Your cruise inquiry has been received. Our sailing specialist will contact you within 24 hours with the best options for your maritime adventure.</p>
+          <h3 style="color:var(--secondary); margin-bottom:15px;">Thanks ${name}!</h3>
+          <p style="margin-bottom:20px;">Your road trip request has been received. Our travel specialist will contact you within 24 hours to finalize your adventure.</p>
           <div style="background:var(--light); padding:15px; border-radius:8px; margin:20px 0;">
             <p style="font-weight:600; margin-bottom:10px;">Next Steps:</p>
             <ol style="text-align:left; padding-left:20px; margin:0;">
-              <li>Personalized cruise options</li>
-              <li>Cabin selection assistance</li>
-              <li>Excursion recommendations</li>
-              <li>Packing tips for your voyage</li>
+              <li>We'll confirm vehicle availability</li>
+              <li>Discuss route options</li>
+              <li>Provide personalized recommendations</li>
             </ol>
           </div>
-          <p>Smooth sailing ahead!</p>
+          <p>Get ready for an unforgettable journey!</p>
         </div>
       `;
       
+      // Show custom alert
       const customAlert = document.createElement('div');
       customAlert.style.position = 'fixed';
       customAlert.style.top = '0';
@@ -407,7 +408,7 @@
       alertContent.innerHTML = confirmationHtml;
       
       const closeButton = document.createElement('button');
-      closeButton.textContent = 'Continue';
+      closeButton.textContent = 'Awesome!';
       closeButton.style.background = 'linear-gradient(to right, var(--primary), var(--accent))';
       closeButton.style.color = 'white';
       closeButton.style.border = 'none';
@@ -430,7 +431,9 @@
       document.body.appendChild(customAlert);
     });
     
-    document.getElementById('sailingDate').min = new Date().toISOString().split('T')[0];
+    // Add today's date as min date for date picker
+    document.getElementById('date').min = new Date().toISOString().split('T')[0];
   </script>
+
 </body>
 </html>

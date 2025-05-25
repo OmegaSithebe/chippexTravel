@@ -1,0 +1,76 @@
+/* ===== BASE STYLES (applies to all 3 pages) ===== */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+.success-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  text-align: center;
+}
+
+h1 {
+  color: #4fc1e9;
+  font-size: 2.5rem;
+}
+
+.thank-you-message {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  margin: 20px 0;
+}
+
+.back-button {
+  background: #4fc1e9;
+  color: #003566;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: bold;
+}
+
+.back-button:hover {
+  background: #003566;
+  color: #4fc1e9;
+  transform: translateY(-3px);
+}
+
+footer {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* ===== THEME VARIATIONS ===== */
+/* Car Theme */
+.car-theme {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/car-bg.jpg');
+  background-size: cover;
+  min-height: 100vh;
+}
+
+/* Ship Theme */
+.ship-theme {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/ship-bg.jpg');
+  background-size: cover;
+  min-height: 100vh;
+}
+
+/* Flight Theme */
+.flight-theme {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/flight-bg.jpg');
+  background-size: cover;
+  min-height: 100vh;
+}

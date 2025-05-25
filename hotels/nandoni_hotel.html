@@ -19,12 +19,9 @@
     }
     
     .room-option {
-      border: 2px solid #ddd;
-      padding: 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-bottom: 15px;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
     }
     
     .room-option:hover {
@@ -32,10 +29,29 @@
     }
     
     .room-option.selected {
-      border-color: var(--accent-color);
-      background-color: rgba(231, 76, 60, 0.05);
+        border-color: var(--accent-color);
+        background-color: rgba(231, 76, 60, 0.05);
+        box-shadow: 0 0 0 2px var(--accent-color);
     }
     
+    .room-option::before {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #ddd;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .room-option.selected::before {
+        border-color: var(--accent-color);
+        background-color: var(--accent-color);
+        box-shadow: inset 0 0 0 3px white;
+    }
+
     .room-option h4 {
       color: var(--dark-color);
       margin-bottom: 10px;
@@ -140,41 +156,42 @@
       </div>
     </section>
     
-    <section class="booking-section animated delay-1">
+  <div class="container">
+    <section class="booking-section animated">
       <div class="section-title">
         <h2>Book Your Stay</h2>
         <p>Fill in your details to reserve your perfect getaway</p>
       </div>
       
-      <form id="bookingForm" class="booking-form">
+      <form id="bookingForm" class="booking-form" method="POST" action="">
         <div class="form-group">
           <label for="name">Full Name *</label>
-          <input type="text" id="name" class="form-control" required>
+          <input type="text" id="name" name="name" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="email">Email Address *</label>
-          <input type="email" id="email" class="form-control" required>
+          <input type="email" id="email" name="email" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="phone">Phone Number *</label>
-          <input type="tel" id="phone" class="form-control" required>
+          <input type="tel" id="phone" name="phone" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="checkIn">Check-in Date *</label>
-          <input type="date" id="checkIn" class="form-control" required>
+          <input type="date" id="checkIn" name="checkIn" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="checkOut">Check-out Date *</label>
-          <input type="date" id="checkOut" class="form-control" required>
+          <input type="date" id="checkOut" name="checkOut" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="guests">Number of Guests *</label>
-          <select id="guests" class="form-control" required>
+          <select id="guests" name="guests" class="form-control" required>
             <option value="">Select...</option>
             <option value="1">1 Guest</option>
             <option value="2">2 Guests</option>
@@ -185,48 +202,47 @@
         </div>
         
         <div class="form-group" style="grid-column: 1 / -1">
-          <label>Select Your Room Type *</label>
-          <input type="hidden" id="roomType" required>
-          
-          <div class="room-option" data-value="standard">
-            <h4>Standard Room</h4>
-            <p>Comfortable room with dam view, perfect for couples or solo travelers.</p>
-            <div class="amenities-list">
-              <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
-              <span class="amenity-item"><i class="fas fa-tv"></i> TV</span>
-              <span class="amenity-item"><i class="fas fa-coffee"></i> Tea/Coffee</span>
+            <label>Select Your Room Type *</label>
+            <input type="hidden" id="roomType" name="roomType" required>
+            
+            <div class="room-option" data-value="standard">
+                <h4>Standard Room</h4>
+                <p>Comfortable room with dam view, perfect for couples or solo travelers.</p>
+                <div class="amenities-list">
+                    <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
+                    <span class="amenity-item"><i class="fas fa-tv"></i> TV</span>
+                    <span class="amenity-item"><i class="fas fa-coffee"></i> Tea/Coffee</span>
+                </div>
+                <p class="price">R2000/night</p>
             </div>
-            <p class="price">R2000/night</p>
-          </div>
-          
-          <div class="room-option" data-value="deluxe">
-            <h4>Deluxe Room</h4>
-            <p>Spacious room with private balcony overlooking the dam.</p>
-            <div class="amenities-list">
-              <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
-              <span class="amenity-item"><i class="fas fa-tv"></i> Smart TV</span>
-              <span class="amenity-item"><i class="fas fa-coffee"></i> Tea/Coffee</span>
-              <span class="amenity-item"><i class="fas fa-umbrella-beach"></i> Balcony</span>
+            
+            <div class="room-option" data-value="deluxe">
+                <h4>Deluxe Room</h4>
+                <p>Spacious room with private balcony overlooking the dam.</p>
+                <div class="amenities-list">
+                    <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
+                    <span class="amenity-item"><i class="fas fa-tv"></i> Smart TV</span>
+                    <span class="amenity-item"><i class="fas fa-coffee"></i> Tea/Coffee</span>
+                    <span class="amenity-item"><i class="fas fa-umbrella-beach"></i> Balcony</span>
+                </div>
+                <p class="price">R2800/night</p>
             </div>
-            <p class="price">R2800/night</p>
-          </div>
-          
-          <div class="room-option" data-value="family">
-            <h4>Family Suite</h4>
-            <p>Two-bedroom suite perfect for families, with kitchenette.</p>
-            <div class="amenities-list">
-              <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
-              <span class="amenity-item"><i class="fas fa-tv"></i> Smart TV</span>
-              <span class="amenity-item"><i class="fas fa-utensils"></i> Kitchenette</span>
-              <span class="amenity-item"><i class="fas fa-couch"></i> Living Area</span>
+            
+            <div class="room-option" data-value="family">
+                <h4>Family Suite</h4>
+                <p>Two-bedroom suite perfect for families, with kitchenette.</p>
+                <div class="amenities-list">
+                    <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
+                    <span class="amenity-item"><i class="fas fa-tv"></i> Smart TV</span>
+                    <span class="amenity-item"><i class="fas fa-utensils"></i> Kitchenette</span>
+                    <span class="amenity-item"><i class="fas fa-couch"></i> Living Area</span>
+                </div>
+                <p class="price">R3500/night</p>
             </div>
-            <p class="price">R3500/night</p>
-          </div>
         </div>
-        
-        <div class="form-group special-request">
+        <div class="form-group special-request" style="grid-column: 1 / -1">
           <label for="specialRequests">Special Requests</label>
-          <textarea id="specialRequests" class="form-control" placeholder="Any special requirements or preferences..."></textarea>
+          <textarea id="specialRequests" name="specialRequests" class="form-control" placeholder="Any special requirements or preferences..."></textarea>
         </div>
         
         <div class="form-submit">
@@ -251,14 +267,14 @@
           <div class="footer-section">
             <h3>Follow Us</h3>
             <div class="social-icons">
-              <a href="#"><i class="fab fa-facebook"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="https://www.facebook.com/travel.bg"><i class="fab fa-facebook"></i></a>
+              <a href="https://www.instagram.com/accounts/login/two_factor?next=%2Ftravel_africa%2F"><i class="fab fa-instagram"></i></a>
+              <a href="https://x.com/VisitUdupi"><i class="fab fa-twitter"></i></a>
             </div>
           </div>
         </div>
         <div class="footer-bottom">
-          <p class="copyright-text">&copy; <span id="current-year"></span> Chippex Travel All Rights Reserved. <br>
+          <p class="copyright-text">&copy; <span id="current-year"></span> Chippexs Travel All Rights Reserved. <br>
         </div>
       </div>
     </footer>
@@ -266,8 +282,127 @@
     
   <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
+
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          // Set current year
+          document.getElementById('current-year').textContent = new Date().getFullYear();
+          
+          // Room type selection
+          const roomOptions = document.querySelectorAll('.room-option');
+          const roomTypeInput = document.getElementById('roomType');
+          
+          roomOptions.forEach(option => {
+              option.addEventListener('click', function() {
+                  // Remove selected class from all options
+                  roomOptions.forEach(opt => {
+                      opt.classList.remove('selected');
+                      const existingRadio = opt.querySelector('input[type="radio"]');
+                      if (existingRadio) {
+                          existingRadio.remove();
+                      }
+                  });
+                  
+                  // Add selected class to clicked option
+                  this.classList.add('selected');
+                  
+                  // Set the hidden input value
+                  roomTypeInput.value = this.dataset.value;
+                  
+                  // Add a radio button for better form handling
+                  const radio = document.createElement('input');
+                  radio.type = 'radio';
+                  radio.name = 'roomTypeRadio';
+                  radio.value = this.dataset.value;
+                  radio.checked = true;
+                  radio.style.display = 'none';
+                  this.prepend(radio);
+              });
+          });
+
+          // Date picker setup
+          const today = new Date().toISOString().split('T')[0];
+          document.getElementById('checkIn').min = today;
+          
+          document.getElementById('checkIn').addEventListener('change', function() {
+              const checkOut = document.getElementById('checkOut');
+              checkOut.min = this.value;
+              if (checkOut.value && checkOut.value < this.value) {
+                  checkOut.value = this.value;
+              }
+          });
+          
+          // Form submission
+          const bookingForm = document.getElementById('bookingForm');
+          if (bookingForm) {
+              bookingForm.addEventListener('submit', async function(e) {
+                  e.preventDefault();
+                  
+                  // Validate room type selection
+                  if (!roomTypeInput.value) {
+                      alert('Please select a room type');
+                      return;
+                  }
+                  
+                  // Validate dates
+                  const checkIn = document.getElementById('checkIn').value;
+                  const checkOut = document.getElementById('checkOut').value;
+                  if (new Date(checkOut) <= new Date(checkIn)) {
+                      alert('Check-out date must be after check-in date');
+                      return;
+                  }
+                  
+                  // Show loading state
+                  const submitBtn = this.querySelector('button[type="submit"]');
+                  const originalBtnText = submitBtn.textContent;
+                  submitBtn.disabled = true;
+                  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                  
+                  try {
+                      const formData = new FormData(this);
+                      const response = await fetch('nandoni_form.php', {
+                          method: 'POST',
+                          body: formData
+                      });
+                      
+                      if (!response.ok) {
+                          throw new Error(`HTTP error! status: ${response.status}`);
+                      }
+                      
+                      const result = await response.json();
+                      
+                      if (result.status === 'success') {
+                          // Show success message
+                          const successHTML = `
+                              <div class="alert alert-success" style="padding: 15px; background: #d4edda; color: #155724; border-radius: 4px; margin-bottom: 20px;">
+                                  <i class="fas fa-check-circle"></i> ${result.message}
+                                  <p style="margin-top: 10px; margin-bottom: 0;">We've sent a confirmation to your email address.</p>
+                              </div>
+                          `;
+                          bookingForm.insertAdjacentHTML('beforebegin', successHTML);
+                          bookingForm.reset();
+                          document.querySelectorAll('.room-option').forEach(opt => opt.classList.remove('selected'));
+                          roomTypeInput.value = '';
+                          
+                          // Scroll to success message
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                      } else {
+                          throw new Error(result.message || 'Unknown error occurred');
+                      }
+                  } catch (error) {
+                      console.error('Error:', error);
+                      alert(error.message || 'An unexpected error occurred. Please try again later.');
+                  } finally {
+                      submitBtn.disabled = false;
+                      submitBtn.textContent = originalBtnText;
+                  }
+              });
+          }
+      });
     </script>
-  
-  <script src="js/scripts.js"></script>
+
+
 </body>
 </html>

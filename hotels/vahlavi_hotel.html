@@ -317,14 +317,14 @@
           <div class="footer-section">
             <h3>Follow Us</h3>
             <div class="social-icons">
-              <a href="#"><i class="fab fa-facebook"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="https://www.facebook.com/travel.bg"><i class="fab fa-facebook"></i></a>
+              <a href="https://www.instagram.com/accounts/login/two_factor?next=%2Ftravel_africa%2F"><i class="fab fa-instagram"></i></a>
+              <a href="https://x.com/VisitUdupi"><i class="fab fa-twitter"></i></a>
             </div>
           </div>
         </div>
         <div class="footer-bottom">
-          <p class="copyright-text">&copy; <span id="current-year"></span> Chippex Travel All Rights Reserved. <br>
+          <p class="copyright-text">&copy; <span id="current-year"></span> Chippexs Travel All Rights Reserved. <br>
         </div>
       </div>
     </footer>
@@ -333,19 +333,107 @@
   <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
-  <script src="js/scripts.js"></script>
+
   <script>
-    // Additional JS for Vahlavi
     document.addEventListener('DOMContentLoaded', function() {
-      // Room card selection
-      const roomCards = document.querySelectorAll('.room-card');
-      roomCards.forEach(card => {
-        card.addEventListener('click', function() {
-          roomCards.forEach(c => c.classList.remove('selected'));
-          this.classList.add('selected');
-          document.getElementById('roomType').value = this.dataset.value;
+        // Set current year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Room card selection
+        const roomCards = document.querySelectorAll('.room-card');
+        const roomTypeInput = document.getElementById('roomType');
+        
+        roomCards.forEach(card => {
+            card.addEventListener('click', function() {
+                roomCards.forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                roomTypeInput.value = this.dataset.value;
+            });
         });
-      });
+
+        // Date picker setup
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('checkIn').min = today;
+        
+        document.getElementById('checkIn').addEventListener('change', function() {
+            const checkOut = document.getElementById('checkOut');
+            checkOut.min = this.value;
+            if (checkOut.value && checkOut.value < this.value) {
+                checkOut.value = this.value;
+            }
+        });
+        
+        // Form submission
+        const bookingForm = document.getElementById('bookingForm');
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Validate room type selection
+                if (!roomTypeInput.value) {
+                    alert('Please select a room type');
+                    return;
+                }
+                
+                // Show loading state
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                
+                try {
+                    // Get all form data
+                    const formData = new FormData();
+                    formData.append('name', document.getElementById('name').value);
+                    formData.append('email', document.getElementById('email').value);
+                    formData.append('phone', document.getElementById('phone').value);
+                    formData.append('checkIn', document.getElementById('checkIn').value);
+                    formData.append('checkOut', document.getElementById('checkOut').value);
+                    formData.append('guests', document.getElementById('guests').value);
+                    formData.append('roomType', roomTypeInput.value);
+                    formData.append('specialRequests', document.getElementById('specialRequests').value);
+                    
+                    // Add packages
+                    const packageCheckboxes = document.querySelectorAll('input[name="packages"]:checked');
+                    const packages = Array.from(packageCheckboxes).map(cb => cb.value);
+                    packages.forEach(pkg => {
+                        formData.append('packages[]', pkg);
+                    });
+                    
+                    const response = await fetch('vahlavi_form.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.status === 'success') {
+                        // Show success message
+                        const successHTML = `
+                            <div class="alert alert-success" style="padding: 15px; background: #d4edda; color: #155724; border-radius: 4px; margin-bottom: 20px;">
+                                <i class="fas fa-check-circle"></i> ${result.message}
+                                <p style="margin-top: 10px; margin-bottom: 0;">We've sent a confirmation to your email address.</p>
+                            </div>
+                        `;
+                        bookingForm.insertAdjacentHTML('beforebegin', successHTML);
+                        bookingForm.reset();
+                        roomCards.forEach(card => card.classList.remove('selected'));
+                        roomTypeInput.value = '';
+                        
+                        // Scroll to success message
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        throw new Error(result.message || 'Unknown error occurred');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert(error.message || 'An unexpected error occurred. Please try again later.');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnText;
+                }
+            });
+        }
     });
   </script>
 </body>
