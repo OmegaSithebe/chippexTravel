@@ -367,108 +367,22 @@
     </div>
   </div>
 
-  <script>
-    document.getElementById("flightTravelForm").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const form = this;
-        const formData = new FormData(form);
-        
-        // Show loading state
-        const submitButton = form.querySelector('button[type="submit"]');
-        const originalButtonText = submitButton.textContent;
-        submitButton.textContent = "Processing...";
-        submitButton.disabled = true;
-        
-        fetch(form.action, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.status === 'success') {
-                showCustomAlert(
-                    "Booking Received!",
-                    data.message,
-                    "We'll contact you shortly to confirm your flight details."
-                );
-                form.reset();
-            } else {
-                showCustomAlert(
-                    "Error",
-                    data.message,
-                    "Please correct the errors and try again."
-                );
-            }
-        })
-        .catch(error => {
-            showCustomAlert(
-                "Error",
-                "There was a problem submitting your request",
-                error.message
-            );
-        })
-        .finally(() => {
-            submitButton.textContent = originalButtonText;
-            submitButton.disabled = false;
-        });
-    });
-
-    function showCustomAlert(title, message, details) {
-        const alertHtml = `
-            <div style="text-align:center; padding:20px;">
-                <h3 style="color:var(--secondary); margin-bottom:15px;">${title}</h3>
-                <p style="margin-bottom:20px;">${message}</p>
-                <div style="background:var(--light); padding:15px; border-radius:8px; margin:20px 0;">
-                    <p>${details}</p>
-                </div>
-            </div>
-        `;
-        
-        const customAlert = document.createElement('div');
-        customAlert.style.position = 'fixed';
-        customAlert.style.top = '0';
-        customAlert.style.left = '0';
-        customAlert.style.width = '100%';
-        customAlert.style.height = '100%';
-        customAlert.style.backgroundColor = 'rgba(0,0,0,0.8)';
-        customAlert.style.display = 'flex';
-        customCustomAlert.style.justifyContent = 'center';
-        customAlert.style.alignItems = 'center';
-        customAlert.style.zIndex = '1000';
-        
-        const alertContent = document.createElement('div');
-        alertContent.style.backgroundColor = 'white';
-        alertContent.style.padding = '30px';
-        alertContent.style.borderRadius = '15px';
-        alertContent.style.maxWidth = '500px';
-        alertContent.style.width = '90%';
-        alertContent.innerHTML = alertHtml;
-        
-        const closeButton = document.createElement('button');
-        closeButton.textContent = 'OK';
-        closeButton.style.background = 'linear-gradient(to right, var(--primary), var(--accent))';
-        closeButton.style.color = 'white';
-        closeButton.style.border = 'none';
-        closeButton.style.padding = '12px 25px';
-        closeButton.style.borderRadius = '8px';
-        closeButton.style.marginTop = '15px';
-        closeButton.style.cursor = 'pointer';
-        closeButton.style.fontWeight = '600';
-        closeButton.style.width = '100%';
-        
-        closeButton.addEventListener('click', function() {
-            document.body.removeChild(customAlert);
-        });
-        
-        alertContent.appendChild(closeButton);
-        customAlert.appendChild(alertContent);
-        document.body.appendChild(customAlert);
-    }
-  </script>
+<script>
+document.getElementById("flightTravelForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const form = this;
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    
+    // Show loading state
+    submitButton.textContent = "Processing...";
+    submitButton.disabled = true;
+    
+    // Submit the form normally after a small delay (to show loading state)
+    setTimeout(() => {
+        form.submit(); // Traditional form submission
+    }, 500); // Short delay to ensure "Processing..." appears
+});
+</script>
 </body>
 </html>

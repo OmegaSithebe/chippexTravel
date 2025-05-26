@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Database configuration
 $servername = "localhost";
 $username = "chippyzr_chippexUser";
@@ -10,43 +16,67 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 
 // Check connection
 if (!$conn) {
-    die(json_encode(['status' => 'error', 'message' => 'Database connection failed: ' . mysqli_connect_error()]));
+    die("Connection failed: " . mysqli_connect_error());
 }
 
-// Capture and sanitize form data
-$name = mysqli_real_escape_string($conn, $_POST['name'] ?? '');
-$email = mysqli_real_escape_string($conn, $_POST['email'] ?? '');
-$phone = mysqli_real_escape_string($conn, $_POST['phone'] ?? '');
-$checkIn = mysqli_real_escape_string($conn, $_POST['checkIn'] ?? '');
-$checkOut = mysqli_real_escape_string($conn, $_POST['checkOut'] ?? '');
-$guests = mysqli_real_escape_string($conn, $_POST['guests'] ?? '');
-$roomType = mysqli_real_escape_string($conn, $_POST['roomType'] ?? '');
-$specialRequests = mysqli_real_escape_string($conn, $_POST['specialRequests'] ?? '');
-$packages = isset($_POST['packages']) ? $_POST['packages'] : [];
-$packagesString = is_array($packages) ? implode(", ", $packages) : '';
-
 // Validate required fields
-if (empty($name) || empty($email) || empty($phone) || empty($checkIn) || empty($checkOut) || empty($guests) || empty($roomType)) {
-    echo json_encode(['status' => 'error', 'message' => 'Please complete all required fields.']);
-    exit;
+$required = ['name', 'email', 'phone', 'checkIn', 'checkOut', 'guests', 'roomType'];
+foreach ($required as $field) {
+    if (empty($_POST[$field])) {
+        $_SESSION['error'] = 'Please complete all required fields.';
+        header("Location: vahlavi_hotel.html");
+        exit;
+    }
 }
 
 // Validate email format
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    echo json_encode(['status' => 'error', 'message' => 'Please enter a valid email address.']);
+if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    $_SESSION['error'] = 'Please enter a valid email address.';
+    header("Location: vahlavi_hotel.html");
     exit;
 }
 
-// Insert data into database
+// Process form data
+$name = mysqli_real_escape_string($conn, $_POST['name']);
+$email = mysqli_real_escape_string($conn, $_POST['email']);
+$phone = mysqli_real_escape_string($conn, $_POST['phone']);
+$checkIn = mysqli_real_escape_string($conn, $_POST['checkIn']);
+$checkOut = mysqli_real_escape_string($conn, $_POST['checkOut']);
+$guests = mysqli_real_escape_string($conn, $_POST['guests']);
+$roomType = mysqli_real_escape_string($conn, $_POST['roomType']);
+$specialRequests = isset($_POST['specialRequests']) ? mysqli_real_escape_string($conn, $_POST['specialRequests']) : '';
+$packages = isset($_POST['packages']) ? $_POST['packages'] : [];
+$packagesString = is_array($packages) ? implode(", ", $packages) : '';
+
+// Insert into database
 $sql = "INSERT INTO vahlavi_bookings 
         (full_name, email, phone, check_in, check_out, guests, room_type, packages, special_requests, submitted_at) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
 
 $stmt = mysqli_prepare($conn, $sql);
+if (!$stmt) {
+    $_SESSION['error'] = 'Database error. Please try again later.';
+    header("Location: vahlavi_hotel.html");
+    exit;
+}
+
 mysqli_stmt_bind_param($stmt, "sssssssss", $name, $email, $phone, $checkIn, $checkOut, $guests, $roomType, $packagesString, $specialRequests);
 
 if (mysqli_stmt_execute($stmt)) {
-    // Send email notification
+    // Store data in session for success page
+    $_SESSION['form_data'] = [
+        'name' => $name,
+        'email' => $email,
+        'phone' => $phone,
+        'checkIn' => $checkIn,
+        'checkOut' => $checkOut,
+        'guests' => $guests,
+        'roomType' => $roomType,
+        'packages' => $packagesString,
+        'specialRequests' => $specialRequests
+    ];
+    
+    // Send email notification to admin
     $to = "admin@chippexstravel.co.za";
     $subject = "New Booking at Vahlavi Guest House";
     
@@ -84,7 +114,7 @@ if (mysqli_stmt_execute($stmt)) {
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $headers .= "From: Vahlavi Guest House Booking System <noreply@chippexstravel.co.za>" . "\r\n";
     
-    $mailSent = mail($to, $subject, $message, $headers);
+    mail($to, $subject, $message, $headers);
     
     // Send confirmation to guest
     $guestSubject = "Your Vahlavi Guest House Booking Confirmation";
@@ -108,23 +138,16 @@ if (mysqli_stmt_execute($stmt)) {
     $guestHeaders .= "From: Vahlavi Guest House <noreply@chippexstravel.co.za>" . "\r\n";
     $guestHeaders .= "Reply-To: admin@chippexstravel.co.za" . "\r\n";
     
-    $guestMailSent = mail($email, $guestSubject, $guestMessage, $guestHeaders);
+    mail($email, $guestSubject, $guestMessage, $guestHeaders);
     
-    $response = [
-        'status' => 'success',
-        'message' => "Thank you, $name. Your booking has been received successfully!",
-        'email_sent' => $mailSent,
-        'confirmation_sent' => $guestMailSent
-    ];
-    
-    echo json_encode($response);
+    // Redirect to success page
+    header("Location: vahlavi-success.php");
+    exit;
 } else {
-    $error = mysqli_error($conn);
-    error_log("Booking failed: " . $error);
-    echo json_encode(['status' => 'error', 'message' => 'An error occurred while saving your booking. Please try again.', 'debug' => $error]);
+    $_SESSION['error'] = "Error: " . mysqli_error($conn);
+    header("Location: vahlavi_hotel.html");
+    exit;
 }
 
-// Close connection
 mysqli_close($conn);
-exit;
 ?>

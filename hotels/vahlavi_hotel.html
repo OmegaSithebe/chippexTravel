@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* Vahlavi-specific styles */
+    Vahlavi-specific styles
     :root {
       --primary-color: #9b59b6;
       --secondary-color: #8e44ad;
@@ -178,35 +178,35 @@
         <p>Experience warm hospitality and stylish comfort</p>
       </div>
       
-      <form id="bookingForm" class="booking-form">
+      <form id="bookingForm" action="vahlavi_form.php" method="POST">
         <div class="form-group">
           <label for="name">Full Name *</label>
-          <input type="text" id="name" class="form-control" required>
+          <input type="text" id="name" name="name" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="email">Email Address *</label>
-          <input type="email" id="email" class="form-control" required>
+          <input type="email" id="email" name="email" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="phone">Phone Number *</label>
-          <input type="tel" id="phone" class="form-control" required>
+          <input type="tel" id="phone" name="phone" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="checkIn">Check-in Date *</label>
-          <input type="date" id="checkIn" class="form-control" required>
+          <input type="date" id="checkIn" name="checkIn" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="checkOut">Check-out Date *</label>
-          <input type="date" id="checkOut" class="form-control" required>
+           <input type="date" id="checkOut" name="checkOut" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="guests">Number of Guests *</label>
-          <select id="guests" class="form-control" required>
+           <select id="guests" name="guests" class="form-control" required>
             <option value="">Select...</option>
             <option value="1">1 Guest</option>
             <option value="2">2 Guests</option>
@@ -217,7 +217,7 @@
         
         <div class="form-group" style="grid-column: 1 / -1">
           <label>Select Your Room *</label>
-          <input type="hidden" id="roomType" required>
+          <input type="hidden" id="roomType" name="roomType" required>
           
           <div class="room-grid">
             <div class="room-card" data-value="standard">
@@ -330,9 +330,6 @@
     </footer>
   </div>
   
-  <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -366,75 +363,33 @@
         // Form submission
         const bookingForm = document.getElementById('bookingForm');
         if (bookingForm) {
-            bookingForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
+            bookingForm.addEventListener('submit', function(e) {
                 // Validate room type selection
+                const roomTypeInput = document.getElementById('roomType');
                 if (!roomTypeInput.value) {
+                    e.preventDefault();
                     alert('Please select a room type');
-                    return;
+                    return false;
+                }
+                
+                // Validate dates
+                const checkIn = document.getElementById('checkIn').value;
+                const checkOut = document.getElementById('checkOut').value;
+                if (new Date(checkOut) <= new Date(checkIn)) {
+                    e.preventDefault();
+                    alert('Check-out date must be after check-in date');
+                    return false;
                 }
                 
                 // Show loading state
                 const submitBtn = this.querySelector('button[type="submit"]');
-                const originalBtnText = submitBtn.textContent;
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
                 
-                try {
-                    // Get all form data
-                    const formData = new FormData();
-                    formData.append('name', document.getElementById('name').value);
-                    formData.append('email', document.getElementById('email').value);
-                    formData.append('phone', document.getElementById('phone').value);
-                    formData.append('checkIn', document.getElementById('checkIn').value);
-                    formData.append('checkOut', document.getElementById('checkOut').value);
-                    formData.append('guests', document.getElementById('guests').value);
-                    formData.append('roomType', roomTypeInput.value);
-                    formData.append('specialRequests', document.getElementById('specialRequests').value);
-                    
-                    // Add packages
-                    const packageCheckboxes = document.querySelectorAll('input[name="packages"]:checked');
-                    const packages = Array.from(packageCheckboxes).map(cb => cb.value);
-                    packages.forEach(pkg => {
-                        formData.append('packages[]', pkg);
-                    });
-                    
-                    const response = await fetch('vahlavi_form.php', {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    const result = await response.json();
-                    
-                    if (result.status === 'success') {
-                        // Show success message
-                        const successHTML = `
-                            <div class="alert alert-success" style="padding: 15px; background: #d4edda; color: #155724; border-radius: 4px; margin-bottom: 20px;">
-                                <i class="fas fa-check-circle"></i> ${result.message}
-                                <p style="margin-top: 10px; margin-bottom: 0;">We've sent a confirmation to your email address.</p>
-                            </div>
-                        `;
-                        bookingForm.insertAdjacentHTML('beforebegin', successHTML);
-                        bookingForm.reset();
-                        roomCards.forEach(card => card.classList.remove('selected'));
-                        roomTypeInput.value = '';
-                        
-                        // Scroll to success message
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    } else {
-                        throw new Error(result.message || 'Unknown error occurred');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert(error.message || 'An unexpected error occurred. Please try again later.');
-                } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalBtnText;
-                }
+                return true;
             });
         }
-    });
+     });
   </script>
 </body>
 </html>

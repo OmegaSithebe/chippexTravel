@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Enable error display for debugging (remove in production)
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -19,6 +21,9 @@ if ($conn->connect_error) {
 
 // Check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Store all form data in session
+    $_SESSION['form_data'] = $_POST;
+    
     // Capture form data with additional sanitization
     $name          = isset($_POST['name']) ? $conn->real_escape_string($_POST['name']) : '';
     $email         = isset($_POST['email']) ? $conn->real_escape_string($_POST['email']) : '';
@@ -29,11 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cabinType     = isset($_POST['cabinType']) ? $conn->real_escape_string($_POST['cabinType']) : '';
     $passengers    = isset($_POST['passengers']) ? $conn->real_escape_string($_POST['passengers']) : '';
     $notes         = isset($_POST['notes']) ? $conn->real_escape_string($_POST['notes']) : '';
-
-    // Debug: Show received data
-    echo "<pre style='display:none;'>";
-    print_r($_POST);
-    echo "</pre>";
 
     // Validate required fields
     $errors = [];
@@ -75,10 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if ($execute_result) {
             $last_id = $conn->insert_id;
-            echo "<div style='background:#eeffee; padding:15px; border-radius:5px; margin-bottom:20px;'>";
-            echo "<p style='color: green; font-weight:bold;'>✅ Thank you, <b>$name</b>. Your booking request (ID: $last_id) has been received successfully!</p>";
-            echo "</div>";
-
+            
             // Email notification
             $to      = "admin@chippexstravel.co.za";
             $subject = "🛳️ New Ship Travel Request from $name";
@@ -109,13 +106,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $mail_sent = mail($to, $subject, $body, $headers);
             
-            if (!$mail_sent) {
-                echo "<p style='color: orange;'>⚠️ Booking was saved but email notification failed to send.</p>";
-            }
+            // Redirect to success page
+            header("Location: ship-success.php");
+            exit;
         } else {
             echo "<div style='background:#ffeeee; padding:15px; border-radius:5px; margin-bottom:20px;'>";
             echo "<p style='color: red; font-weight:bold;'>❌ Error: " . $stmt->error . "</p>";
-            echo "<p>SQL: " . htmlspecialchars($sql) . "</p>";
             echo "</div>";
         }
 

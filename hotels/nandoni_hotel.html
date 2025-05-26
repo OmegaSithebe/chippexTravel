@@ -163,7 +163,7 @@
         <p>Fill in your details to reserve your perfect getaway</p>
       </div>
       
-      <form id="bookingForm" class="booking-form" method="POST" action="">
+      <form id="bookingForm" class="booking-form" method="POST" action="nandoni_form.php">
         <div class="form-group">
           <label for="name">Full Name *</label>
           <input type="text" id="name" name="name" class="form-control" required>
@@ -335,73 +335,33 @@
           });
           
           // Form submission
-          const bookingForm = document.getElementById('bookingForm');
-          if (bookingForm) {
-              bookingForm.addEventListener('submit', async function(e) {
-                  e.preventDefault();
-                  
-                  // Validate room type selection
-                  if (!roomTypeInput.value) {
-                      alert('Please select a room type');
-                      return;
-                  }
-                  
-                  // Validate dates
-                  const checkIn = document.getElementById('checkIn').value;
-                  const checkOut = document.getElementById('checkOut').value;
-                  if (new Date(checkOut) <= new Date(checkIn)) {
-                      alert('Check-out date must be after check-in date');
-                      return;
-                  }
-                  
-                  // Show loading state
-                  const submitBtn = this.querySelector('button[type="submit"]');
-                  const originalBtnText = submitBtn.textContent;
-                  submitBtn.disabled = true;
-                  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-                  
-                  try {
-                      const formData = new FormData(this);
-                      const response = await fetch('nandoni_form.php', {
-                          method: 'POST',
-                          body: formData
-                      });
-                      
-                      if (!response.ok) {
-                          throw new Error(`HTTP error! status: ${response.status}`);
-                      }
-                      
-                      const result = await response.json();
-                      
-                      if (result.status === 'success') {
-                          // Show success message
-                          const successHTML = `
-                              <div class="alert alert-success" style="padding: 15px; background: #d4edda; color: #155724; border-radius: 4px; margin-bottom: 20px;">
-                                  <i class="fas fa-check-circle"></i> ${result.message}
-                                  <p style="margin-top: 10px; margin-bottom: 0;">We've sent a confirmation to your email address.</p>
-                              </div>
-                          `;
-                          bookingForm.insertAdjacentHTML('beforebegin', successHTML);
-                          bookingForm.reset();
-                          document.querySelectorAll('.room-option').forEach(opt => opt.classList.remove('selected'));
-                          roomTypeInput.value = '';
-                          
-                          // Scroll to success message
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
-                      } else {
-                          throw new Error(result.message || 'Unknown error occurred');
-                      }
-                  } catch (error) {
-                      console.error('Error:', error);
-                      alert(error.message || 'An unexpected error occurred. Please try again later.');
-                  } finally {
-                      submitBtn.disabled = false;
-                      submitBtn.textContent = originalBtnText;
-                  }
-              });
-          }
-      });
-    </script>
+        const bookingForm = document.getElementById('bookingForm');
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', function(e) {
+                // Validate room type selection
+                if (!document.getElementById('roomType').value) {
+                    e.preventDefault();
+                    alert('Please select a room type');
+                    return;
+                }
+                
+                // Validate dates
+                const checkIn = document.getElementById('checkIn').value;
+                const checkOut = document.getElementById('checkOut').value;
+                if (new Date(checkOut) <= new Date(checkIn)) {
+                    e.preventDefault();
+                    alert('Check-out date must be after check-in date');
+                    return;
+                }
+                
+                // Show loading state
+                const submitBtn = this.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            });
+        }
+    });
+  </script>
 
 
 </body>

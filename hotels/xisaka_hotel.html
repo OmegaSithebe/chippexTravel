@@ -248,35 +248,35 @@
         </div>
       </div>
       
-      <form id="bookingForm" class="booking-form">
+      <form id="bookingForm" class="booking-form" method="POST" action="xisaka_form.php">
         <div class="form-group">
           <label for="name">Full Name *</label>
-          <input type="text" id="name" class="form-control" required>
+          <input type="text" id="name" name="name" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="email">Email Address *</label>
-          <input type="email" id="email" class="form-control" required>
+          <input type="email" id="email" name="email" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="phone">Phone Number *</label>
-          <input type="tel" id="phone" class="form-control" required>
+          <input type="tel" id="phone" name="phone" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="checkIn">Check-in Date *</label>
-          <input type="date" id="checkIn" class="form-control" required>
+          <input type="date" id="checkIn" name="checkIn" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="checkOut">Check-out Date *</label>
-          <input type="date" id="checkOut" class="form-control" required>
+          <input type="date" id="checkOut" name="checkOut" class="form-control" required>
         </div>
         
         <div class="form-group">
           <label for="guests">Number of Guests *</label>
-          <select id="guests" class="form-control" required>
+          <select id="guests" name="guests" class="form-control" required>
             <option value="">Select...</option>
             <option value="1">1 Guest</option>
             <option value="2">2 Guests</option>
@@ -287,7 +287,7 @@
         
         <div class="form-group" style="grid-column: 1 / -1">
           <label>Select Your Room *</label>
-          <input type="hidden" id="roomType" required>
+          <input type="hidden" id="roomType" name="roomType" required>
           
                 <div class="room-type" data-value="standard">
             <div class="room-image" style="background-image: url('images/xisaka_standard.jfif');"></div>
@@ -362,7 +362,7 @@
         
         <div class="form-group" style="grid-column: 1 / -1">
         <label for="specialRequests">Special Requests</label>
-        <textarea id="specialRequests" class="form-control" placeholder="Do you have any special requirements?"></textarea>
+        <textarea id="specialRequests" name="specialRequests" class="form-control" placeholder="Do you have any special requirements?"></textarea>
         </div>
         
     
@@ -400,116 +400,64 @@
   </div>
 </footer>
 
-  
-  <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Set current year
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+      
+      // Room selection
+      const roomTypes = document.querySelectorAll('.room-type');
+      const roomTypeInput = document.getElementById('roomType');
+      
+      roomTypes.forEach(room => {
+          room.addEventListener('click', function() {
+              roomTypes.forEach(r => r.classList.remove('selected'));
+              this.classList.add('selected');
+              roomTypeInput.value = this.dataset.value;
+              roomTypeInput.name = 'roomType'; // Add this line
+          });
+      });
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Set current year
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-        
-        // Room selection
-        const roomTypes = document.querySelectorAll('.room-type');
-        const roomTypeInput = document.getElementById('roomType');
-        
-        roomTypes.forEach(room => {
-            room.addEventListener('click', function() {
-                roomTypes.forEach(r => r.classList.remove('selected'));
-                this.classList.add('selected');
-                roomTypeInput.value = this.dataset.value;
-            });
-        });
-
-        // Date picker setup
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('checkIn').min = today;
-        
-        document.getElementById('checkIn').addEventListener('change', function() {
-            const checkOut = document.getElementById('checkOut');
-            checkOut.min = this.value;
-            if (checkOut.value && checkOut.value < this.value) {
-                checkOut.value = this.value;
-            }
-        });
-        
-        // Form submission
-        const bookingForm = document.getElementById('bookingForm');
-        if (bookingForm) {
-            bookingForm.addEventListener('submit', async function(e) {
+      // Date picker setup
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('checkIn').min = today;
+      
+      document.getElementById('checkIn').addEventListener('change', function() {
+          const checkOut = document.getElementById('checkOut');
+          checkOut.min = this.value;
+          if (checkOut.value && checkOut.value < this.value) {
+              checkOut.value = this.value;
+          }
+      });
+      
+    // Form submission
+    const bookingForm = document.getElementById('bookingForm');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', function(e) {
+            // Validate room type selection
+            if (!roomTypeInput.value) {
                 e.preventDefault();
-                
-                // Validate room type selection
-                if (!roomTypeInput.value) {
-                    alert('Please select a room type');
-                    return;
-                }
-                
-                // Show loading state
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalBtnText = submitBtn.textContent;
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-                
-                try {
-                    // Get all form data
-                    const formData = new FormData();
-                    formData.append('name', document.getElementById('name').value);
-                    formData.append('email', document.getElementById('email').value);
-                    formData.append('phone', document.getElementById('phone').value);
-                    formData.append('checkIn', document.getElementById('checkIn').value);
-                    formData.append('checkOut', document.getElementById('checkOut').value);
-                    formData.append('guests', document.getElementById('guests').value);
-                    formData.append('roomType', roomTypeInput.value);
-                    formData.append('specialRequests', document.getElementById('specialRequests').value);
-                    
-                    // Add add-ons
-                    const addonCheckboxes = document.querySelectorAll('input[name="addons"]:checked');
-                    const addons = Array.from(addonCheckboxes).map(cb => cb.value);
-                    addons.forEach(addon => {
-                        formData.append('addons[]', addon);
-                    });
-                    
-                    const response = await fetch('xisaka_form.php', {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    const result = await response.json();
-                    
-                    if (result.status === 'success') {
-                        // Show success message
-                        const successHTML = `
-                            <div class="alert alert-success" style="padding: 15px; background: #d4edda; color: #155724; border-radius: 4px; margin-bottom: 20px;">
-                                <i class="fas fa-check-circle"></i> ${result.message}
-                                <p style="margin-top: 10px; margin-bottom: 0;">We've sent a confirmation to your email address.</p>
-                            </div>
-                        `;
-                        bookingForm.insertAdjacentHTML('beforebegin', successHTML);
-                        bookingForm.reset();
-                        roomTypes.forEach(room => room.classList.remove('selected'));
-                        roomTypeInput.value = '';
-                        
-                        // Uncheck all add-ons
-                        document.querySelectorAll('input[name="addons"]').forEach(checkbox => {
-                            checkbox.checked = false;
-                        });
-                        
-                        // Scroll to success message
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    } else {
-                        throw new Error(result.message || 'Unknown error occurred');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert(error.message || 'An unexpected error occurred. Please try again later.');
-                } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalBtnText;
-                }
-            });
-        }
-    });
-  </script>
+                alert('Please select a room type');
+                return false;
+            }
+            
+            // Validate dates
+            const checkIn = document.getElementById('checkIn').value;
+            const checkOut = document.getElementById('checkOut').value;
+            if (new Date(checkOut) <= new Date(checkIn)) {
+                e.preventDefault();
+                alert('Check-out date must be after check-in date');
+                return false;
+            }
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            return true;
+        });
+    }
+});
+</script>
