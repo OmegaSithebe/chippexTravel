@@ -39,5 +39,6 @@ if (mysqli_stmt_execute($stmt)) {
     echo "<p style='color: red;'>❌ Payment entry failed. Try again.</p>";
 }
 
+
 mysqli_close($conn);
 ?>
