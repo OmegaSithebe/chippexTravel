@@ -909,6 +909,147 @@
     }
   }
 
+    /* Gallery Section Styles */
+  #gallery {
+    padding: 80px 0;
+  }
+  
+  .gallery-filters {
+    margin-bottom: 40px;
+  }
+  
+  .filter-btn {
+    background: transparent;
+    border: 2px solid #ff5a00;
+    color: #ff5a00;
+    padding: 8px 20px;
+    margin: 0 5px 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+  }
+  
+  .filter-btn:hover, 
+  .filter-btn.active {
+    background: #ff5a00;
+    color: white;
+  }
+  
+  .gallery-grid {
+    margin-bottom: 40px;
+  }
+  
+  .gallery-box {
+    position: relative;
+    margin-bottom: 30px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .gallery-box img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .gallery-box:hover img {
+    transform: scale(1.1);
+  }
+  
+  .gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .gallery-box:hover .gallery-overlay {
+    opacity: 1;
+  }
+  
+  .gallery-caption {
+    text-align: center;
+    color: white;
+    padding: 20px;
+  }
+  
+  .gallery-caption h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .gallery-caption p {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+  }
+  
+  /* Lightbox Styles */
+  .gallery-lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+  }
+  
+  .lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 80%;
+    max-height: 80%;
+  }
+  
+  .close-lightbox {
+    position: absolute;
+    top: 50px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .lightbox-caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+  }
+  
+  @media (max-width: 768px) {
+    .gallery-box img {
+      height: 200px;
+    }
+    
+    .lightbox-content {
+      max-width: 95%;
+    }
+    
+    .close-lightbox {
+      top: 20px;
+      right: 20px;
+      font-size: 30px;
+    }
+  }
+
 </style>
 	
 
@@ -1598,6 +1739,180 @@
 			</div>
 		</div>
 	</section>
+
+	<!-- Gallery Section -->
+	<section id="gallery" class="fh5co-bg-color">
+	<div class="container">
+		<div class="row">
+		<div class="col-md-12">
+			<div class="section-title text-center">
+			<h2>Travel Experience Gallery</h2>
+			<p>Capturing moments from our unforgettable journeys</p>
+			</div>
+		</div>
+		</div>
+		
+		<!-- Gallery Filters
+		<div class="row">
+		<div class="col-md-12 text-center">
+			<div class="gallery-filters">
+			<button class="filter-btn active" data-filter="all">All</button>
+			<button class="filter-btn" data-filter="adventure">Adventure</button>
+			<button class="filter-btn" data-filter="luxury">Luxury</button>
+			<button class="filter-btn" data-filter="nature">Nature</button>
+			<button class="filter-btn" data-filter="cultural">Cultural</button>
+			</div>
+		</div>
+		</div> -->
+		
+		<!-- Gallery Grid -->
+		<div class="row gallery-grid">
+			<!-- Image 1 -->
+			<div class="col-md-4 col-sm-6 gallery-item adventure">
+				<div class="gallery-box">
+				<img src="images/gallery/Lesotho culture.jpeg" alt="Adventure Travel" class="img-responsive">
+				<div class="gallery-overlay">
+					<div class="gallery-caption">
+					<h3>Lesotho Culture</h3>
+					<p>Lesotho Culture Experience</p>
+					</div>
+				</div>
+				</div>
+			</div>
+			
+			<!-- Image 2 -->
+			<div class="col-md-4 col-sm-6 gallery-item luxury">
+				<div class="gallery-box">
+				<img src="images/gallery/Lesotho culture Slogan.jpeg" alt="Luxury Resort" class="img-responsive">
+				<div class="gallery-overlay">
+					<div class="gallery-caption">
+					<h3>Lesotho Culture</h3>
+					<p>Lesotho culture honoured Slogan</p>
+					</div>
+				</div>
+				</div>
+			</div>
+			
+			<!-- Image 3 -->
+			<div class="col-md-4 col-sm-6 gallery-item nature">
+				<div class="gallery-box">
+				<img src="images/gallery/Lesotho culture village.jpeg" alt="Nature Retreat" class="img-responsive">
+				<div class="gallery-overlay">
+					<div class="gallery-caption">
+					<h3>Lesotho Culture</h3>
+					<p>Lesotho culture village</p>
+					</div>
+				</div>
+				</div>
+			</div>
+			
+			<!-- Image 4 -->
+			<div class="col-md-4 col-sm-6 gallery-item cultural">
+				<div class="gallery-box">
+				<img src="images/gallery/Lesotho Tourists gathering.jpeg" alt="Cultural Experience" class="img-responsive">
+				<div class="gallery-overlay">
+					<div class="gallery-caption">
+					<h3>Lesotho Culture</h3>
+					<p>Lesotho Tourists gathering</p>
+					</div>
+				</div>
+				</div>
+			</div>
+			
+			<!-- Image 5 -->
+			<div class="col-md-4 col-sm-6 gallery-item adventure">
+				<div class="gallery-box">
+				<img src="images/gallery/Lesotho culture women.jpeg" alt="Water Adventure" class="img-responsive">
+				<div class="gallery-overlay">
+					<div class="gallery-caption">
+					<h3>Lesotho Culture</h3>
+					<p>Lesotho culture women</p>
+					</div>
+				</div>
+				</div>
+			</div>
+			
+			<!-- Image 6 -->
+			<div class="col-md-4 col-sm-6 gallery-item luxury">
+				<div class="gallery-box">
+				<img src="images/gallery/Lesotho culture man.jpeg" alt="Luxury Cruise" class="img-responsive">
+				<div class="gallery-overlay">
+					<div class="gallery-caption">
+					<h3>Lesotho Culture</h3>
+					<p>Lesotho culture man</p>
+					</div>
+				</div>
+				</div>
+			</div>
+			
+			<!-- Image 7 -->
+			<div class="col-md-4 col-sm-6 gallery-item nature">
+				<div class="gallery-box">
+				<img src="images/gallery/Lesotho culture woman.jpeg" alt="Wildlife Safari" class="img-responsive">
+				<div class="gallery-overlay">
+					<div class="gallery-caption">
+					<h3>Lesotho Culture</h3>
+					<p>Lesotho culture woman</p>
+					</div>
+				</div>
+				</div>
+			</div>
+			
+			<!-- Image 8 -->
+			<div class="col-md-4 col-sm-6 gallery-item cultural">
+				<div class="gallery-box">
+				<img src="images/gallery/Lesotho culture show.jpeg" alt="Historic Site" class="img-responsive">
+				<div class="gallery-overlay">
+					<div class="gallery-caption">
+					<h3>Lesotho Culture</h3>
+					<p>Lesotho culture show</p>
+					</div>
+				</div>
+				</div>
+			</div>
+			
+			<!-- Image 9 -->
+			<div class="col-md-4 col-sm-6 gallery-item adventure">
+				<div class="gallery-box">
+				<img src="images/gallery/Lesotho culture history.jpeg" alt="Desert Adventure" class="img-responsive">
+				<div class="gallery-overlay">
+					<div class="gallery-caption">
+					<h3>Lesotho Culture</h3>
+					<p>Lesotho culture history</p>
+					</div>
+				</div>
+				</div>
+			</div>
+
+			<!-- Image 10 -->
+			<div class="col-md-4 col-sm-6 gallery-item adventure">
+				<div class="gallery-box">
+				<img src="images/gallery/Lesotho culture & Zulu culture.jpeg" alt="Desert Adventure" class="img-responsive">
+				<div class="gallery-overlay">
+					<div class="gallery-caption">
+					<h3>Lesotho Culture</h3>
+					<p>Lesotho culture & Zulu culture</p>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- View More Button -->
+		<!-- <div class="row">
+		<div class="col-md-12 text-center">
+			<a href="#" class="btn btn-primary btn-luxe-primary">View More Photos</a>
+		</div>
+		</div> -->
+	</div>
+	</section>
+
+	<!-- Lightbox Modal -->
+	<div class="gallery-lightbox" id="lightbox">
+	<span class="close-lightbox">&times;</span>
+	<img class="lightbox-content" id="lightbox-img">
+	<div class="lightbox-caption" id="lightbox-caption"></div>
+	</div>
 	
 
 	<!-- New Payment Link Request Form -->
@@ -1921,7 +2236,69 @@
 		});
 	</script>
 
+	<script>
+	// Gallery Filtering Functionality
+	document.addEventListener('DOMContentLoaded', function() {
+		// Filter buttons
+		const filterButtons = document.querySelectorAll('.filter-btn');
+		const galleryItems = document.querySelectorAll('.gallery-item');
 		
+		filterButtons.forEach(button => {
+		button.addEventListener('click', function() {
+			// Remove active class from all buttons
+			filterButtons.forEach(btn => btn.classList.remove('active'));
+			
+			// Add active class to clicked button
+			this.classList.add('active');
+			
+			// Get filter value
+			const filterValue = this.getAttribute('data-filter');
+			
+			// Filter gallery items
+			galleryItems.forEach(item => {
+			if (filterValue === 'all' || item.classList.contains(filterValue)) {
+				item.style.display = 'block';
+			} else {
+				item.style.display = 'none';
+			}
+			});
+		});
+		});
+		
+		// Lightbox functionality
+		const galleryBoxes = document.querySelectorAll('.gallery-box');
+		const lightbox = document.getElementById('lightbox');
+		const lightboxImg = document.getElementById('lightbox-img');
+		const lightboxCaption = document.getElementById('lightbox-caption');
+		const closeLightbox = document.querySelector('.close-lightbox');
+		
+		galleryBoxes.forEach(box => {
+		box.addEventListener('click', function() {
+			const imgSrc = this.querySelector('img').src;
+			const caption = this.querySelector('.gallery-caption').innerHTML;
+			
+			lightboxImg.src = imgSrc;
+			lightboxCaption.innerHTML = caption;
+			lightbox.style.display = 'block';
+			document.body.style.overflow = 'hidden'; // Prevent scrolling
+		});
+		});
+		
+		// Close lightbox
+		closeLightbox.addEventListener('click', function() {
+		lightbox.style.display = 'none';
+		document.body.style.overflow = 'auto'; // Re-enable scrolling
+		});
+		
+		// Close lightbox when clicking outside the image
+		lightbox.addEventListener('click', function(e) {
+		if (e.target === lightbox) {
+			lightbox.style.display = 'none';
+			document.body.style.overflow = 'auto';
+		}
+		});
+	});
+	</script>	
 
 </body>
 </html> 
