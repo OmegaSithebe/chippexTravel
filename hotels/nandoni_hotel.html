@@ -22,10 +22,14 @@
         position: relative;
         cursor: pointer;
         transition: all 0.3s ease;
+        overflow: hidden;
+        border-radius: 10px;
     }
     
     .room-option:hover {
       border-color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
     
     .room-option.selected {
@@ -44,6 +48,7 @@
         border: 2px solid #ddd;
         border-radius: 50%;
         transition: all 0.3s ease;
+        z-index: 2;
     }
 
     .room-option.selected::before {
@@ -92,6 +97,27 @@
       min-height: 100px;
       resize: vertical;
     }
+    
+    /* New room option styling */
+    .room-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px 8px 0 0;
+    }
+    
+    .room-content {
+      padding: 20px;
+    }
+    
+    .room-highlight {
+      background-color: rgba(231, 76, 60, 0.1);
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      margin: 10px 0;
+      display: inline-block;
+    }
 
   /* WhatsApp Floating Button */
   .whatsapp-float {
@@ -130,6 +156,15 @@
   @media (min-width: 480px) {
     .whatsapp-text {
       display: inline;
+    }
+  }
+  
+  /* Responsive layout for room options */
+  @media (min-width: 768px) {
+    .room-options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
     }
   }
   </style>
@@ -201,45 +236,78 @@
           </select>
         </div>
         
-        <div class="form-group" style="grid-column: 1 / -1">
-            <label>Select Your Room Type *</label>
-            <input type="hidden" id="roomType" name="roomType" required>
-            
-            <div class="room-option" data-value="standard">
-                <h4>Standard Room</h4>
-                <p>Comfortable room with dam view, perfect for couples or solo travelers.</p>
+        
+      <div class="form-group" style="grid-column: 1 / -1">
+          <label>Select Your Accommodation Type *</label>
+          <input type="hidden" id="roomType" name="roomType" required>
+          
+          <div class="room-options-grid">
+            <div class="room-option" data-value="clubhouse-mansion">
+              <img src="images/Nandoni waterfront resort king suite - clubhouse mansion.jpeg" alt="Clubhouse Mansion" class="room-image">
+              <div class="room-content">
+                <h4>Clubhouse Mansion</h4>
+                <span class="room-highlight">Full Dam View</span>
+                <p>Experience the full view of Nandoni Dam with sunrise and sunset directly over the water from our luxurious mansion.</p>
                 <div class="amenities-list">
-                    <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
-                    <span class="amenity-item"><i class="fas fa-tv"></i> TV</span>
-                    <span class="amenity-item"><i class="fas fa-coffee"></i> Tea/Coffee</span>
+                  <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
+                  <span class="amenity-item"><i class="fas fa-snowflake"></i> Air Conditioning</span>
+                  <span class="amenity-item"><i class="fas fa-swimming-pool"></i> Infinity Pool</span>
+                  <span class="amenity-item"><i class="fas fa-utensils"></i> Restaurant & Bar</span>
                 </div>
-                <p class="price">R2000/night</p>
+                <p class="price">From R4000/night</p>
+              </div>
             </div>
             
-            <div class="room-option" data-value="deluxe">
-                <h4>Deluxe Room</h4>
-                <p>Spacious room with private balcony overlooking the dam.</p>
+            <div class="room-option" data-value="three-bedroom-villa">
+              <img src="images/nandoni waterfront resort - 3 bedroom villa.jpeg" alt="Three Bedroom Villa" class="room-image">
+              <div class="room-content">
+                <h4>Three Bedroom Villa</h4>
+                <span class="room-highlight">Breakfast Included</span>
+                <p>Spacious six-sleeper villa with living room, kitchen, en-suite bedroom, and premium bedrooms.</p>
                 <div class="amenities-list">
-                    <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
-                    <span class="amenity-item"><i class="fas fa-tv"></i> Smart TV</span>
-                    <span class="amenity-item"><i class="fas fa-coffee"></i> Tea/Coffee</span>
-                    <span class="amenity-item"><i class="fas fa-umbrella-beach"></i> Balcony</span>
+                  <span class="amenity-item"><i class="fas fa-utensils"></i> Kitchen</span>
+                  <span class="amenity-item"><i class="fas fa-couch"></i> Living Area</span>
+                  <span class="amenity-item"><i class="fas fa-fire"></i> Braai Facilities</span>
+                  <span class="amenity-item"><i class="fas fa-umbrella-beach"></i> Large Patio</span>
                 </div>
-                <p class="price">R2800/night</p>
+                <p class="price">R7500/night</p>
+              </div>
             </div>
             
-            <div class="room-option" data-value="family">
-                <h4>Family Suite</h4>
-                <p>Two-bedroom suite perfect for families, with kitchenette.</p>
+            <div class="room-option" data-value="two-bedroom-villa">
+              <img src="images/nandoni waterfront resort 2 bedroom villa.jpeg" alt="Two Bedroom Villa" class="room-image">
+              <div class="room-content">
+                <h4>Two Bedroom Villa</h4>
+                <span class="room-highlight">Breakfast Included</span>
+                <p>Comfortable four-sleeper villa with en-suite bedroom, premium bedroom, living room, and kitchen.</p>
                 <div class="amenities-list">
-                    <span class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</span>
-                    <span class="amenity-item"><i class="fas fa-tv"></i> Smart TV</span>
-                    <span class="amenity-item"><i class="fas fa-utensils"></i> Kitchenette</span>
-                    <span class="amenity-item"><i class="fas fa-couch"></i> Living Area</span>
+                  <span class="amenity-item"><i class="fas fa-utensils"></i> Kitchen</span>
+                  <span class="amenity-item"><i class="fas fa-couch"></i> Living Area</span>
+                  <span class="amenity-item"><i class="fas fa-fire"></i> Braai Facilities</span>
+                  <span class="amenity-item"><i class="fas fa-umbrella-beach"></i> Large Patio</span>
                 </div>
-                <p class="price">R3500/night</p>
+                <p class="price">R6800/night</p>
+              </div>
             </div>
-        </div>
+            
+            <div class="room-option" data-value="presidential-villa">
+              <img src="images/nandoni waterfront resort - presidential villa.jpg" alt="Presidential Two Sleeper Villa" class="room-image">
+              <div class="room-content">
+                <h4>Presidential Two Sleeper Villa</h4>
+                <span class="room-highlight">Breakfast Included</span>
+                <p>Ultimate luxury experience with premium amenities and exclusive services for the discerning traveler.</p>
+                <div class="amenities-list">
+                  <span class="amenity-item"><i class="fas fa-concierge-bell"></i> Premium Service</span>
+                  <span class="amenity-item"><i class="fas fa-spa"></i> Luxury Amenities</span>
+                  <span class="amenity-item"><i class="fas fa-eye"></i> Panoramic Views</span>
+                  <span class="amenity-item"><i class="fas fa-crown"></i> Exclusive Access</span>
+                </div>
+                <p class="price">R15000/night</p>
+              </div>
+            </div>
+          </div>
+      </div>
+        
         <div class="form-group special-request" style="grid-column: 1 / -1">
           <label for="specialRequests">Special Requests</label>
           <textarea id="specialRequests" name="specialRequests" class="form-control" placeholder="Any special requirements or preferences..."></textarea>
@@ -341,7 +409,7 @@
                 // Validate room type selection
                 if (!document.getElementById('roomType').value) {
                     e.preventDefault();
-                    alert('Please select a room type');
+                    alert('Please select an accommodation type');
                     return;
                 }
                 

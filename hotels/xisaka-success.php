@@ -15,96 +15,175 @@ $data = $_SESSION['form_data'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xisaka Booking Confirmation</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Booking Confirmed - Xisaka Guest House</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Fallback styles if CSS fails to load */
+        :root {
+            --primary-color: #27ae60;
+            --secondary-color: #219653;
+            --accent-color: #e67e22;
+            --success-color: #2ecc71;
+        }
+        
         body { 
-            font-family: Arial, sans-serif; 
-            color: #fff; 
+            font-family: 'Arial', sans-serif; 
+            color: #333; 
             margin: 0; 
             padding: 0; 
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./assets/images/xisaka-bg.jpg');
             background-size: cover;
             background-position: center;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+        
         .success-container { 
             max-width: 800px; 
-            margin: 50px auto; 
-            padding: 30px; 
-            background: rgba(0, 0, 0, 0.7); 
+            margin: 20px; 
+            padding: 40px; 
+            background: rgba(255, 255, 255, 0.95); 
             border-radius: 15px; 
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-        .thank-you-message {
-            margin: 30px 0;
-            line-height: 1.8;
+        
+        .success-icon {
+            font-size: 4rem;
+            color: var(--success-color);
+            margin-bottom: 20px;
         }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .booking-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .booking-detail {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .detail-value {
+            color: #333;
+        }
+        
+        .booking-id {
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        
         .back-button {
-            background: #e67e22;
+            background: var(--primary-color);
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 12px 30px;
+            border-radius: 25px;
             font-size: 16px;
-            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
             margin-top: 20px;
+            transition: background 0.3s;
         }
+        
         .back-button:hover {
-            background: #d35400;
-            transform: translateY(-2px);
+            background: var(--secondary-color);
         }
+        
         footer {
+            color: white;
             text-align: center;
+            margin-top: 20px;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            margin-top: 50px;
         }
-        .booking-details {
-            text-align: left;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        .booking-details h3 {
-            border-bottom: 1px solid #e67e22;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .detail-row {
-            margin-bottom: 10px;
+        
+        @media (max-width: 768px) {
+            .success-container {
+                margin: 10px;
+                padding: 20px;
+            }
+            
+            .booking-detail {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
-<body class="xisaka-theme">
-    <div class="success-container animated">
-        <h1><i class="fas fa-check-circle"></i> Booking Confirmed, <?php echo htmlspecialchars($data['name']); ?>!</h1>
-        
-        <div class="thank-you-message">
-            <p>Thank you for choosing Xisaka Guest House for your stay!</p>
-            <p>We've sent a confirmation email to <?php echo htmlspecialchars($data['email']); ?> with your booking details.</p>
+<body>
+    <div class="success-container">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
         </div>
+        <h1>Booking Request Received!</h1>
+        
+        <div class="booking-id">
+            Booking Reference: #<?php echo htmlspecialchars($data['bookingId'] ?? 'N/A'); ?>
+        </div>
+        
+        <p>Thank you, <strong><?php echo htmlspecialchars($data['name']); ?></strong>! Your booking request has been submitted successfully.</p>
         
         <div class="booking-details">
-            <h3>Your Booking Details</h3>
-            <div class="detail-row"><strong>Check-in:</strong> <?php echo htmlspecialchars($data['checkIn']); ?></div>
-            <div class="detail-row"><strong>Check-out:</strong> <?php echo htmlspecialchars($data['checkOut']); ?></div>
-            <div class="detail-row"><strong>Room Type:</strong> <?php echo htmlspecialchars($data['roomType']); ?></div>
-            <div class="detail-row"><strong>Guests:</strong> <?php echo htmlspecialchars($data['guests']); ?></div>
+            <h3>Booking Summary</h3>
+            <div class="booking-detail">
+                <span class="detail-label">Room Type:</span>
+                <span class="detail-value"><?php echo htmlspecialchars($data['roomType']); ?></span>
+            </div>
+            <div class="booking-detail">
+                <span class="detail-label">Check-in:</span>
+                <span class="detail-value"><?php echo htmlspecialchars($data['checkIn']); ?></span>
+            </div>
+            <div class="booking-detail">
+                <span class="detail-label">Check-out:</span>
+                <span class="detail-value"><?php echo htmlspecialchars($data['checkOut']); ?></span>
+            </div>
+            <div class="booking-detail">
+                <span class="detail-label">Number of Nights:</span>
+                <span class="detail-value"><?php echo htmlspecialchars($data['nights'] ?? 'N/A'); ?></span>
+            </div>
+            <div class="booking-detail">
+                <span class="detail-label">Guests:</span>
+                <span class="detail-value"><?php echo htmlspecialchars($data['guests']); ?></span>
+            </div>
             <?php if (!empty($data['addons'])): ?>
-            <div class="detail-row"><strong>Add-ons:</strong> <?php echo htmlspecialchars($data['addons']); ?></div>
+            <div class="booking-detail">
+                <span class="detail-label">Selected Add-ons:</span>
+                <span class="detail-value"><?php echo htmlspecialchars($data['addons']); ?></span>
+            </div>
             <?php endif; ?>
             <?php if (!empty($data['specialRequests'])): ?>
-            <div class="detail-row"><strong>Special Requests:</strong> <?php echo nl2br(htmlspecialchars($data['specialRequests'])); ?></div>
+            <div class="booking-detail">
+                <span class="detail-label">Special Requests:</span>
+                <span class="detail-value"><?php echo htmlspecialchars($data['specialRequests']); ?></span>
+            </div>
             <?php endif; ?>
         </div>
         
-        <p>Our team will contact you shortly to confirm your reservation. If you have any questions, please call us at +27 73 474 2034.</p>
+        <div class="next-steps">
+            <h3>What Happens Next?</h3>
+            <p>We've sent a confirmation email to <strong><?php echo htmlspecialchars($data['email']); ?></strong>. Our team will contact you within 24 hours to confirm availability and provide payment details.</p>
+        </div>
         
         <button class="back-button" onclick="window.location.href='xisaka_hotel.html'">
             <i class="fas fa-arrow-left"></i> Back to Xisaka Guest House
