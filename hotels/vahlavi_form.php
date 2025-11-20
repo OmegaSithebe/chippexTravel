@@ -12,9 +12,29 @@ define('ADMIN_EMAIL', 'admin@chippexstravel.co.za');
 define('NOREPLY_EMAIL', 'noreply@chippexstravel.co.za');
 define('CONTACT_PHONE', '+27 73 474 2034');
 
+// Room prices configuration
+define('ROOM_PRICES', [
+    'standard' => 1815,
+    'deluxe' => 2400,
+    'executive' => 3200
+]);
+
+// Package prices
+define('PACKAGE_PRICES', [
+    'breakfast' => 150,
+    'airport' => 300,
+    'dinner' => 450
+]);
+
+// Currency conversion (Update this rate regularly)
+define('USD_TO_ZAR_RATE', 18.5);
+
 // Enable error reporting for development
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+// Start output buffering to prevent header errors
+ob_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Create database connection
@@ -62,8 +82,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $guests = mysqli_real_escape_string($conn, $_POST['guests']);
     $roomType = mysqli_real_escape_string($conn, $_POST['roomType']);
     $specialRequests = isset($_POST['specialRequests']) ? mysqli_real_escape_string($conn, $_POST['specialRequests']) : '';
-    $packages = isset($_POST['packages']) ? $_POST['packages'] : [];
-    $packagesString = is_array($packages) ? implode(", ", $packages) : '';
+    
+    // Handle packages - ensure it's always an array
+    $packages = [];
+    if (isset($_POST['packages'])) {
+        if (is_array($_POST['packages'])) {
+            $packages = $_POST['packages'];
+        } else {
+            // If it's a string, convert to array
+            $packages = [$_POST['packages']];
+        }
+    }
+    $packagesString = !empty($packages) ? implode(", ", $packages) : '';
 
     // Map room types to display names for emails
     $roomTypeDisplay = [
@@ -74,13 +104,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $roomTypeName = isset($roomTypeDisplay[$roomType]) ? $roomTypeDisplay[$roomType] : $roomType;
 
-    // Calculate number of nights
+    // Calculate number of nights and total amounts
     $nights = floor((strtotime($checkOut) - strtotime($checkIn)) / (60 * 60 * 24));
+    $pricePerNight = ROOM_PRICES[$roomType] ?? 0;
+    
+    // Calculate package costs - FIXED: Check if packages is array before foreach
+    $packageTotal = 0;
+    $packageDetails = [];
+    if (is_array($packages) && !empty($packages)) {
+        foreach ($packages as $package) {
+            if (isset(PACKAGE_PRICES[$package])) {
+                $packagePrice = PACKAGE_PRICES[$package];
+                $packageTotal += $packagePrice;
+                $packageDetails[] = ucfirst($package) . " (R" . number_format($packagePrice, 2) . ")";
+            }
+        }
+    }
+    
+    $totalAmountZAR = ($pricePerNight * $nights) + $packageTotal;
+    $totalAmountUSD = round($totalAmountZAR / USD_TO_ZAR_RATE, 2);
 
     // Insert data using prepared statement
     $sql = "INSERT INTO vahlavi_bookings 
-            (full_name, email, phone, check_in, check_out, guests, room_type, packages, special_requests, submitted_at) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+            (full_name, email, phone, check_in, check_out, guests, room_type, packages, special_requests, total_amount, submitted_at) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
 
     $stmt = mysqli_prepare($conn, $sql);
     if (!$stmt) {
@@ -89,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    mysqli_stmt_bind_param($stmt, "sssssssss", $name, $email, $phone, $checkIn, $checkOut, $guests, $roomType, $packagesString, $specialRequests);
+    mysqli_stmt_bind_param($stmt, "sssssssssd", $name, $email, $phone, $checkIn, $checkOut, $guests, $roomType, $packagesString, $specialRequests, $totalAmountZAR);
     
     if (!mysqli_stmt_execute($stmt)) {
         $_SESSION['error'] = 'An error occurred while saving your booking. Please try again.';
@@ -100,8 +147,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the booking ID
     $bookingId = mysqli_insert_id($conn);
 
-    // Store form data in session for success page
-    $_SESSION['form_data'] = [
+    // Store form data in session for payment page
+    $_SESSION['booking_data'] = [
+        'bookingId' => $bookingId,
         'name' => $name,
         'email' => $email,
         'phone' => $phone,
@@ -109,13 +157,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'checkOut' => $checkOut,
         'guests' => $guests,
         'roomType' => $roomTypeName,
+        'roomTypeCode' => $roomType,
         'packages' => $packagesString,
+        'packageDetails' => $packageDetails,
         'specialRequests' => $specialRequests,
-        'bookingId' => $bookingId,
-        'nights' => $nights
+        'nights' => $nights,
+        'pricePerNight' => $pricePerNight,
+        'packageTotal' => $packageTotal,
+        'totalAmountZAR' => $totalAmountZAR,
+        'totalAmountUSD' => $totalAmountUSD,
+        'exchangeRate' => USD_TO_ZAR_RATE
     ];
 
-    // Send email to admin
+    // Send initial booking notification to admin
     $to = ADMIN_EMAIL;
     $subject = "New Booking Request - Vahlavi Guest House (Booking #$bookingId)";
     
@@ -130,6 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             .content { padding: 20px; background: #f9f9f9; }
             .detail { margin: 10px 0; }
             .footer { background: #34495e; color: white; padding: 15px; text-align: center; }
+            .amount { color: #e74c3c; font-weight: bold; font-size: 1.2em; }
         </style>
     </head>
     <body>
@@ -149,12 +204,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class='detail'><strong>Number of Nights:</strong> $nights</div>
                 <div class='detail'><strong>Number of Guests:</strong> $guests</div>
                 <div class='detail'><strong>Room Type:</strong> $roomTypeName</div>
+                <div class='detail'><strong>Price per Night:</strong> R" . number_format($pricePerNight, 2) . "</div>
                 <div class='detail'><strong>Packages:</strong> " . ($packagesString ? $packagesString : 'None') . "</div>
+                <div class='detail'><strong>Package Total:</strong> R" . number_format($packageTotal, 2) . "</div>
+                <div class='detail'><strong>Total Amount (ZAR):</strong> <span class='amount'>R" . number_format($totalAmountZAR, 2) . "</span></div>
+                <div class='detail'><strong>Total Amount (USD):</strong> <span class='amount'>$" . number_format($totalAmountUSD, 2) . "</span></div>
+                <div class='detail'><strong>Exchange Rate:</strong> 1 USD = " . USD_TO_ZAR_RATE . " ZAR</div>
                 <div class='detail'><strong>Special Requests:</strong> " . ($specialRequests ? nl2br($specialRequests) : 'None') . "</div>
+                <div class='detail'><strong>Payment Status:</strong> <span style='color: #f39c12;'>Pending Payment</span></div>
                 <div class='detail'><strong>Submitted:</strong> " . date('Y-m-d H:i:s') . "</div>
             </div>
             <div class='footer'>
-                <p>Please contact the guest within 24 hours to confirm availability.</p>
+                <p>Guest has been redirected to payment page. Awaiting payment confirmation.</p>
             </div>
         </div>
     </body>
@@ -202,14 +263,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class='detail'><strong>Check-out:</strong> $checkOut</div>
                 <div class='detail'><strong>Number of Nights:</strong> $nights</div>
                 <div class='detail'><strong>Guests:</strong> $guests</div>
+                <div class='detail'><strong>Total Amount:</strong> R" . number_format($totalAmountZAR, 2) . " (Approx. $" . number_format($totalAmountUSD, 2) . " USD)</div>
                 " . ($packagesString ? "<div class='detail'><strong>Selected Packages:</strong> $packagesString</div>" : "") . "
                 " . ($specialRequests ? "<div class='detail'><strong>Special Requests:</strong> " . nl2br($specialRequests) . "</div>" : "") . "
                 
                 <p><strong>Next Steps:</strong></p>
                 <ul>
-                    <li>Our team will review your request within 24 hours</li>
-                    <li>We'll contact you to confirm availability and provide payment details</li>
-                    <li>Once confirmed, your reservation will be secured</li>
+                    <li>You will be redirected to our secure payment page</li>
+                    <li>Complete your payment to confirm your reservation</li>
+                    <li>Once paid, your booking will be secured</li>
                 </ul>
                 
                 <p>If you have any questions, please contact us at " . CONTACT_PHONE . " or reply to this email.</p>
@@ -231,11 +293,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     mail($email, $guestSubject, $guestMessage, $guestHeaders);
 
-    // Redirect to success page
-    header("Location: vahlavi-success.php");
+    // Clear output buffer before redirecting
+    ob_end_clean();
+    
+    // Redirect to payment page
+    header("Location: vahlavi_payment.php");
     exit;
     
     // Close connection
     mysqli_close($conn);
 }
+
+// End output buffering if not redirected
+ob_end_flush();
 ?>

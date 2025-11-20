@@ -1,14 +1,43 @@
 <?php
 session_start();
 
-// Check if form data exists, otherwise redirect to form
-if (!isset($_SESSION['form_data'])) {
+// Check if payment was successful or if we have session data
+$paymentSuccess = isset($_GET['payment']) && $_GET['payment'] === 'success';
+$bookingId = $_GET['booking_id'] ?? null;
+
+if ($paymentSuccess && $bookingId) {
+    // Database connection to get booking details
+    $conn = mysqli_connect('localhost', 'chippyzr_chippexUser', 'chipexTravelDev@24!', 'chippyzr_chippex');
+    $sql = "SELECT * FROM vahlavi_bookings WHERE id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $bookingId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $booking = $result->fetch_assoc();
+    mysqli_close($conn);
+    
+    $data = [
+        'name' => $booking['full_name'],
+        'email' => $booking['email'],
+        'checkIn' => $booking['check_in'],
+        'checkOut' => $booking['check_out'],
+        'guests' => $booking['guests'],
+        'roomType' => $booking['room_type'],
+        'packages' => $booking['packages'],
+        'specialRequests' => $booking['special_requests'],
+        'bookingId' => $booking['id'],
+        'paymentStatus' => $booking['payment_status']
+    ];
+    
+    // Clear session data
+    unset($_SESSION['booking_data']);
+} elseif (isset($_SESSION['form_data'])) {
+    $data = $_SESSION['form_data'];
+    unset($_SESSION['form_data']);
+} else {
     header("Location: vahlavi_hotel.html");
     exit;
 }
-
-// Get form data from session
-$data = $_SESSION['form_data'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,6 +83,16 @@ $data = $_SESSION['form_data'];
             font-size: 4rem;
             color: var(--success-color);
             margin-bottom: 20px;
+        }
+        
+        .payment-badge {
+            background: var(--success-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
         }
         
         h1 {
@@ -136,13 +175,27 @@ $data = $_SESSION['form_data'];
         <div class="success-icon">
             <i class="fas fa-check-circle"></i>
         </div>
-        <h1>Booking Request Received!</h1>
+        
+        <?php if ($paymentSuccess): ?>
+            <div class="payment-badge">
+                <i class="fas fa-check"></i> Payment Successful!
+            </div>
+            <h1>Booking Confirmed!</h1>
+        <?php else: ?>
+            <h1>Booking Request Received!</h1>
+        <?php endif; ?>
         
         <div class="booking-id">
-            Booking Reference: #<?php echo htmlspecialchars($data['bookingId'] ?? 'N/A'); ?>
+            Booking Reference: #<?php echo htmlspecialchars($data['bookingId']); ?>
         </div>
         
-        <p>Thank you, <strong><?php echo htmlspecialchars($data['name']); ?></strong>! Your booking request has been submitted successfully.</p>
+        <p>Thank you, <strong><?php echo htmlspecialchars($data['name']); ?></strong>! 
+        <?php if ($paymentSuccess): ?>
+            Your booking has been confirmed and payment has been processed successfully.
+        <?php else: ?>
+            Your booking request has been submitted successfully.
+        <?php endif; ?>
+        </p>
         
         <div class="booking-details">
             <h3>Booking Summary</h3>
@@ -159,16 +212,12 @@ $data = $_SESSION['form_data'];
                 <span class="detail-value"><?php echo htmlspecialchars($data['checkOut']); ?></span>
             </div>
             <div class="booking-detail">
-                <span class="detail-label">Number of Nights:</span>
-                <span class="detail-value"><?php echo htmlspecialchars($data['nights'] ?? 'N/A'); ?></span>
-            </div>
-            <div class="booking-detail">
                 <span class="detail-label">Guests:</span>
                 <span class="detail-value"><?php echo htmlspecialchars($data['guests']); ?></span>
             </div>
             <?php if (!empty($data['packages'])): ?>
             <div class="booking-detail">
-                <span class="detail-label">Selected Packages:</span>
+                <span class="detail-label">Packages:</span>
                 <span class="detail-value"><?php echo htmlspecialchars($data['packages']); ?></span>
             </div>
             <?php endif; ?>
@@ -178,11 +227,22 @@ $data = $_SESSION['form_data'];
                 <span class="detail-value"><?php echo htmlspecialchars($data['specialRequests']); ?></span>
             </div>
             <?php endif; ?>
+            <?php if ($paymentSuccess): ?>
+            <div class="booking-detail">
+                <span class="detail-label">Payment Status:</span>
+                <span class="detail-value" style="color: var(--success-color); font-weight: bold;">Paid</span>
+            </div>
+            <?php endif; ?>
         </div>
         
         <div class="next-steps">
             <h3>What Happens Next?</h3>
-            <p>We've sent a confirmation email to <strong><?php echo htmlspecialchars($data['email']); ?></strong>. Our team will contact you within 24 hours to confirm availability and provide payment details.</p>
+            <?php if ($paymentSuccess): ?>
+                <p>We've sent a payment confirmation email to <strong><?php echo htmlspecialchars($data['email']); ?></strong>. Your reservation is now secured, and we look forward to welcoming you!</p>
+                <p>You will receive a detailed confirmation email with all your booking information shortly.</p>
+            <?php else: ?>
+                <p>We've sent a confirmation email to <strong><?php echo htmlspecialchars($data['email']); ?></strong>. Please proceed to the payment page to complete your reservation.</p>
+            <?php endif; ?>
         </div>
         
         <button class="back-button" onclick="window.location.href='vahlavi_hotel.html'">
@@ -195,7 +255,3 @@ $data = $_SESSION['form_data'];
     </footer>
 </body>
 </html>
-<?php 
-// Clear the session data
-unset($_SESSION['form_data']);
-?>
