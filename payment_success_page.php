@@ -53,7 +53,7 @@ if ($paymentSuccess && $paymentId) {
             color: #333; 
             margin: 0; 
             padding: 0; 
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./assets/images/travel-bg.jpg');
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/travel-bg.jpg');
             background-size: cover;
             background-position: center;
             min-height: 100vh;

@@ -17,11 +17,18 @@ define('NOREPLY_EMAIL', 'noreply@chippexstravel.co.za');
 
 header('Content-Type: application/json');
 
+// Log the request for debugging
+error_log("Payment Success Endpoint Called - Method: " . $_SERVER['REQUEST_METHOD']);
+error_log("POST Data: " . file_get_contents('php://input'));
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the JSON input
     $input = json_decode(file_get_contents('php://input'), true);
     
+    error_log("Parsed Input: " . print_r($input, true));
+    
     if (!$input) {
+        error_log("No input data received");
         echo json_encode(['success' => false, 'error' => 'No input data received']);
         exit;
     }
@@ -30,18 +37,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
     
     if (!$conn) {
-        echo json_encode(['success' => false, 'error' => 'Database connection failed']);
+        error_log("Database connection failed: " . mysqli_connect_error());
+        echo json_encode(['success' => false, 'error' => 'Database connection failed: ' . mysqli_connect_error()]);
         exit;
     }
+    
+    // Set charset to avoid encoding issues
+    mysqli_set_charset($conn, 'utf8');
     
     $paymentId = mysqli_real_escape_string($conn, $input['paymentId'] ?? '');
     $transactionId = mysqli_real_escape_string($conn, $input['transactionId'] ?? '');
     $payerEmail = mysqli_real_escape_string($conn, $input['payerEmail'] ?? '');
     $payerName = mysqli_real_escape_string($conn, $input['payerName'] ?? '');
-    $amountUSD = mysqli_real_escape_string($conn, $input['amount'] ?? '');
-    $amountZAR = mysqli_real_escape_string($conn, $input['amountZAR'] ?? '');
+    $amountUSD = floatval($input['amount'] ?? 0);
+    $amountZAR = floatval($input['amountZAR'] ?? 0);
     $currency = mysqli_real_escape_string($conn, $input['currency'] ?? 'USD');
     $status = mysqli_real_escape_string($conn, $input['status'] ?? '');
+    
+    error_log("Processing payment - ID: $paymentId, Transaction: $transactionId");
+    
+    // Validate required fields
+    if (empty($paymentId) || empty($transactionId)) {
+        error_log("Missing required fields: paymentId or transactionId");
+        echo json_encode(['success' => false, 'error' => 'Missing required payment data']);
+        mysqli_close($conn);
+        exit;
+    }
     
     // Update payment with payment information
     $sql = "UPDATE payments SET 
@@ -56,7 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = mysqli_prepare($conn, $sql);
     
     if (!$stmt) {
-        echo json_encode(['success' => false, 'error' => 'Prepare statement failed: ' . mysqli_error($conn)]);
+        $error = mysqli_error($conn);
+        error_log("Prepare statement failed: " . $error);
+        echo json_encode(['success' => false, 'error' => 'Prepare statement failed: ' . $error]);
         mysqli_close($conn);
         exit;
     }
@@ -64,6 +87,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     mysqli_stmt_bind_param($stmt, "sssi", $transactionId, $payerEmail, $payerName, $paymentId);
     
     if (mysqli_stmt_execute($stmt)) {
+        error_log("Payment updated successfully for ID: $paymentId");
+        
         // Get payment details for email
         $paymentSql = "SELECT * FROM payments WHERE id = ?";
         $paymentStmt = mysqli_prepare($conn, $paymentSql);
@@ -73,6 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $payment = $result->fetch_assoc();
         
         if ($payment) {
+            error_log("Sending confirmation emails for payment ID: $paymentId");
+            
             // Send payment confirmation email to customer
             sendPaymentConfirmationEmail($payment, $transactionId, $amountZAR, $amountUSD);
             
@@ -81,15 +108,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             echo json_encode(['success' => true, 'message' => 'Payment recorded successfully']);
         } else {
-            echo json_encode(['success' => false, 'error' => 'Payment not found']);
+            error_log("Payment not found in database for ID: $paymentId");
+            echo json_encode(['success' => false, 'error' => 'Payment not found in database']);
         }
     } else {
         $error = mysqli_error($conn);
+        error_log("Payment update failed: " . $error);
         echo json_encode(['success' => false, 'error' => $error]);
     }
     
     mysqli_close($conn);
 } else {
+    error_log("Invalid request method: " . $_SERVER['REQUEST_METHOD']);
     echo json_encode(['success' => false, 'error' => 'Invalid request method']);
 }
 
@@ -147,7 +177,11 @@ function sendPaymentConfirmationEmail($payment, $transactionId, $amountZAR, $amo
     $headers .= "From: Chippexs Travel <" . NOREPLY_EMAIL . ">\r\n";
     $headers .= "Reply-To: " . ADMIN_EMAIL . "\r\n";
     
-    mail($to, $subject, $message, $headers);
+    if (mail($to, $subject, $message, $headers)) {
+        error_log("Confirmation email sent to: $to");
+    } else {
+        error_log("Failed to send confirmation email to: $to");
+    }
 }
 
 function sendPaymentNotificationToAdmin($payment, $transactionId, $amountZAR, $amountUSD, $payerEmail, $payerName) {
@@ -198,6 +232,10 @@ function sendPaymentNotificationToAdmin($payment, $transactionId, $amountZAR, $a
     $headers .= "Content-type:text/html;charset=UTF-8\r\n";
     $headers .= "From: Chippexs Travel <" . NOREPLY_EMAIL . ">\r\n";
     
-    mail($to, $subject, $message, $headers);
+    if (mail($to, $subject, $message, $headers)) {
+        error_log("Notification email sent to admin");
+    } else {
+        error_log("Failed to send notification email to admin");
+    }
 }
 ?>

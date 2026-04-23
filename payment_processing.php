@@ -12,6 +12,9 @@ if (!isset($_SESSION['payment_data'])) {
 }
 
 $payment = $_SESSION['payment_data'];
+
+// Debug output
+error_log("Payment Processing - Payment ID: " . $payment['paymentId'] . ", Amount USD: " . $payment['amountUSD']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -222,6 +225,8 @@ $payment = $_SESSION['payment_data'];
     </div>
 
     <script>
+        console.log('PayPal Button Loading...');
+        
         paypal.Buttons({
             style: {
                 layout: 'vertical',
@@ -232,6 +237,7 @@ $payment = $_SESSION['payment_data'];
             
             createOrder: function(data, actions) {
                 const amount = '<?php echo $payment['amountUSD']; ?>';
+                console.log('Creating order with amount:', amount);
                 
                 return actions.order.create({
                     purchase_units: [{
@@ -245,7 +251,11 @@ $payment = $_SESSION['payment_data'];
             },
             
             onApprove: function(data, actions) {
+                console.log('Payment approved, order ID:', data.orderID);
+                
                 return actions.order.capture().then(function(details) {
+                    console.log('Payment captured:', details);
+                    
                     // Send payment data to server
                     return fetch('payment_success.php', {
                         method: 'POST',
@@ -263,23 +273,42 @@ $payment = $_SESSION['payment_data'];
                             status: details.status
                         })
                     })
-                    .then(response => response.json())
+                    .then(response => {
+                        console.log('Response status:', response.status);
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok: ' + response.statusText);
+                        }
+                        return response.json();
+                    })
                     .then(data => {
+                        console.log('Payment success response:', data);
                         if (data.success) {
                             window.location.href = 'payment_success_page.php?payment=success&payment_id=<?php echo $payment['paymentId']; ?>';
                         } else {
-                            alert('Payment successful but there was an issue updating your payment record. Please contact us.');
+                            console.error('Payment failed:', data.error);
+                            alert('Payment successful but there was an issue updating your payment record. Please contact us. Error: ' + data.error);
                         }
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                        alert('Payment successful but there was a network error. Please contact us with your payment reference.');
                     });
                 });
             },
             
             onError: function(err) {
                 console.error('PayPal Checkout onError', err);
-                alert('An error occurred during the payment process. Please try again.');
+                alert('An error occurred during the payment process. Please try again. Error: ' + err.message);
+            },
+            
+            onCancel: function(data) {
+                console.log('Payment cancelled by user');
+                // User cancelled the payment
             }
             
         }).render('#paypal-button-container');
+        
+        console.log('PayPal Button Rendered');
     </script>
 </body>
 </html>
