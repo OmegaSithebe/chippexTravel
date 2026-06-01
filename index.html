@@ -969,8 +969,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		/* Ensure overlay does not block interaction with video controls */
+		pointer-events: none;
   }
   
   .gallery-box:hover .gallery-overlay {
@@ -1926,7 +1928,7 @@
 				<!-- Video 1 -->
 				<div class="col-md-4 col-sm-6 gallery-item cultural">
 					<div class="gallery-box">
-					<video controls class="img-responsive">
+					<video width="100%" height="auto" controls class="img-responsive" style="display: block;">
 						<source src="images/gallery/CedarWoods_experience.mp4" type="video/mp4">
 						Your browser does not support the video tag.
 					</video>
@@ -1942,7 +1944,7 @@
 				<!-- Video 2 -->
 				<div class="col-md-4 col-sm-6 gallery-item adventure">
 					<div class="gallery-box">
-					<video controls class="img-responsive">
+					<video width="100%" height="auto" controls class="img-responsive" style="display: block;">
 						<source src="images/gallery/CedarWoods_experience2.mp4" type="video/mp4">
 						Your browser does not support the video tag.
 					</video>
@@ -1958,7 +1960,7 @@
 				<!-- Video 3 -->
 				<div class="col-md-4 col-sm-6 gallery-item luxury">
 					<div class="gallery-box">
-					<video controls class="img-responsive">
+					<video width="100%" height="auto" controls class="img-responsive" style="display: block;">
 						<source src="images/gallery/CedarWoods_experience3.mp4" type="video/mp4">
 						Your browser does not support the video tag.
 					</video>
@@ -1974,7 +1976,7 @@
 				<!-- Video 4 -->
 				<div class="col-md-4 col-sm-6 gallery-item nature">
 					<div class="gallery-box">
-					<video controls class="img-responsive">
+					<video width="100%" height="auto" controls class="img-responsive" style="display: block;">
 						<source src="images/gallery/CedarWoods_experience4.mp4" type="video/mp4">
 						Your browser does not support the video tag.
 					</video>
@@ -1990,7 +1992,7 @@
 				<!-- Video 5 -->
 				<div class="col-md-4 col-sm-6 gallery-item cultural">
 					<div class="gallery-box">
-					<video controls class="img-responsive">
+					<video width="100%" height="auto" controls class="img-responsive" style="display: block;">
 						<source src="images/gallery/CedarWoods_experience5.mp4" type="video/mp4">
 						Your browser does not support the video tag.
 					</video>
@@ -2006,7 +2008,7 @@
 				<!-- Video 6 -->
 				<div class="col-md-4 col-sm-6 gallery-item nature">
 					<div class="gallery-box">
-					<video controls class="img-responsive">
+					<video width="100%" height="auto" controls class="img-responsive" style="display: block;">
 						<source src="images/gallery/CedarWoods_experience6.mp4" type="video/mp4">
 						Your browser does not support the video tag.
 					</video>
@@ -2022,7 +2024,7 @@
 				<!-- Video 7 -->
 				<div class="col-md-4 col-sm-6 gallery-item cultural">
 					<div class="gallery-box">
-					<video controls class="img-responsive">
+					<video width="100%" height="auto" controls class="img-responsive" style="display: block;">
 						<source src="images/gallery/CedarWoods_experience7.mp4" type="video/mp4">
 						Your browser does not support the video tag.
 					</video>
@@ -2034,7 +2036,48 @@
 					</div>
 					</div>
 				</div>
+
+				<!-- Image 11 - Tourists Arrive at Airport -->
+				<div class="col-md-4 col-sm-6 gallery-item adventure">
+					<div class="gallery-box">
+					<img src="images/gallery/tourists arrival.jpeg" alt="Tourists Arrive at South African Airport" class="img-responsive">
+					<div class="gallery-overlay">
+						<div class="gallery-caption">
+						<h3>South African Welcome</h3>
+						<p>Travelers touch down in South Africa, ready for an unforgettable adventure ahead</p>
+						</div>
+					</div>
+					</div>
+				</div>
+
+				<!-- Image 12 - Tour Guide at Nelson Mandela Statue -->
+				<div class="col-md-4 col-sm-6 gallery-item cultural">
+					<div class="gallery-box">
+					<img src="images/gallery/tourists spot.jpeg" alt="Tour Guide at Nelson Mandela Statue" class="img-responsive">
+					<div class="gallery-overlay">
+						<div class="gallery-caption">
+						<h3>Icon Recognition</h3>
+						<p>Our expert tour guide stands proudly at the Nelson Mandela statue, welcoming guests to South Africa's rich heritage</p>
+						</div>
+					</div>
+					</div>
+				</div>
+
+				<!-- Image 13 - First Meeting -->
+				<div class="col-md-4 col-sm-6 gallery-item luxury">
+					<div class="gallery-box">
+					<img src="images/gallery/tourists found.jpeg" alt="Tourists and Tour Guide Meeting" class="img-responsive">
+					<div class="gallery-overlay">
+						<div class="gallery-caption">
+						<h3>Magical First Meeting</h3>
+						<p>The moment magic happens - our tour guide and guests unite for an extraordinary journey through South Africa's wonders</p>
+						</div>
+					</div>
+					</div>
+				</div>
 			</div>
+
+			
 			
 			<!-- View More Button -->
 			<!-- <div class="row">
